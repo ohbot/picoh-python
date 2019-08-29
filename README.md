@@ -189,7 +189,7 @@ picoh.move(1,4,2)
 ```
 ---
 
-picoh.eyeColour(r, g, b, swapRandG=False)
+picoh.baseColour(r, g, b)
 ----------
 
 Set the colour of Picoh’s eyes. 
@@ -199,16 +199,11 @@ Set the colour of Picoh’s eyes.
 | r        | 0-10 (int)  | Red| - |
 | g        | 0-10 (int)  | Green| - |
 | b        | 0-10 (int)  | Blue| - |
-| swapRandG| bool | swap r and g value (Unused - legacy from Ohbot library) | False |
 
 
 For Example:
 ```python
-picoh.eyeColour(2,3,8)
-```
-or 
-```python
-picoh.eyeColour(2,3,8,True)
+picoh.baseColour(2,3,8)
 ```
 
 ---
