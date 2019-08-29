@@ -1,4 +1,4 @@
-# Ohbot for Python (Mac Version)
+# Picoh for Python
 
 <a href="http://whoosh.co.uk/ohbothelp/images/eyes.gif" target="_blank"><img src="http://whoosh.co.uk/ohbothelp/images/eyes.gif" border="0" width = "30%"/></a>
 
@@ -6,9 +6,9 @@
 Background
 -----
 
-These instructions allow you to program your Ohbot using Python on a Mac.
+These instructions allow you to program your Picoh using Python.
 
-More information about Ohbot can be found on [ohbot.co.uk.](http://www.ohbot.co.uk)
+More information about Picoh can be found on [ohbot.co.uk.](http://www.ohbot.co.uk/picoh)
 
 
 Setup
@@ -18,21 +18,23 @@ Install the latest version of Python from [here.](https://www.python.org/downloa
 
 Open the Terminal app and type the folloing:
 
-``sudo pip3 install ohbotMac``
+**TODO**
+
+``sudo pip3 install picoh``
 
 You can find the Terminal app by searching for it in spotlight.
 
-<a href="https://github.com/ohbot/ohbotMac-python/blob/master/images/ss.png" target="_blank"><img src="https://github.com/ohbot/ohbotMac-python/blob/master/images/ss.png" border="0" width = "60%"/></a>
+<a href="https://github.com/picoh/ohbotMac-python/blob/master/images/ss.png" target="_blank"><img src="https://github.com/ohbot/ohbotMac-python/blob/master/images/ss.png" border="0" width = "60%"/></a>
 
 Dependencies
 ----------
 
-The ``pip3 install ohbotMac`` command will install the following libraries:
+The ``pip3 install picoh`` command will install the following libraries:
 
 
 | Library    | Use         | Terminal command to install  |Link |
 | ---------- |-------------| -----------------------------|-----|
-| ohbotMac   | Interface with Ohbot          | ```pip3 install ohbotMac```  |[ohbot](https://github.com/ohbot/ohbotWin-python/) 
+| picoh   | Interface with Picoh          | ```pip3 install picoh```  |[picoh](https://github.com/ohbot/picoh/) 
 | serial    | Communicate with serial port| ```pip3 install pyserial```  |[pyserial](https://github.com/pyserial/pyserial/) |
 | lxml    | Import settings file          | ```pip3 install lxml```  |[lxml](https://github.com/lxml/lxml) |
 | playsound    | Play sound files       | ```pip3 install playsound```  |[playsound](https://github.com/TaylorSMarks/playsound) |
@@ -42,18 +44,18 @@ The ``pip3 install ohbotMac`` command will install the following libraries:
 
 To upgrade to the latest version of the library run the following in the console:
 <br>
-```sudo pip3 install ohbotMac --upgrade```
+```sudo pip3 install picoh --upgrade```
 
 
 
-Ohbot library files (these will be installed with the `sudo pip3 install ohbotMac` command above):
+Picoh library files (these will be installed with the `sudo pip3 install picoh` command above):
 
 | File    | Use         |
 | ---------- |------------|
-| ohbot.py   | Ohbot package |
-| MotorDefinionsv21.omd    | Motor settings file |
+| picoh.py   | Picoh package |
+| picohdefinitions.omd    | Motor settings file |
 
-_Note: The text to speech module will generate an audio file, ‘ohbotspeech.wav’ and a text file ‘phonemes.txt’ inside your working folder._
+_Note: The text to speech module will generate an audio file, ‘picohspeech.wav’ and a text file ‘phonemes.txt’ inside your working folder._
 
 ---
 
@@ -62,18 +64,19 @@ Hardware
 
 Required:
 
+***TODO**
 
 * Mac running OSX
-* Ohbot
+* Picoh
 * USB Y Cable
-* A 5 volt 1 amp USB power supply (for Ohbot)
+* A 5 volt 1 amp USB power supply (for Picoh)
 * Speakers/headphones.
 
 
 Setup:
 
 
-Plug the middle of USB Y cable into the PC and the other large USB plug into the power adaptor. Then plug the mini USB into Ohbot. (Note with newer devices the power adaptor may not be required.)
+Plug the middle of USB Y cable into the computer and the other large USB plug into the power adaptor. Then plug the micro USB into Picoh. (Note with newer devices the power adaptor may not be required.)
 
 ---
 
@@ -83,12 +86,12 @@ Starting Python Programs
 Open <b>IDLE</b> from <b>Applications</b>.
 
 Select <b>New</b> from the <b>File menu.</b>
-
+**TODO**
 Go to the [hellworldohbot](https://github.com/ohbot/ohbotMac-python/blob/master/examples/helloworldohbot.py) example on Github, copy the code and paste it into the new Python window.
 
 Select <b>Run Module</b> from the <b>Run</b> menu.
 
-Ohbot should speak and move.
+Picoh should speak and move.
 
 More example programs can be found [here.](https://github.com/ohbot/ohbotMac-python/tree/master/examples)
 
@@ -96,12 +99,12 @@ More example programs can be found [here.](https://github.com/ohbot/ohbotMac-pyt
 Functions
 -------
 
-ohbot.init(portName)
+picoh.init(portName)
 ----------
 
 Called internally looking for a port with name containing "USB Serial Device" but if your port is different you can call it and override this port name. It returns True if the port is found and opened successfully, otherwise it returns false. This is likely with a versions of OSX in languages other than English. 
 
-ohbot.move(m, pos, speed=3)
+picoh.move(m, pos, speed=3)
 ----------
 
 
@@ -114,15 +117,15 @@ ohbot.move(m, pos, speed=3)
 
 For Example:
 ```python
-ohbot.move(1,7)
+picoh.move(1,7)
 ```
 or
 ```python
-ohbot.move(2,3,1) 
+picoh.move(2,3,1) 
 ```
 or you can use a constant from the library to specify the motor:
 ```python
-ohbot.move(ohbot.EYETURN,3,1) 
+picoh.move(picoh.EYETURN,3,1) 
 ```
 Motor index reference:
 
@@ -131,7 +134,7 @@ Motor index reference:
 | constant | HEADNOD | HEADTURN | EYETURN | LIDBLINK | TOPLIP | BOTTOMLIP | EYETILT | 
   
 
-ohbot.say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0)
+picoh.say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0)
 ----------
 
 | Name| Range| Description | Default |
@@ -146,20 +149,20 @@ ohbot.say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0)
 
 For Example:
 ```python
-ohbot.say('Hello I am Ohbot')
+picoh.say('Hello I am Picoh')
 
-ohbot.say('Goodbye',False,False)
+picoh.say('Goodbye',False,False)
 
-ohbot.say('Goodbye',False,False,True)
+picoh.say('Goodbye',False,False,True)
 
-ohbot.say('Goodbye',soundDelay = 0.3)
+picoh.say('Goodbye',soundDelay = 0.3)
 ```
 ---
 
-ohbot.wait(seconds)
+picoh.wait(seconds)
 ----------
 
-Seconds - float or int required wait time. ohbot.wait(1.5)
+Seconds - float or int required wait time. picoh.wait(1.5)
 
 | Name| Range| Description  |
 | --- |------|-------------|
@@ -169,81 +172,81 @@ Seconds - float or int required wait time. ohbot.wait(1.5)
 
 For Example:
 ```python
-ohbot.wait(2)
+picoh.wait(2)
 
-ohbot.wait(0.5)
+picoh.wait(0.5)
 ```
 
-*Note: It is important to use ohbot.wait() commands between motor sequential commands for the same motor.*
+*Note: It is important to use picoh.wait() commands between motor sequential commands for the same motor.*
 
 For Example:
 ```python
-ohbot.move(1,7,2)
+picoh.move(1,7,2)
 
-ohbot.wait(2)
+picoh.wait(2)
 
-ohbot.move(1,4,2)
+picoh.move(1,4,2)
 ```
 ---
 
-ohbot.eyeColour(r, g, b, swapRandG=False)
+picoh.eyeColour(r, g, b, swapRandG=False)
 ----------
 
-Set the colour of Ohbot’s eyes. 
+Set the colour of Picoh’s eyes. 
 
 | Name| Range| Description  | Default |
 | ---      |------|-------------| ------- |
 | r        | 0-10 (int)  | Red| - |
 | g        | 0-10 (int)  | Green| - |
 | b        | 0-10 (int)  | Blue| - |
-| swapRandG| bool | swap r and g value for some older Ohbots | False |
+| swapRandG| bool | swap r and g value (Unused - legacy from Ohbot library) | False |
 
 
 For Example:
 ```python
-ohbot.eyeColour(2,3,8)
+picoh.eyeColour(2,3,8)
 ```
 or 
 ```python
-ohbot.eyeColour(2,3,8,True)
+picoh.eyeColour(2,3,8,True)
 ```
 
 ---
 
-ohbot.reset()
+picoh.reset()
 ----------
 
-Resets Ohbot’s motors back to rest positions and turns off Ohbot’s eyes. Useful to start programs with this. You may need an ohbot.wait() after this to give time for the motors to move. 
+Resets Picoh's motors  and matrix back to rest positions and turns off Picoh's base LEDs. Useful to start programs with this. You may need an picoh.wait() after this to give time for the motors to move. 
 
 For Example:
 ```python
-ohbot.reset()
-ohbot.move(1,7,2)
-ohbot.wait(1)
-ohbot.move(1,1)
+picoh.reset()
+picoh.move(1,7,2)
+picoh.wait(1)
+picoh.move(1,1)
 ...
 ```
 ---
 
-ohbot.close()
+picoh.close()
 ----------
 
-Call to detach all Ohbot’s motors which stops them using power, you can call ohbot.attach(m) or ohbot.detach(m) for individual motors.
+Call to detach all Picoh's motors which stops them using power, you can call picoh.attach(m) or picoh.detach(m) for individual motors.
 
 For Example:
 ```python
-ohbot.move(1,7,2)
-ohbot.wait(1)
-ohbot.move(1,1)
+picoh.move(1,7,2)
+picoh.wait(1)
+picoh.move(1,1)
 
-ohbot.close()
+picoh.close()
 ```
 ---
 
-ohbot.readSensor(sensorNumber)
+picoh.readSensor(sensorNumber)
 ----------
 
-Seconds - float or int required wait time. ohbot.wait(1.5)
+Seconds - float or int required wait time. picoh.wait(1.5)
 
 | Name| Range| Description  |
 | --- |------|-------------|
@@ -253,29 +256,31 @@ returns the value as a float 0 - 10.
 
 For Example:
 ```python
-reading = ohbot.readSensor(3)
+reading = picoh.readSensor(3)
 
-ohbot.move(ohbot.HEADTURN, reading)
+picoh.move(picoh.HEADTURN, reading)
 
 ```
-ohbot.setSynthesizer(synth)
+picoh.setSynthesizer(synth)
 ----------
 
 Allows override of default OSX say command. 
 
 
-ohbot.setVoice(voice)
+** TODO **
+
+picoh.setVoice(voice)
 ------
 
-Use ohbot.setVoice() to set the voice:
+Use picoh.setVoice() to set the voice:
 
 For Example:
 ```python
 
-ohbot.setVoice("Oliver")
-ohbot.say("Hello this is Oliver")
-ohbot.setVoice("Kate")
-ohbot.say("Hello this is Kate")
+picoh.setVoice("Oliver")
+picoh.say("Hello this is Oliver")
+picoh.setVoice("Kate")
+picoh.say("Hello this is Kate")
 ```
 Available voices can be found in System Preferences -> Accessibility -> Speech in the System Voice Menu. Click customize to view voices in other languages. 
 
@@ -287,10 +292,10 @@ A full list of voices can also be displayed by entering the following command in
 
 ```say -v ?```
 
-ohbot.speechSpeed(params)
+picoh.speechSpeed(params)
 ------
 
-Use ohbot.speechSpeed() to set speech rate in words per minute:
+Use picoh.speechSpeed() to set speech rate in words per minute:
 
 Range: (int) 90+
 
@@ -298,11 +303,11 @@ Range: (int) 90+
 For Example:
 ```python
 
-ohbot.setVoice("Oliver")
-ohbot.speechSpeed(90)
-ohbot.say("Hello this is Oliver Slow")
-ohbot.speechSpeed(400)
-ohbot.say("Hello this is Oliver Fast")
+picoh.setVoice("Oliver")
+picoh.speechSpeed(90)
+picoh.say("Hello this is Oliver Slow")
+picoh.speechSpeed(400)
+picoh.say("Hello this is Oliver Fast")
 ```
 
 
