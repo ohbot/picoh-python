@@ -4,7 +4,7 @@ import random
 import tkinter as Tk
 import tkinter.font as tkFont
 from tkinter import messagebox
-import picoh
+from picoh import picoh
 
 global phraseList, rowList, numberOfRows
 
