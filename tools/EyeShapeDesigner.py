@@ -11,7 +11,7 @@ import numpy as np
 # import math
 from lxml import etree
 import os
-import picoh
+from picoh import picoh
 from copy import deepcopy
 
 from threading import Timer
@@ -496,7 +496,11 @@ class PicohEyeDesigner(Tk.Frame):
 
         my_tree = self.tree
 
-        with open('./Picoh.obe', 'wb') as f:
+        directory = picoh.dir
+
+        file = os.path.join(directory, 'Ohbot.obe')
+
+        with open(file, 'wb') as f:
             f.write(etree.tostring(my_tree))
             f.close()
 
@@ -604,9 +608,9 @@ class PicohEyeDesigner(Tk.Frame):
     # Function to read XML files
     def xmlReadin(self):
 
-        dir = os.path.dirname(os.path.abspath(__file__))
+        directory = picoh.dir
 
-        file = os.path.join(dir, 'Picoh.obe')
+        file = os.path.join(directory, 'Ohbot.obe')
 
         self.tree = etree.parse(file)
 

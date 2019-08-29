@@ -82,6 +82,9 @@ speechDatabaseFile = 'PicohSpeech.csv'
 eyeShapeFile = 'ohbot.obe'
 speechAudioFile = 'picohspeech.wav'
 
+# Variable to hold the location of the picoh library folder.
+dir = os.path.dirname(os.path.abspath(__file__))
+
 # Cache of pupil positions
 global lastfex, lastfey
 lastfex = 5
