@@ -114,7 +114,7 @@ def _loadEyeShapes():
 
     dir = os.path.dirname(os.path.abspath(__file__))
 
-    file = os.path.join(dir, eyeSHapeFile)
+    file = os.path.join(dir, eyeShapeFile)
 
     tree = etree.parse(file)
 
