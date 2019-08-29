@@ -204,14 +204,15 @@ def _parseSAPIVoice(flag):
 
 # speak depending on synthesizer
 def _speak(text):
+    dir = os.path.dirname(os.path.abspath(__file__))
+
+    file = os.path.join(dir, speechAudioFile)
     if platform.system() == "Windows" or platform.system() == "Linux":
         if ("sapi" in synthesizer.lower()):
             from comtypes.gen import SpeechLib
             global sapivoice, sapistream
 
-            dir = os.path.dirname(os.path.abspath(__file__))
 
-            file = os.path.join(dir, speechAudioFile)
 
             sapistream.Open(file, SpeechLib.SSFMCreateForWrite)
             sapivoice.AudioOutputStream = sapistream
