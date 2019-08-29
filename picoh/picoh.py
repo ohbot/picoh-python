@@ -14,7 +14,7 @@ import random
 import re
 import csv
 
-print (platform.system())
+print(platform.system())
 
 if platform.system() == "Windows":
     import winsound
@@ -43,7 +43,6 @@ port = ""
 # define library version
 version = "1.0"
 
-
 global writing, voice, synthesizer, speechRate, connected, shapeList, phraseList, topLipFree
 
 # flag to stop writing when writing for threading
@@ -63,6 +62,8 @@ if platform.system() == "Windows":
     voice = ""
 if platform.system() == "Darwin":
     voice = "Alex"
+if platform.system() == "Linux":
+    voice = ""
 
 # global to set the speech speed.
 speechRate = 170
@@ -73,10 +74,13 @@ if platform.system() == "Windows":
     synthesizer = "sapi"
 if platform.system() == "Darwin":
     synthesizer = "say -o "
+if platform.system() == "Linux":
+    synthesizer = "festival"
 
 # Variable to hold name of speech database and eyeshape files.
-speechFile = 'PicohSpeech.csv'
+speechDatabaseFile = 'PicohSpeech.csv'
 eyeShapeFile = 'ohbot.obe'
+speechAudioFile = 'picohspeech.wav'
 
 # Cache of pupil positions
 global lastfex, lastfey
@@ -102,6 +106,7 @@ class Phrase(object):
         self.set = set
         self.variable = variable
         self.text = text
+
 
 # Read eyeshape file into eyeshape list.
 def _loadEyeShapes():
@@ -138,12 +143,13 @@ def _loadEyeShapes():
 
             index = index + 1
 
+
 # Read speech database file into phraseList.
 def _loadSpeechDatabase():
     global phraseList
     dir = os.path.dirname(os.path.abspath(__file__))
 
-    file = os.path.join(dir, speechFile)
+    file = os.path.join(dir, speechDatabaseFile)
     rowList = []
 
     with open(file, 'rt')as f:
@@ -176,6 +182,7 @@ def _is_digit(n):
     except ValueError:
         return False
 
+
 # Function to parse SAPI settings from voice override
 # -a0 to -a100 for amplitude
 # -r-10 to r10 for rate
@@ -185,55 +192,66 @@ def _parseSAPIVoice(flag):
     pos = voice.find("-" + flag)
     val = ""
     if ((pos != None) and (pos >= 0)):
-        val = voice[pos+2:]
+        val = voice[pos + 2:]
         pos = val.find(" ")
         if ((pos != None) and (pos > 0)):
             val = val[:pos]
     return val
 
+
 # speak depending on synthesizer
 def _speak(text):
-    if platform.system() == "Windows":
+    if platform.system() == "Windows" or platform.system() == "Linux":
         if ("sapi" in synthesizer.lower()):
             from comtypes.gen import SpeechLib
-            global sapivoice,sapistream
-            sapistream.Open("picohspeech.wav", SpeechLib.SSFMCreateForWrite)
+            global sapivoice, sapistream
+
+            dir = os.path.dirname(os.path.abspath(__file__))
+
+            file = os.path.join(dir, speechAudioFile)
+
+            sapistream.Open(file, SpeechLib.SSFMCreateForWrite)
             sapivoice.AudioOutputStream = sapistream
 
-            #set any parameters
-            sa = _parseSAPIVoice ("a");
+            # set any parameters
+            sa = _parseSAPIVoice("a");
             if _is_digit(sa):
                 sapivoice.Volume = int(sa)
             else:
                 sapivoice.Volume = 100
-            sr = _parseSAPIVoice ("r")
+            sr = _parseSAPIVoice("r")
             if _is_digit(sr):
                 sapivoice.Rate = int(sr)
             else:
                 sapivoice.Rate = 0
-            sv = _parseSAPIVoice ("v");
+            sv = _parseSAPIVoice("v");
             # Default voice is always first in the list
             if (sv == ''):
                 sapivoice.voice = sapivoice.GetVoices()[0]
             else:
                 for v in sapivoice.GetVoices():
                     if (sv.lower() in v.GetDescription().lower()):
-                        sapivoice.voice = v        
+                        sapivoice.voice = v
 
             sapivoice.Speak(text)
             sapistream.Close()
         else:
             # Remove any characters that are unsafe for a subprocess call
             safetext = re.sub(r'[^ .a-zA-Z0-9?\']+', '', text)
-            bashcommand = synthesizer + ' -w picohspeech.wav ' + voice + ' "' + safetext + '"'
+
+            bashcommand = synthesizer + ' -w ' + file + ' ' + voice + ' "' + safetext + '"'
             # Execute bash command.
-            subprocess.call(bashcommand,shell=True)
-            
+            subprocess.call(bashcommand, shell=True)
+
     if platform.system() == "Darwin":
         # Remove any characters that are unsafe for a subprocess call
         safetext = re.sub(r'[^ .a-zA-Z0-9?\']+', '', text)
 
-        bashcommand = synthesizer + 'picohspeech.wav --file-format=RF64 --data-format=LEI16@22050 -r' + str(
+        dir = os.path.dirname(os.path.abspath(__file__))
+
+        file = os.path.join(dir, speechAudioFile)
+
+        bashcommand = synthesizer + file + ' --file-format=RF64 --data-format=LEI16@22050 -r' + str(
             speechRate) + ' -v ' + voice + ' "' + safetext + '"'
 
         # Execute bash command.
@@ -245,6 +263,7 @@ def _speak(text):
         retval = ret.wait()
         # print(retval)
 
+
 def init(portName):
     # pickup global instances of port, ser and sapi variables   
     global port, ser, sapivoice, sapistream, connected
@@ -255,14 +274,23 @@ def init(portName):
     if platform.system() == "Windows":
         sapivoice = CreateObject("SAPI.SpVoice")
         sapistream = CreateObject("SAPI.SpFileStream")
+        dir = os.path.dirname(os.path.abspath(__file__))
+        silenceFile = os.path.join(dir, 'Silence1.wav')
+        winsound.PlaySound(silenceFile, winsound.SND_FILENAME)
 
-    # get the audio system warmed up on Mac
+        # get the audio system warmed up on Mac
     if platform.system() == "Darwin":
         dir = os.path.dirname(os.path.abspath(__file__))
         silenceFile = os.path.join(dir, 'Silence1.wav')
         playsound(silenceFile)
-        
-    # Search for the Picoh serial port 
+
+        # get the audio system warmed up on linux
+    if platform.system() == "Linux":
+        dir = os.path.dirname(os.path.abspath(__file__))
+        silenceFile = os.path.join(dir, 'Silence1.wav')
+        os.system('aplay ' + silenceFile)
+
+    # Search for the Picoh serial port
     ports = list(serial.tools.list_ports.comports())
     for p in ports:
 
@@ -299,7 +327,8 @@ def init(portName):
     # Make an initial call to Festival without playing the sound to check it's all okay
     text = "Hi"
 
-    # Create a bash command with the desired text. The command writes two files, a .wav with the speech audio and a .txt file containing the phonemes and the times.
+    # Create a bash command with the desired text. The command writes two files, a .wav with the speech audio and a
+    # .txt file containing the phonemes and the times.
     _speak(text)
     _loadSpeechDatabase()
     return True
@@ -346,12 +375,14 @@ if platform.system() == "Windows":
     init("USB Serial Device")
 if platform.system() == "Darwin":
     init("usbmodem")
+if platform.system() == "Linux":
+    init("Arduino")
 
-# Function to move Picoh's motors. Arguments | m (motor) → int (0-6) | pos (position) → int (0-10) | spd (speed) → int (0-10) **eg move(4,3,9) or move(0,9,3)**
+
+# Function to move Picoh's motors. Arguments | m (motor) → int (0-6) | pos (position) → int (0-10) | spd (speed) →
+# int (0-10) **eg move(4,3,9) or move(0,9,3)**
 def move(m, pos, spd=3, eye=0):
-    global lastfex, lastfey,topLipFree
-
-
+    global lastfex, lastfey, topLipFree
 
     # Limit values to keep then within range
     pos = _limit(pos)
@@ -365,8 +396,7 @@ def move(m, pos, spd=3, eye=0):
     if pos <= 5 and m == BOTTOMLIP:
         topLipFree = False
 
-
-    # Reverse the motor if necessary   
+    # Reverse the motor if necessary
     if motorRev[m]:
         pos = 10 - pos
 
@@ -423,12 +453,12 @@ def move(m, pos, spd=3, eye=0):
 # Function to write to serial port
 def _serwrite(s):
     global connected, writing
-    if platform.system() == "Windows":
+    if platform.system() == "Windows" or platform.system()=="Linux":
         # wait until previous write is finished
         while (writing):
             pass
         # print ('waiting on write')
-    
+
     if connected:
         writing = True
         ser.write(s.encode('latin-1'))
@@ -488,7 +518,6 @@ def setSpeechSpeed(params=speechRate):
 # untilDone - wait in function until speech is complete, lipSync - move lips in time with speech, hdmiAudio - adds a delay to give hdmi channel time to activate.
 # soundDelay - positive if lip movement is lagging behind sound, negative if sound is lagging behind lip movement.
 def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
-
     global topLipFree
 
     if text.isspace() or text == '':
@@ -497,7 +526,7 @@ def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
     # Use the bottom lip to push the top lip above the centre point if it is below
 
     if topLipFree:
-        move(BOTTOMLIP,4)
+        move(BOTTOMLIP, 4)
         wait(0.25)
 
     if hdmiAudio:
@@ -510,7 +539,11 @@ def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
     _speak(text)
 
     # open the file to calculate visemes. Festival on RPi has this built in but for espeak need to do it manually
-    waveFile = wave.open('picohspeech.wav', 'r')
+
+    dir = os.path.dirname(os.path.abspath(__file__))
+    file = os.path.join(dir, 'picohspeech.wav')
+
+    waveFile = wave.open(file, 'r')
 
     length = waveFile.getnframes()
     framerate = waveFile.getframerate()
@@ -521,6 +554,8 @@ def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
     if platform.system() == "Windows":
         VISEMESPERSEC = 10
     if platform.system() == "Darwin":
+        VISEMESPERSEC = 10
+    if platform.system() == "Linux":
         VISEMESPERSEC = 10
 
     # How many samples in 1/20th second
@@ -563,7 +598,7 @@ def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
     # Normalise the volume
     max = 0
     for i in range(0, len(phonemes) - 1):
-        if (phonemes[i] > max):
+        if phonemes[i] > max:
             max = phonemes[i]
 
     for i in range(0, len(phonemes) - 1):
@@ -607,21 +642,29 @@ def _limit(val):
 
 # Function to play back the speech wav file, if hmdi audio is being used play silence before speech sound
 def _saySpeech(addSilence):
+    dir = os.path.dirname(os.path.abspath(__file__))
+    speechFile = os.path.join(dir, 'picohspeech.wav')
+    silenceFile = os.path.join(dir, 'Silence1.wav')
 
     if platform.system() == "Windows":
+
         if addSilence:
-            winsound.PlaySound('Silence1.wav', winsound.SND_FILENAME)        
-        winsound.PlaySound('picohspeech.wav', winsound.SND_FILENAME)
+            winsound.PlaySound(silenceFile, winsound.SND_FILENAME)
+        winsound.PlaySound(speechFile, winsound.SND_FILENAME)
 
     if platform.system() == "Darwin":
-        dir = os.path.dirname(os.path.abspath(__file__))
         if addSilence:
-            dir = os.path.dirname(os.path.abspath(__file__))
-            silenceFile = os.path.join(dir, 'Silence1.wav')
             playsound(silenceFile)
-
-        speechFile = os.path.join(dir, 'picohspeech.wav')
         playsound(speechFile)
+
+    if platform.system() == "Linux":
+        if addSilence:
+            commandString = 'aplay ' + silenceFile + '\naplay '+ speechFile
+            os.system(commandString)
+        else:
+            os.system('aplay ' + speechFile)
+
+
 
 # Function to move Picoh's lips in time with speech. Arguments | phonemes → list of phonemes[] | waits → list of waits[]
 def _moveSpeech(phonemes, times):
@@ -658,7 +701,7 @@ def eyeColour(r, g, b, swapRandG=False):
     baseColour(r, g, b, swapRandG)
 
 
-# Function to set the color of the LEDs in Picoh's base. Arguments | r (red) → int (0-10) | g (green) → int (0-10) | b (blue) → int (0-10) 
+# Function to set the color of the LEDs in Picoh's base. Arguments | r (red) → int (0-10) | g (green) → int (0-10) | b (blue) → int (0-10)
 # swapRandG is used to swap the red and green values as this is required for some LEDs
 def baseColour(r, g, b, swapRandG=False):
     # Limit the values to keep them within range.
@@ -730,8 +773,8 @@ def readSensor(index):
 
 # set the brightness of the eyes.  Value is 0 (off) to 10 (full brightness)
 def setEyeBrightness(val):
-    val = val/10
-    val = val*val
+    val = val / 10
+    val = val * val
     msg = "{:0.0f}".format(val * 255)
 
     # print ("brightness:" + msg)
