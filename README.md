@@ -260,10 +260,10 @@ picoh.say(picoh.getPhrase(1,2))
 or get a random phrase from a specific set:
 ```python
 
-picoh.say(picoh.getPhrase(1,""))
+picoh.say(picoh.getPhrase(set=1)))
 # Picoh will say a random phrase from set 1.
 
-picoh.say(picoh.getPhrase("",2))
+picoh.say(picoh.getPhrase(variable=2))
 # Picoh will say a random phrase with variable = 2.
 ```
 
