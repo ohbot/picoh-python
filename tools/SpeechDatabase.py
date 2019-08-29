@@ -4,17 +4,18 @@ import random
 import tkinter as Tk
 import tkinter.font as tkFont
 from tkinter import messagebox
+import picoh
 
 global phraseList, rowList, numberOfRows
 
 speechFile = 'PicohSpeech.csv'
+directory = picoh.dir
+
 numberOfRows = 0
 phraseList = []
 rowList = []
 
-dir = os.path.dirname(os.path.abspath(__file__))
-
-file = os.path.join(dir, speechFile)
+file = os.path.join(directory, speechFile)
 
 
 class Phrase(object):
