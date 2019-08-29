@@ -74,8 +74,9 @@ if platform.system() == "Windows":
 if platform.system() == "Darwin":
     synthesizer = "say -o "
 
-# Variable to hold name of speech database file.
+# Variable to hold name of speech database and eyeshape files.
 speechFile = 'PicohSpeech.csv'
+eyeShapeFile = 'ohbot.obe'
 
 # Cache of pupil positions
 global lastfex, lastfey
@@ -102,13 +103,13 @@ class Phrase(object):
         self.variable = variable
         self.text = text
 
-
+# Read eyeshape file into eyeshape list.
 def _loadEyeShapes():
     global shapeList
 
     dir = os.path.dirname(os.path.abspath(__file__))
 
-    file = os.path.join(dir, 'ohbot.obe')
+    file = os.path.join(dir, eyeSHapeFile)
 
     tree = etree.parse(file)
 
@@ -137,7 +138,7 @@ def _loadEyeShapes():
 
             index = index + 1
 
-
+# Read speech database file into phraseList.
 def _loadSpeechDatabase():
     global phraseList
     dir = os.path.dirname(os.path.abspath(__file__))
@@ -175,7 +176,7 @@ def _is_digit(n):
     except ValueError:
         return False
 
-# Function to parse SAPI settings from voice overrid
+# Function to parse SAPI settings from voice override
 # -a0 to -a100 for amplitude
 # -r-10 to r10 for rate
 # -v any part of the name of a SAPI voice e.g. -vHazel, -vZira
@@ -188,7 +189,6 @@ def _parseSAPIVoice(flag):
         pos = val.find(" ")
         if ((pos != None) and (pos > 0)):
             val = val[:pos]
-    
     return val
 
 # speak depending on synthesizer
