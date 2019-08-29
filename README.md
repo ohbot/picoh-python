@@ -189,6 +189,92 @@ picoh.move(1,4,2)
 ```
 ---
 
+picoh.setEyeShape(shapeNameLeft,shapeNameRight)
+------
+
+shapeNameLeft: String - Eyeshape name. 
+shapeNameRight: String - Eyeshape name. 
+
+Use picoh.setEyeShape() to change the shape of pixels displayed on Picoh's matrix display. 
+To see available eye shapes and design your own have a look at the EyeShape designer tool.
+
+For Example:
+```python
+
+picoh.setEyeShape("Happy")
+
+```
+or set pupils to different shapes using:
+```python
+
+picoh.setEyeShape("Sad","Angry")
+picoh.wait(1)
+picoh.setEyeShape("Angry","Sad")
+```
+
+picoh.setEyeBrightness(val)
+------
+
+| Name| Range| Description |
+| --- |------|-------------|
+| val | 0-10 (int or float)  | Desired Brightness| 
+
+Use picoh.setEyeShape() to change the brightness of the pixels on Picoh's matrix display. 
+
+For Example:
+```python
+
+picoh.setEyeBrightness(3)
+picoh.wait(1)
+
+```
+or loop set in a loop:
+```python
+
+for x in range(0,10):
+    picoh.setEyeBrightness(x)
+    picoh.wait(0.2)
+```
+
+
+picoh.getPhrase(set,variable)
+------
+
+set: Int - The desired set for phrase. 
+variable: Int - The desired variable for phrase. 
+
+Use picoh.getPhrase() to retrieve a phrase from Picoh's speech database. 
+
+You can view and edit the speech database using the Speech Databse tool. Each entry in the speech database has a set and a variable associated with it. When you use getPhrase() you can choose to get phrases with specific values for set and/or variable.  
+
+If more than one phrase matches the set and variable provided a random match is returned. 
+
+To see available eye shapes and design your own have a look at the EyeShape designer tool.
+
+For Example:
+```python
+
+picoh.say(picoh.getPhrase(1,2))
+
+```
+or get a random phrase from a specific set:
+```python
+
+picoh.say(picoh.getPhrase(1,""))
+# Picoh will say a random phrase from set 1.
+
+picoh.say(picoh.getPhrase("",2))
+# Picoh will say a random phrase with variable = 2.
+```
+
+or get a random phrase from the whole database:
+```python
+
+picoh.say(picoh.getPhrase())
+
+```
+
+
 picoh.baseColour(r, g, b)
 ----------
 

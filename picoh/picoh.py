@@ -1,4 +1,4 @@
-# This is a script to help control an Picoh Robot. www.ohbot.co.uk
+# This is a script to help control a Picoh Robot. www.ohbot.co.uk
 
 import platform
 import serial
@@ -34,12 +34,6 @@ TOPLIP = 4
 BOTTOMLIP = 5
 EYETILT = 6
 
-EYETILTL = 7
-EYETILTR = 8
-
-EYETURNL = 9
-EYETURNR = 10
-
 # array to hold 
 sensors = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
@@ -54,7 +48,7 @@ global writing, voice, synthesizer, speechRate, connected, shapeList, phraseList
 
 # flag to stop writing when writing for threading
 writing = False
-# global to set the params to speech synthesizer which control the voice
+
 # flag to allow the library to run when not connected
 connected = False
 
