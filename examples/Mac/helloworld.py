@@ -1,53 +1,53 @@
 # import the ohbot module
 
-from ohbotMac import ohbot
+from picoh import picoh
 
-# Reset Ohbot
-ohbot.reset()
+# Reset picoh
+picoh.reset()
 
-# Turn ohbot's head and open eyelids
-ohbot.move(ohbot.HEADTURN,2)
-ohbot.move(ohbot.LIDBLINK,10)
+# Turn picoh's head and open eyelids
+picoh.move(picoh.HEADTURN,2)
+picoh.move(picoh.LIDBLINK,10)
 
 # Wait a few seconds for the motors to move
 
-ohbot.wait(2)
+picoh.wait(2)
 
 # Move head back to the centre at slow speed and say "Hello World"
-ohbot.move(1,5,1)
-ohbot.say("Hello World")
+picoh.move(1,5,1)
+picoh.say("Hello World")
 
 # Slowly increase the brightness of the illuminated eyes.
 
 for x in range(0,10):
 
-    ohbot.eyeColour(x,x,x)
-    ohbot.wait(0.1)
+    picoh.baseColour(x,x,x)
+    picoh.wait(0.1)
 
-    ohbot.eyeColour(0,0,0)
-    ohbot.wait(0.2)
+    picoh.baseColour(0,0,0)
+    picoh.wait(0.2)
 
-ohbot.say("Now I am running in python you know",False)
+picoh.say("Now I am running in python you know",False)
 
 for x in range (0,10):
-    ohbot.move(3,x)
-    ohbot.eyeColour(x,10-x,x)
-    ohbot.wait(0.3)
+    picoh.move(3,x)
+    picoh.baseColour(x,10-x,x)
+    picoh.wait(0.3)
 
-ohbot.say("I can do the robot")
+picoh.say("I can do the robot")
 
 
 for y in range(0,4):
     for x in range(0,10):
-        ohbot.move(y,x)
-        ohbot.eyeColour(y,x,10-x)
-        ohbot.wait(0.2)
+        picoh.move(y,x)
+        picoh.baseColour(y,x,10-x)
+        picoh.wait(0.2)
         
-ohbot.reset()      
-ohbot.say("and ventriloquism",True,False)
-ohbot.eyeColour(0,0,10)
-ohbot.wait(1)
+picoh.reset()
+picoh.say("and ventriloquism",True,False)
+picoh.baseColour(0,0,10)
+picoh.wait(1)
 
-# close ohbot at the end.
+# close picoh at the end.
 
-ohbot.close()
+picoh.close()

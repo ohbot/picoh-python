@@ -3,9 +3,9 @@ from distutils.core import setup
 setup(
     name = 'picoh',
     packages = ['picoh'],
-    package_data={'': ['picohdefinitions.omd','Silence1.wav']},
+    package_data={'': ['picohdefinitions.omd','Silence1.wav','PicohSpeech.csv','ohbot.obe']},
     include_package_data=True,
-    version = '1.0',
+    version = '0.1',
     description = 'Python library for controlling Picoh Robot',
     author = 'ohbot',
     author_email = 'info@ohbot.co.uk',
@@ -14,6 +14,6 @@ setup(
     keywords = ['ohbot', 'robot','picoh'],
     classifiers = [],
     install_requires=[
-          'pyserial','lxml','playsound','pyobjc',
+          'pyserial','lxml','playsound','pyobjc',,
       ],
 )
