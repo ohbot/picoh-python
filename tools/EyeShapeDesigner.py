@@ -16,7 +16,6 @@ from copy import deepcopy
 
 from threading import Timer
 
-
 # Class to hold Eyeshape information. Same fields as Picoh.obe xml file.
 
 class EyeShape(object):
@@ -1252,15 +1251,12 @@ if __name__ == "__main__":
     root.resizable(0, 0)
     onImage = Tk.PhotoImage(file="./Images/onsmaller.gif")
     offImage = Tk.PhotoImage(file="./Images/offsmaller.gif")
-    saveImage = Tk.PhotoImage(file="./Images/savebutton.gif")
-    loadImage = Tk.PhotoImage(file="./Images/loadbutton.gif")
     logo = Tk.PhotoImage(file="./Images/picohlogo.gif")
     logoOn = Tk.PhotoImage(file="./Images/picohlogoOn.gif")
     spacer = Tk.PhotoImage(file="./Images/onsmaller.gif")
     copyDown = Tk.PhotoImage(file="./Images/movedown.gif")
     copyRight = Tk.PhotoImage(file="./Images/moveright.gif")
     picohGraphic = Tk.PhotoImage(file="./Images/picohGraphic.gif")
-    blueButtonGraphic = Tk.PhotoImage(file="./Images/bluebutton.gif")
 
     app = PicohEyeDesigner(root)
     root.mainloop()

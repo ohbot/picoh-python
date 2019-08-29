@@ -6,3 +6,4 @@ tools/.idea/modules.xml
 tools/.idea/tools.iml
 tools/.idea/misc.xml
 tools/.idea/vcs.xml
+*.gz
