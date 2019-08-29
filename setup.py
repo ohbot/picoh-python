@@ -1,17 +1,17 @@
 from distutils.core import setup
 
 setup(
-    name = 'ohbotMac',
-    packages = ['ohbotMac'],
-    package_data={'': ['MotorDefinitionsv21.omd','Silence1.wav']},
+    name = 'picoh',
+    packages = ['picoh'],
+    package_data={'': ['picohdefinitions.omd','Silence1.wav']},
     include_package_data=True,
-    version = '1.15',  
-    description = 'Python library for controlling Ohbot on a Mac',
+    version = '1.0',
+    description = 'Python library for controlling Picoh Robot',
     author = 'ohbot',
     author_email = 'info@ohbot.co.uk',
-    url = 'https://github.com/ohbot/ohbotWin-python',
+    url = 'https://github.com/ohbot/picoh',
     download_url = 'https://github.com/ohbot/ohbotMac-python/archive/1.15.tar.gz',
-    keywords = ['ohbot', 'robot'],
+    keywords = ['ohbot', 'robot','picoh'],
     classifiers = [],
     install_requires=[
           'pyserial','lxml','playsound','pyobjc',
