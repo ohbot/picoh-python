@@ -2,6 +2,8 @@ from distutils.core import setup
 
 import system
 
+versionNo = 0.123
+
 if platform.system() == "Darwin":
 
     setup(
@@ -9,7 +11,7 @@ if platform.system() == "Darwin":
         packages = ['picoh'],
         package_data={'': ['picohdefinitions.omd','Silence1.wav','PicohSpeech.csv','ohbot.obe']},
         include_package_data=True,
-        version = '0.122',
+        version = versionNo,
         description = 'Python library for controlling Picoh Robot',
         author = 'ohbot',
         author_email = 'info@ohbot.co.uk',
@@ -28,7 +30,7 @@ if platform.system() == "Linux":
           packages = ['picoh'],
           package_data={'': ['picohdefinitions.omd','Silence1.wav','PicohSpeech.csv','ohbot.obe']},
           include_package_data=True,
-          version = '0.122',
+          version = versionNo,
           description = 'Python library for controlling Picoh Robot',
           author = 'ohbot',
           author_email = 'info@ohbot.co.uk',
@@ -49,7 +51,7 @@ if platform.system() == "Windows":
           packages = ['picoh'],
           package_data={'': ['picohdefinitions.omd','Silence1.wav','PicohSpeech.csv','ohbot.obe']},
           include_package_data=True,
-          version = '0.122',
+          version = versionNo,
           description = 'Python library for controlling Picoh Robot',
           author = 'ohbot',
           author_email = 'info@ohbot.co.uk',
