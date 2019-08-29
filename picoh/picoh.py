@@ -548,7 +548,7 @@ def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
     text = text.replace("Picoh", "peek oh")
 
     if platform.system() == "Linux":
-        sayLinux(text,untilDone,lipSync,hdmiAudio,soundDelay)
+        _sayLinux(text,untilDone,lipSync,hdmiAudio,soundDelay)
         return
 
     if hdmiAudio:
@@ -651,7 +651,7 @@ def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
             continue
 
 
-def sayLinux(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
+def _sayLinux(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
 
     dir = os.path.dirname(os.path.abspath(__file__))
     file = os.path.join(dir, 'picohspeech.wav')
@@ -663,14 +663,19 @@ def sayLinux(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
 
         safetext = re.sub(r'[^ .a-zA-Z0-9?\']+', '', text)
 
+        bashcommand = "festival -b '(set! mytext (Utterance Text " + '"' + safetext + '"))' + "' '(utt.synth mytext)' '(utt.save.wave mytext " + '"ohbotspeech.wav")' + "' '(utt.save.segs mytext " + '"phonemes"' + ")'"
+        print(bashcommand)
         # Create a bash command with the desired text. The command writes two files, a .wav with the speech audio and a .txt file containing the phonemes and the times.
-        bashcommand = "festival -b '(set! mytext (Utterance Text " + '"' + safetext + '"))' + "' '(utt.synth mytext)' '(utt.save.wave mytext " + '"'+file+'")' + "' '(utt.save.segs mytext " + '"phonemes"' + ")'"
+       # bashcommand = "festival -b '(set! mytext (Utterance Text " + '"' + safetext + '"))' + "' '(utt.synth mytext)' '(utt.save.wave mytext " + '"'+file+'")' + "' '(utt.save.segs mytext " + '"phonemes"' + ")'"
+
 
         # Execute bash command.
         subprocess.call(bashcommand, shell=True)
 
         # Open the text file containing the phonemes
-        f = open("phonemes", 'r')
+
+        phonemeFile = os.path.join(dir, 'phonemes.txt')
+        f = open(phonemeFile, 'r')
 
         # Empty the lists that contain phoneme data and reset count
         phonemes = []
@@ -724,7 +729,7 @@ def sayLinux(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
             soundDelay = soundDelay - 1
 
         # Create a bash command with the desired text. espeak.exe or another synthesizer must be in the current folder.  the -w parameter forces the speech to a file
-        speak(text)
+        _speak(text)
 
         # open the file to calculate visemes. Festival on RPi has this built in but for espeak need to do it manually
         waveFile = wave.open(file, 'r')
@@ -838,7 +843,7 @@ def _saySpeech(addSilence):
 
     if platform.system() == "Linux":
         if addSilence:
-            commandString = 'aplay ' + silenceFile + '\naplay '+ speechFile
+            commandString = 'aplay ' + silenceFile + '\naplay '+ "picohSpeech.wav"
             os.system(commandString)
         else:
             os.system('aplay ' + speechFile)

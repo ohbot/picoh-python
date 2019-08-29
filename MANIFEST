@@ -5,6 +5,7 @@ picoh/PicohSpeech.csv
 picoh/Silence1.wav
 picoh/__init__.py
 picoh/ohbot.obe
+picoh/phonemes.txt
 picoh/picoh.py
 picoh/picohdefinitions.omd
 picoh/picohspeech.wav
