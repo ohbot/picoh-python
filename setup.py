@@ -9,14 +9,14 @@ if platform.system() == "Windows":
     includes =['pyserial','lxml','playsound','comtypes',]
 
 if platform.system() == "Linux":
-    includes =['pyserial','playsound','lxml==4.0.0']
+    includes =['pyserial','playsound']
 
 setup(
     name = 'picoh',
     packages = ['picoh'],
-    package_data={'': ['picohdefinitions.omd','Silence1.wav','PicohSpeech.csv','ohbot.obe']},
+    package_data={'': ['picohdefinitions.omd','Silence1.wav','picohspeech.wav','PicohSpeech.csv','ohbot.obe']},
     include_package_data=True,
-    version = '0.125',
+    version = '0.137',
     description = 'Python library for controlling Picoh Robot',
     author = 'ohbot',
     author_email = 'info@ohbot.co.uk',

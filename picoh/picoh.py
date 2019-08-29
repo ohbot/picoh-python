@@ -76,6 +76,7 @@ if platform.system() == "Darwin":
     synthesizer = "say -o "
 if platform.system() == "Linux":
     synthesizer = "festival"
+print(synthesizer)
 
 # Variable to hold name of speech database and eyeshape files.
 speechDatabaseFile = 'PicohSpeech.csv'
@@ -207,7 +208,7 @@ def _speak(text):
     dir = os.path.dirname(os.path.abspath(__file__))
 
     file = os.path.join(dir, speechAudioFile)
-    if platform.system() == "Windows" or platform.system() == "Linux":
+    if platform.system() == "Windows":
         if ("sapi" in synthesizer.lower()):
             from comtypes.gen import SpeechLib
             global sapivoice, sapistream
@@ -267,6 +268,16 @@ def _speak(text):
         retval = ret.wait()
         # print(retval)
 
+    if platform.system()== "Linux":
+        dir = os.path.dirname(os.path.abspath(__file__))
+
+        file = os.path.join(dir, speechAudioFile)
+
+        # Remove any characters that are unsafe for a subprocess call
+        safetext = re.sub(r'[^ .a-zA-Z0-9?\']+', '', text)
+        bashcommand = synthesizer + ' -w '+file + ' ' + voice + ' "' + safetext + '"'
+        # Execute bash command.
+        subprocess.call(bashcommand,shell=True)
 
 def init(portName):
     # pickup global instances of port, ser and sapi variables   
@@ -533,11 +544,17 @@ def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
         move(BOTTOMLIP, 4)
         wait(0.25)
 
+    text = text.replace("picoh", "peek oh")
+    text = text.replace("Picoh", "peek oh")
+
+    if platform.system() == "Linux":
+        sayLinux(text,untilDone,lipSync,hdmiAudio,soundDelay)
+        return
+
     if hdmiAudio:
         soundDelay = soundDelay - 1
 
-    text = text.replace("picoh", "peek oh")
-    text = text.replace("Picoh", "peek oh")
+
 
     # Create a bash command with the desired text. espeak.exe or another synthesizer must be in the current folder.  the -w parameter forces the speech to a file
     _speak(text)
@@ -634,6 +651,164 @@ def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
             continue
 
 
+def sayLinux(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
+
+    dir = os.path.dirname(os.path.abspath(__file__))
+    file = os.path.join(dir, 'picohspeech.wav')
+
+    if ("festival" in synthesizer.lower()):
+
+        if hdmiAudio:
+            soundDelay = soundDelay - 1
+
+        safetext = re.sub(r'[^ .a-zA-Z0-9?\']+', '', text)
+
+        # Create a bash command with the desired text. The command writes two files, a .wav with the speech audio and a .txt file containing the phonemes and the times.
+        bashcommand = "festival -b '(set! mytext (Utterance Text " + '"' + safetext + '"))' + "' '(utt.synth mytext)' '(utt.save.wave mytext " + '"'+file+'")' + "' '(utt.save.segs mytext " + '"phonemes"' + ")'"
+
+        # Execute bash command.
+        subprocess.call(bashcommand, shell=True)
+
+        # Open the text file containing the phonemes
+        f = open("phonemes", 'r')
+
+        # Empty the lists that contain phoneme data and reset count
+        phonemes = []
+        times = []
+        vals = []
+
+        # Read a line to move past the first line
+        line = f.readline()
+
+        # While there are more lines to read.
+        while line:
+
+            # Read the line
+            line = f.readline()
+
+            # Split the line into values
+            vals = line.split()
+
+            # If values exist add the phoneme to the phonemes list and the timecode to the times list.
+            if vals:
+                phonemes.append(vals[2])
+                times.append(float(vals[0]))
+
+        if lipSync:
+            if soundDelay > 0:
+                # Set up a thread for the speech sound synthesis, delay start by soundDelay
+                t = threading.Timer(soundDelay, _saySpeech, args=(hdmiAudio,), kwargs=None)
+                # Set up a thread for the speech movement
+                t2 = threading.Thread(target=_moveSpeechFest, args=(phonemes, times))
+            else:
+                # Set up a thread for the speech sound synthesis
+                t = threading.Thread(target=_saySpeech, args=(hdmiAudio,))
+                # Set up a thread for the speech movement, delay start by - soundDelay
+                t2 = threading.Timer(-soundDelay, _moveSpeechFest, args=(phonemes, times), kwargs=None)
+            t2.start()
+        else:
+            # Set up a thread for the speech sound synthesis
+            t = threading.Thread(target=_saySpeech, args=(hdmiAudio,))
+        t.start()
+
+        # if untilDone, keep running until speech has finished
+        if untilDone:
+            totalTime = times[len(times) - 1]
+            startTime = time.time()
+            while time.time() - startTime < totalTime:
+                continue
+
+    if ("espeak" in synthesizer.lower() or "pico2wave" in synthesizer.lower()):
+
+        if hdmiAudio:
+            soundDelay = soundDelay - 1
+
+        # Create a bash command with the desired text. espeak.exe or another synthesizer must be in the current folder.  the -w parameter forces the speech to a file
+        speak(text)
+
+        # open the file to calculate visemes. Festival on RPi has this built in but for espeak need to do it manually
+        waveFile = wave.open(file, 'r')
+
+        length = waveFile.getnframes()
+        framerate = waveFile.getframerate()
+        channels = waveFile.getnchannels()
+        bytespersample = waveFile.getsampwidth()
+
+        # How many samples per second for mouth position
+        VISEMESPERSEC = 20
+
+        # How many samples in 1/20th second
+        # print ('framerate:', framerate, ' channels:', channels, ' length:', length, ' bytespersample:', bytespersample)
+
+        chunk = int(waveFile.getframerate() / VISEMESPERSEC)
+        # print ('chunk:', chunk)
+
+        # Empty the lists that contain phoneme data and reset count
+        phonemes = []
+        times = []
+
+        ms = 0
+
+        for i in range(0, length - chunk, chunk):
+            vol = 0
+            buffer = waveFile.readframes(chunk)
+            # frame is 1 sample for mono or 2 for stereo
+            bytesread = chunk * channels * bytespersample
+            # print ('bytesread:', bytesread)
+            index = 0;
+            for sample in range(0, int(bytesread / (channels * bytespersample))):
+                vol += buffer[index]
+                vol += buffer[index + 1] * 256
+                index += bytespersample
+                if channels > 1:
+                    vol += buffer[index]
+                    vol += buffer[index + 1] * 256
+                    index += bytespersample
+
+            # print ('viseme', i, ":", ms, ':', vol)
+            ms += (1000 / VISEMESPERSEC);
+
+            phonemes.append(float(vol))
+            times.append(float(ms) / 1000)
+
+        # Back to the beginning for next use
+        waveFile.rewind()
+
+        # Normalise the volume
+        max = 0
+        for i in range(0, len(phonemes) - 1):
+            if (phonemes[i] > max):
+                max = phonemes[i]
+
+        for i in range(0, len(phonemes) - 1):
+            phonemes[i] = phonemes[i] * 10 / max
+            # print ('visnorm', i, ":", times[i], ':', phonemes[i])
+
+        if lipSync:
+            if soundDelay > 0:
+                # Set up a thread for the speech sound synthesis, delay start by soundDelay
+                t = threading.Timer(soundDelay, saySpeech, args=(hdmiAudio,), kwargs=None)
+                # Set up a thread for the speech movement
+                t2 = threading.Thread(target=_moveSpeech, args=(phonemes, times))
+            else:
+                # Set up a thread for the speech sound synthesis
+                t = threading.Thread(target=saySpeech, args=(hdmiAudio,))
+                # Set up a thread for the speech movement, delay start by - soundDelay
+                t2 = threading.Timer(-soundDelay, _moveSpeech, args=(phonemes, times), kwargs=None)
+            t2.start()
+        else:
+            # Set up a thread for the speech sound synthesis
+            t = threading.Thread(target=saySpeech, args=(hdmiAudio,))
+        t.start()
+
+        # if untilDone, keep running until speech has finished
+        if untilDone:
+            totalTime = times[len(times) - 1]
+            startTime = time.time()
+            while time.time() - startTime < totalTime:
+                continue
+
+
 # Function to limit values so they are between 0 - 10
 def _limit(val):
     if val > 10:
@@ -687,6 +862,117 @@ def _moveSpeech(phonemes, times):
                 currentX = x
     move(TOPLIP, 5)
     move(BOTTOMLIP, 5)
+
+def _moveSpeechFest(phonemes, times):
+    startTime = time.time()
+    timeNow = 0
+    totalTime = times[len(times)-1]
+    currentX = -1
+    while timeNow < totalTime:
+        timeNow = time.time() - startTime
+        for x in range (0,len(times)):
+            if timeNow > times[x] and x > currentX:
+                posTop = _phonememapTopFest(phonemes[x])
+                posBottom = _phonememapBottomFest(phonemes[x])
+                move(TOPLIP,posTop,10)
+                move(BOTTOMLIP,posBottom,10)
+                currentX = x
+    move(TOPLIP,5)
+    move(BOTTOMLIP,5)
+
+
+# Function mapping phonemes to top lip positions. Argument | val → phoneme | returns a position as int
+def _phonememapTopFest(val):
+    return {
+        'p': 5,
+        'b': 5,
+        'm': 5,
+        'ae': 7,
+        'ax': 7,
+        'ah': 7,
+        'aw': 10,
+        'aa': 10,
+        'ao': 10,
+        'ow': 10,
+        'ey': 7,
+        'eh': 7,
+        'uh': 7,
+        'ay': 7,
+        'h': 7,
+        'er': 8,
+        'r': 8,
+        'l': 8,
+        'y': 6,
+        'iy': 6,
+        'ih': 6,
+        'ix': 6,
+        'w': 6,
+        'uw': 6,
+        'oy': 6,
+        's': 5,
+        'z': 5,
+        'sh': 5,
+        'ch': 5,
+        'jh': 5,
+        'zh': 5,
+        'th': 5,
+        'dh': 5,
+        'd': 5,
+        't': 5,
+        'n': 5,
+        'k': 5,
+        'g': 5,
+        'ng': 5,
+        'f': 6,
+        'v': 6
+    }.get(val, 5)
+
+
+# Function mapping phonemes to lip positions. Argument | val → phoneme | returns a position as int
+def _phonememapBottomFest(val):
+    return {
+        'p': 5,
+        'b': 5,
+        'm': 5,
+        'ae': 8,
+        'ax': 8,
+        'ah': 8,
+        'aw': 5,
+        'aa': 10,
+        'ao': 10,
+        'ow': 10,
+        'ey': 7,
+        'eh': 7,
+        'uh': 7,
+        'ay': 7,
+        'h': 7,
+        'er': 8,
+        'r': 8,
+        'l': 8,
+        'y': 6,
+        'iy': 6,
+        'ih': 6,
+        'ix': 6,
+        'w': 6,
+        'uw': 6,
+        'oy': 6,
+        's': 6,
+        'z': 6,
+        'sh': 6,
+        'ch': 6,
+        'jh': 6,
+        'zh': 6,
+        'th': 6,
+        'dh': 6,
+        'd': 6,
+        't': 6,
+        'n': 6,
+        'k': 6,
+        'g': 6,
+        'ng': 6,
+        'f': 5,
+        'v': 5
+    }.get(val, 5)
 
 
 # Function mapping phonemes to top lip positions.
