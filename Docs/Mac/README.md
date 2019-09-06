@@ -50,8 +50,11 @@ Picoh library files (these will be installed with the `sudo pip3 install picoh` 
 | ---------- |------------|
 | picoh.py   | Picoh package |
 | picohdefinitions.omd    | Motor settings file |
+| PicohSpeech.csv | Speech Database File |
+| Ohbot.obe | EyeShape Files|
 
-_Note: The text to speech module will generate an audio file, ‘picohspeech.wav’ and a text file ‘phonemes.txt’ inside your working folder._
+
+_Note: The text to speech module will generate an audio file, ‘picohspeech.wav’ inside /picohData in your working folder._
 
 
 Hardware
@@ -60,12 +63,11 @@ Hardware
 Required:
 
 
-* Mac running OSX
+* Mac running macOS
 * Picoh
 * USB Cable
 
 Setup:
-
 
 Connect Picoh to your mac using the USB cable. 
 
@@ -78,10 +80,10 @@ Open <b>IDLE</b> from <b>Applications</b>.
 
 Select <b>New</b> from the <b>File menu.</b>
 
-Go to the [hellworldohbot](https://github.com/ohbot/ohbotMac-python/blob/master/examples/helloworldohbot.py) example on Github, copy the code and paste it into the new Python window.
+Go to the [helloworldpicoh](https://github.com/ohbot/picoh-python/blob/master/examples/Mac/helloworldpicoh.py) example, copy the code and paste it into the new Python window.
 
 Select <b>Run Module</b> from the <b>Run</b> menu.
 
-Ohbot should speak and move.
+Picoh should speak and move.
 
-More example programs can be found [here.](https://github.com/ohbot/ohbotMac-python/tree/master/examples)
+More example programs can be found [here.](https://github.com/ohbot/picoh-python/tree/master/examples/Mac)

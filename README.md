@@ -2,42 +2,6 @@
 
 <a href=".images/PicohLogoPixels.png" target="_blank"><img src=".images/PicohLogoPixels.png" border="0" width = "30%"/></a>
 
-Hardware
------
-
-Required:
-
-***TODO**
-
-* Mac running OSX
-* Picoh
-* USB Y Cable
-* A 5 volt 1 amp USB power supply (for Picoh)
-* Speakers/headphones.
-
-
-Setup:
-
-
-Plug the middle of USB Y cable into the computer and the other large USB plug into the power adaptor. Then plug the micro USB into Picoh. (Note with newer devices the power adaptor may not be required.)
-
----
-
-Starting Python Programs
---------
-
-Open <b>IDLE</b> from <b>Applications</b>.
-
-Select <b>New</b> from the <b>File menu.</b>
-**TODO**
-Go to the [hellworldohbot](https://github.com/ohbot/ohbotMac-python/blob/master/examples/helloworldohbot.py) example on Github, copy the code and paste it into the new Python window.
-
-Select <b>Run Module</b> from the <b>Run</b> menu.
-
-Picoh should speak and move.
-
-More example programs can be found [here.](https://github.com/ohbot/ohbotMac-python/tree/master/examples)
-
 
 Functions
 -------
@@ -152,8 +116,11 @@ or set pupils to different shapes using:
 
 picoh.setEyeShape("Sad","Angry")
 picoh.wait(1)
-picoh.setEyeShape("Angry","Sad")
+picoh.setEyeShape("Large","Heart")
 ```
+
+Default options for eye shapes: "Angry", "Crying", "Eyeball", "Glasses", "Heart", "Large", "Sad", "SmallBall", "Square","Sungalsses", "VerySad"
+
 
 picoh.setEyeBrightness(val)
 ------
