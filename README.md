@@ -7,6 +7,8 @@ Setup
 |Platform|Setup Guide|Example Programs|
 |-------|-------|---------|
 |macOs|[Setup](https://github.com/ohbot/picoh-python/blob/master/Docs/Setup_Mac.md)|[Examples](https://github.com/ohbot/picoh-python/tree/master/examples/Mac)|
+|Windows|[Setup](https://github.com/ohbot/picoh-python/blob/master/Docs/Setup_Windows.md)|[Examples](https://github.com/ohbot/picoh-python/tree/master/examples/Windows)|
+|Pi|[Setup](https://github.com/ohbot/picoh-python/blob/master/Docs/Setup_Pi.md)|[Examples](https://github.com/ohbot/picoh-python/tree/master/examples/Pi)|
 
 
 Functions
