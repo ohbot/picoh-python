@@ -86,8 +86,8 @@ Picoh library files (these will be installed with the `pip install picoh` comman
 
 | File    | Use         |
 | ---------- |------------|
-| ohbot.py   | Ohbot package |
-| MotorDefinionsv21.omd    | Motor settings file |
+| picoh.py   | picoh package |
+| picohDefinitions.omd    | Motor settings file |
 | PicohSpeech.csv | Speech Database File |
 | Ohbot.obe | EyeShape Files|
 
