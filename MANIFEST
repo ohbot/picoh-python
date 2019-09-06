@@ -4,3 +4,4 @@ setup.py
 picoh/Silence1.wav
 picoh/__init__.py
 picoh/picoh.py
+picoh/picohdefinitions.omd

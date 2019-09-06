@@ -829,7 +829,7 @@ def _saySpeech(addSilence):
     #speechFile = os.path.join(dir, 'picohspeech.wav')
     silenceFile = os.path.join(dir, 'Silence1.wav')
 
-    speechFile = os.path.join(dir, 'picohspeech.wav')
+    speechFile = 'picohspeech.wav'
     if platform.system() == "Windows":
 
         if addSilence:
