@@ -1,4 +1,4 @@
-# import the ohbot module
+# import the picoh module
 
 from picoh import picoh
 
