@@ -8,7 +8,7 @@ from picoh import picoh
 
 global phraseList, rowList, numberOfRows
 
-speechFile = 'PicohSpeech.csv'
+speechFile = '../PicohSpeech.csv'
 #directory = picoh.dir
 
 numberOfRows = 0
@@ -134,8 +134,7 @@ def on_closing():
         callback()
         root.destroy()
 
-
-with open(file, 'w+')as f:
+with open(file, 'r')as f:
 
     data = csv.reader(f)
 
