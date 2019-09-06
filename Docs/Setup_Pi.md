@@ -7,7 +7,7 @@ More information about Picoh can be found on [ohbot.co.uk](http://www.ohbot.co.u
 Dependencies
 ----------
 
-If you don't have pip3 (the python 3 package manager) installed, open terminal and execute the following:
+If you don't have python or pip3 (the python 3 package manager) installed, open terminal and execute the following:
 
 ```
 sudo apt-get install python3
