@@ -4,7 +4,7 @@
 Background
 -----
 
-These instructions allow you to program your Picoh using Python on a Mac.
+These instructions allow you to program your Picoh using Python on a Raspberry Pi.
 
 More information about Picoh can be found on [ohbot.co.uk.](http://www.ohbot.co.uk)
 
