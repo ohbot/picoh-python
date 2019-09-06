@@ -4,7 +4,7 @@
 
 |||||
 |-------|-------|---------|-------|
-|macOs|[Setup](https://github.com/ohbot/picoh-python/blob/master/Docs/Setup_Mac.md)|[Examples](https://github.com/ohbot/picoh-python/tree/master/examples/Mac)|[Voice Documentation](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Mac.md)|
+|macOS|[Setup](https://github.com/ohbot/picoh-python/blob/master/Docs/Setup_Mac.md)|[Examples](https://github.com/ohbot/picoh-python/tree/master/examples/Mac)|[Voice Documentation](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Mac.md)|
 |Windows|[Setup](https://github.com/ohbot/picoh-python/blob/master/Docs/Setup_Windows.md)|[Examples](https://github.com/ohbot/picoh-python/tree/master/examples/Windows)|[Voice Documentation](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Windows.md)|
 |Pi|[Setup](https://github.com/ohbot/picoh-python/blob/master/Docs/Setup_Pi.md)|[Examples](https://github.com/ohbot/picoh-python/tree/master/examples/Pi)|[Voice Documentation](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Pi.md)|
 
