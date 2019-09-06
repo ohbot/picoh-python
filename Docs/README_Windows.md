@@ -130,4 +130,4 @@ Select <b>Run Module</b> from the <b>Run</b> menu.
 
 Picoh should speak and move.
 
-More example programs can be found [here.](https://github.com/ohbot/ohbotWin-python/tree/master/examples)
+More example programs can be found [here.](https://github.com/ohbot/picoh-python/tree/master/examples/Windows)
