@@ -5,11 +5,9 @@
 Setup
 -------
 
- [macOS](https://github.com/ohbot/picoh-python/blob/master/Docs/Setup_Mac.md)
- 
- [Windows](https://github.com/ohbot/picoh-python/blob/master/Docs/Setup_Windows.md)
- 
- [Pi](https://github.com/ohbot/picoh-python/blob/master/Docs/Setup_Pi.md)
+|[macOS](https://github.com/ohbot/picoh-python/blob/master/Docs/Setup_Mac.md)|
+ |[Windows](https://github.com/ohbot/picoh-python/blob/master/Docs/Setup_Windows.md)|
+ |[Pi](https://github.com/ohbot/picoh-python/blob/master/Docs/Setup_Pi.md)|
 
 Functions
 -------
