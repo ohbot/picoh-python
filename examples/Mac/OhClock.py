@@ -1,4 +1,4 @@
-#OhClock - a sample program for using ohbot python library.  More information at ohbot.co.uk
+#OhClock - a sample program for using picoh python library.  More information at ohbot.co.uk
 
 from picoh import picoh
 import threading

@@ -1,4 +1,4 @@
-# Test of different voices for Ohbot using Windows Python library
+# Test of different voices for picoh using Windows Python library
 # SAPI (Default)
 # -a0 to -a100 for amplitude
 # -r-10 to r10 for rate
@@ -18,89 +18,89 @@
 # ESPEAK-NG
 # supports some of the ESPEAK but some is missing
 
-# import the ohbot module
-from ohbotWin import ohbot
+# import the picoh module
+from picoh import picoh
 
-# Reset Ohbot
-ohbot.reset()
+# Reset picoh
+picoh.reset()
 
 # Default synthesizer SAPI.  Default Voice as set in Control Panel
-ohbot.say("I.  I just took a ride")
+picoh.say("I.  I just took a ride")
 # Quieter
-ohbot.setVoice("-a82")
-ohbot.say("In a silver machine.")
+picoh.setVoice("-a82")
+picoh.say("In a silver machine.")
 # Faster
-ohbot.setVoice("-r4")
-ohbot.say("And I'm still feeling mean.")
+picoh.setVoice("-r4")
+picoh.say("And I'm still feeling mean.")
 # Slower
-ohbot.setVoice("-r-4")
-ohbot.say("Do you wanna ride? See yourself going by.")
+picoh.setVoice("-r-4")
+picoh.say("Do you wanna ride? See yourself going by.")
 # American
-ohbot.setVoice("-vzira")
-ohbot.say("The other side of the sky.")
+picoh.setVoice("-vzira")
+picoh.say("The other side of the sky.")
 # Default voice
-ohbot.setVoice("")
-ohbot.say("I got a silver machine.")
+picoh.setVoice("")
+picoh.say("I got a silver machine.")
 
 # Switch to espeak-ng - some of the voice attributes aren't supported
-ohbot.setSynthesizer("espeak-ng")
+picoh.setSynthesizer("espeak-ng")
 
 # Female Portugese loud
-ohbot.setVoice("-vpt+m1 -a200")
-ohbot.say("I got a silver machine.")
-ohbot.wait(1)
+picoh.setVoice("-vpt+m1 -a200")
+picoh.say("I got a silver machine.")
+picoh.wait(1)
 # Male US
-ohbot.setVoice("-ven-us+m2")
-ohbot.say("I got a silver machine.")
-ohbot.wait(1)
+picoh.setVoice("-ven-us+m2")
+picoh.say("I got a silver machine.")
+picoh.wait(1)
 # Female Spanish high pitch
-ohbot.setVoice("-ves-la+f3 -p90")
-ohbot.say("I got a silver machine.")
-ohbot.wait(1)
+picoh.setVoice("-ves-la+f3 -p90")
+picoh.say("I got a silver machine.")
+picoh.wait(1)
 # Male Chinese speed fast
-ohbot.setVoice("-vzh+m2 -s260")
-ohbot.say("I got a silver machine.")
-ohbot.wait(1)
+picoh.setVoice("-vzh+m2 -s260")
+picoh.say("I got a silver machine.")
+picoh.wait(1)
 
 # Switch to espeak
-ohbot.setSynthesizer("espeak")
+picoh.setSynthesizer("espeak")
 
 # Default voice
-ohbot.setVoice("")
-ohbot.say("I.  I just took a ride")
+picoh.setVoice("")
+picoh.say("I.  I just took a ride")
 # Female French
-ohbot.setVoice("-vfr+f4")
-ohbot.say("In a silver machine.")
+picoh.setVoice("-vfr+f4")
+picoh.say("In a silver machine.")
 # Male English
-ohbot.setVoice("-ven+m7")
-ohbot.say("And I'm still feeling mean.")
+picoh.setVoice("-ven+m7")
+picoh.say("And I'm still feeling mean.")
 # Female German
-ohbot.setVoice("-vde+f1")
-ohbot.say("Do you wanna ride? See yourself going by.")
+picoh.setVoice("-vde+f1")
+picoh.say("Do you wanna ride? See yourself going by.")
 # Croak English
-ohbot.setVoice("-ven+croak")
-ohbot.say("The other side of the sky.")
+picoh.setVoice("-ven+croak")
+picoh.say("The other side of the sky.")
 # Whisper English
-ohbot.setVoice("-ven+whisper")
-ohbot.say("I got a silver machine.")
+picoh.setVoice("-ven+whisper")
+picoh.say("I got a silver machine.")
 
-ohbot.wait(2)
+picoh.wait(2)
 
 # Female Portugese loud
-ohbot.setVoice("-vpt+m1 -a200")
-ohbot.say("I got a silver machine.")
-ohbot.wait(1)
+picoh.setVoice("-vpt+m1 -a200")
+picoh.say("I got a silver machine.")
+picoh.wait(1)
 # Male US
-ohbot.setVoice("-ven-us+m2")
-ohbot.say("I got a silver machine.")
-ohbot.wait(1)
+picoh.setVoice("-ven-us+m2")
+picoh.say("I got a silver machine.")
+picoh.wait(1)
 # Female Spanish high pitch
-ohbot.setVoice("-ves-la+f3 -p90")
-ohbot.say("I got a silver machine.")
-ohbot.wait(1)
+picoh.setVoice("-ves-la+f3 -p90")
+picoh.say("I got a silver machine.")
+picoh.wait(1)
 # Male Chinese speed fast
-ohbot.setVoice("-vzh+m2 -s260")
-ohbot.say("I got a silver machine.")
-ohbot.wait(1)
+picoh.setVoice("-vzh+m2 -s260")
+picoh.say("I got a silver machine.")
+picoh.wait(1)
 
-ohbot.close()
+picoh.close()

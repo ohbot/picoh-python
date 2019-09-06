@@ -1,7 +1,7 @@
-##Example of ohbot intergrated with wolfram alpha and wikipedia web service
+##Example of picoh intergrated with wolfram alpha and wikipedia web service
 
 import wolframalpha
-from ohbotWin import ohbot
+from picoh import picoh
 from random import *
 import threading
 
@@ -15,87 +15,87 @@ wolfclient = wolframalpha.Client('??????-??????????')
 
 connectingPhrases = ['Let me think', 'Just a second', 'give me a moment', 'thats an easy one','thats tricky','i know this one','let me get you an answer']
 
-ohbot.reset()
+picoh.reset()
 
 def handleInput():
     while True:
 
         text = input("Question:\n")
-        ohbot.say(text)
-        ohbot.eyeColour(10,5,0,True)
+        picoh.say(text)
+        picoh.baseColour(10,5,0)
         randIndex = randrange(0,len(connectingPhrases))
         
         choice = connectingPhrases[randIndex]
-        ohbot.move(ohbot.HEADTURN,5)
-        ohbot.move(ohbot.EYETILT,7)
-        ohbot.move(ohbot.HEADNOD,9)
-        ohbot.say(choice)
+        picoh.move(picoh.HEADTURN,5)
+        picoh.move(picoh.EYETILT,7)
+        picoh.move(picoh.HEADNOD,9)
+        picoh.say(choice)
 
         
         try:
             res = wolfclient.query(text)
             ans = next(res.results).text
             ans = ans.replace("|",".")
-            ohbot.say(ans)
-            ohbot.eyeColour(0,10,0,True)
+            picoh.say(ans)
+            picoh.baseColour(0,10,0)
 
         except:
 
             print('Answer not available')
-            ohbot.say("Answer not available")
-            ohbot.eyeColour(10,0,0,True)                
+            picoh.say("Answer not available")
+            picoh.baseColour(10,0,0)
                 
-        ohbot.move(ohbot.HEADTURN,5)
+        picoh.move(picoh.HEADTURN,5)
 
 def handleInputWiki():
     while True:
 
         text = input("Define:\n")
-        ohbot.say(text)
-        ohbot.eyeColour(10,5,0,True)
+        picoh.say(text)
+        picoh.baseColour(10,5,0)
         randIndex = randrange(0,len(connectingPhrases))
         
         choice = connectingPhrases[randIndex]
-        ohbot.move(ohbot.HEADTURN,5)
-        ohbot.move(ohbot.EYETILT,7)
-        ohbot.move(ohbot.HEADNOD,9)
-        ohbot.say(choice)
+        picoh.move(picoh.HEADTURN,5)
+        picoh.move(picoh.EYETILT,7)
+        picoh.move(picoh.HEADNOD,9)
+        picoh.say(choice)
         
 
   
         
         try:
             res = wikipedia.summary(text)
-            ohbot.say(res)
-            ohbot.eyeColour(0,10,0,True)
+            picoh.say(res)
+            picoh.baseColour(0,10,0)
 
         except:
 
             print('Answer not available')
-            ohbot.say("Answer not available")
-            ohbot.eyeColour(10,0,0,True)
-            ohbot.move(ohbot.HEADTURN,5)
+            picoh.say("Answer not available")
+            picoh.baseColour(10,0,0)
+            picoh.move(picoh.HEADTURN,5)
         
 
 def moveLoop():
 
     while True:
         
-        ohbot.move(randint(0,2),randint(0,9))
+        picoh.move(randint(0,2),randint(0,9))
 
-        ohbot.wait(randint(0,3))
+        picoh.wait(randint(0,3))
 
 def blinking():
 
     while True:
 
-        ohbot.move(ohbot.LIDBLINK,0,10)
+        picoh.move(picoh.LIDBLINK,0,10)
 
-        ohbot.wait(random()/3)
+        picoh.wait(random()/3)
 
-        ohbot.move(ohbot.LIDBLINK,10,10)
+        picoh.move(picoh.LIDBLINK,10,10)
 
-        ohbot.wait(randint(0,6))
+        picoh.wait(randint(0,6))
 
 
 t = threading.Thread(target=moveLoop, args=())
@@ -112,4 +112,4 @@ t.start()
 t2.start()
 t3.start()
 
-ohbot.say("Hello ohbot here, please type in a question")
+picoh.say("Hello picoh here, please type in a question")

@@ -1,15 +1,15 @@
 # Install pico2wave using sudo apt-get install libttspico-utils
-# Ensure you are running the latest version of the library by running sudo pip3 install ohbot --upgrade
+# Ensure you are running the latest version of the library by running sudo pip3 install picoh --upgrade
 
-from ohbot import ohbot
+from picoh import picoh
 
-ohbot.reset()
+picoh.reset()
 
-ohbot.setSynthesizer("pico2wave")
+picoh.setSynthesizer("pico2wave")
 
-ohbot.say("now I can speak using pico2wave text to speech as well")
+picoh.say("now I can speak using pico2wave text to speech as well")
 
-ohbot.wait(1)
+picoh.wait(1)
 
-ohbot.close()
+picoh.close()
 

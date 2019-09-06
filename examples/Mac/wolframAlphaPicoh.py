@@ -1,7 +1,7 @@
 ##Example of picoh intergrated with wolfram alpha and wikipedia web service
 
 import wolframalpha
-from picohMac import picoh
+from picoh import picoh
 from random import *
 import threading
 
