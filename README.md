@@ -260,7 +260,9 @@ picoh.move(picoh.HEADTURN, reading)
 
 ```
 
-Platform specific documentation for setting voices and languages: [macOS](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Mac.md).
+Platform specific documentation for setting voices and languages.
+
+[macOS](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Mac.md).
 
 [Windows](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Windows.md).
 
