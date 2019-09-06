@@ -6,6 +6,9 @@ import serial.tools.list_ports
 import time
 import threading
 import os
+import os.path
+from os import path
+import shutil
 import sys
 import wave
 import subprocess
@@ -13,8 +16,6 @@ from lxml import etree
 import random
 import re
 import csv
-
-print(platform.system())
 
 if platform.system() == "Windows":
     import winsound
@@ -76,17 +77,25 @@ if platform.system() == "Darwin":
     synthesizer = "say -o "
 if platform.system() == "Linux":
     synthesizer = "festival"
-print("Speech Synthesizer: "synthesizer)
+print("Speech Synthesizer: " + synthesizer)
 
+dirName = 'picohData'
+
+try:
+    # Create target Directory
+    os.mkdir(dirName)
+except FileExistsError:
+    pass
 
 # Variable to hold the location of the picoh library folder.
 dir = os.path.dirname(os.path.abspath(__file__))
 
 if not path.exists('picohData/PicohSpeech.csv'):
-    if platform.system() == "Windows":
-        os.popen('copy ' + os.path.join(dir, 'PicohSpeech.csv') +' picohData/PicohSpeech.csv')
-    if platform.system() == "Darwin" or platform.system() == "Linux":
-        os.popen('cp ' + os.path.join(dir, 'PicohSpeech.csv') +' picohData/PicohSpeech.csv')
+    shutil.copyfile(os.path.join(dir, 'PicohSpeech.csv'),'picohData/PicohSpeech.csv')
+
+if not path.exists('picohData/ohbot.obe'):
+    shutil.copyfile(os.path.join(dir, 'ohbot.obe'),'picohData/ohbot.obe')
+
 
 # Variables to hold name of speech database and eyeshape files.
 
@@ -156,16 +165,11 @@ def _loadEyeShapes():
 
             index = index + 1
 
-
 # Read speech database file into phraseList.
 def _loadSpeechDatabase():
     global phraseList
-    #dir = os.path.dirname(os.path.abspath(__file__))
 
-    #file = os.path.join(dir, speechDatabaseFile)
-    #file = "picohspeech.wav"
     file = speechDatabaseFile
-    rowList = []
 
     with open(file, 'rt')as f:
         data = csv.reader(f)
@@ -216,16 +220,12 @@ def _parseSAPIVoice(flag):
 
 # speak depending on synthesizer
 def _speak(text):
-    dir = os.path.dirname(os.path.abspath(__file__))
 
-    #file = os.path.join(dir, speechAudioFile)
     file = speechAudioFile
     if platform.system() == "Windows":
         if ("sapi" in synthesizer.lower()):
             from comtypes.gen import SpeechLib
             global sapivoice, sapistream
-
-
 
             sapistream.Open(file, SpeechLib.SSFMCreateForWrite)
             sapivoice.AudioOutputStream = sapistream
@@ -264,9 +264,6 @@ def _speak(text):
         # Remove any characters that are unsafe for a subprocess call
         safetext = re.sub(r'[^ .a-zA-Z0-9?\']+', '', text)
 
-        dir = os.path.dirname(os.path.abspath(__file__))
-
-        #file = os.path.join(dir, speechAudioFile)
         file = speechAudioFile
         bashcommand = synthesizer + file + ' --file-format=RF64 --data-format=LEI16@22050 -r' + str(
             speechRate) + ' -v ' + voice + ' "' + safetext + '"'
@@ -274,21 +271,14 @@ def _speak(text):
         # Execute bash command.
         ret = subprocess.Popen(bashcommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
-        # for line in ret.stdout.readlines():
-        # print (line)
-
         retval = ret.wait()
         # print(retval)
 
     if platform.system()== "Linux":
-        #dir = os.path.dirname(os.path.abspath(__file__))
-
-        #file = os.path.join(dir, speechAudioFile)
-        file = speechAudioFile
 
         # Remove any characters that are unsafe for a subprocess call
         safetext = re.sub(r'[^ .a-zA-Z0-9?\']+', '', text)
-        bashcommand = synthesizer + ' -w picohspeech.wav ' + voice + ' "' + safetext + '"'
+        bashcommand = synthesizer + ' -w picohData/picohspeech.wav ' + voice + ' "' + safetext + '"'
         # Execute bash command.
         subprocess.call(bashcommand,shell=True)
 
@@ -307,11 +297,11 @@ def init(portName):
         sapistream = CreateObject("SAPI.SpFileStream")
         winsound.PlaySound(silenceFile, winsound.SND_FILENAME)
 
-        # get the audio system warmed up on Mac
+    # get the audio system warmed up on Mac
     if platform.system() == "Darwin":
         playsound(silenceFile)
 
-        # get the audio system warmed up on linux
+    # get the audio system warmed up on linux
     if platform.system() == "Linux":
         os.system('aplay ' + silenceFile)
 
@@ -671,18 +661,16 @@ def _sayLinux(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0)
 
         safetext = re.sub(r'[^ .a-zA-Z0-9?\']+', '', text)
 
-
-
         # Create a bash command with the desired text. The command writes two files, a .wav with the speech audio and a .txt file containing the phonemes and the times.
 
-        bashcommand = "festival -b '(set! mytext (Utterance Text " + '"' + safetext + '"))' + "' '(utt.synth mytext)' '(utt.save.wave mytext " + '"picohspeech.wav")' + "' '(utt.save.segs mytext " + '"phonemes"' + ")'"
+        bashcommand = "festival -b '(set! mytext (Utterance Text " + '"' + safetext + '"))' + "' '(utt.synth mytext)' '(utt.save.wave mytext " + '"picohData/picohspeech.wav")' + "' '(utt.save.segs mytext " + '"picohData/phonemes"' + ")'"
 
         # Execute bash command.
         subprocess.call(bashcommand, shell=True)
 
         # Open the text file containing the phonemes
 
-        f = open("phonemes", 'r')
+        f = open("picohData/phonemes", 'r')
 
         # Empty the lists that contain phoneme data and reset count
         phonemes = []
@@ -739,7 +727,7 @@ def _sayLinux(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0)
         _speak(text)
 
         # open the file to calculate visemes. Festival on RPi has this built in but for espeak need to do it manually
-        waveFile = wave.open("picohspeech.wav", 'r')
+        waveFile = wave.open("picohData/picohspeech.wav", 'r')
 
         length = waveFile.getnframes()
         framerate = waveFile.getframerate()
@@ -837,7 +825,7 @@ def _saySpeech(addSilence):
     #speechFile = os.path.join(dir, 'picohspeech.wav')
     silenceFile = os.path.join(dir, 'Silence1.wav')
 
-    speechFile = 'picohspeech.wav'
+    speechFile = speechAudioFile
     if platform.system() == "Windows":
 
         if addSilence:
@@ -851,10 +839,10 @@ def _saySpeech(addSilence):
 
     if platform.system() == "Linux":
         if addSilence:
-            commandString = 'aplay ' + silenceFile + '\naplay picohspeech.wav'
+            commandString = 'aplay ' + silenceFile + '\naplay picohData/picohspeech.wav'
             os.system(commandString)
         else:
-            os.system('aplay picohspeech.wav')
+            os.system('aplay picohData/picohspeech.wav')
 
 
 # Function to move Picoh's lips in time with speech. Arguments | phonemes → list of phonemes[] | waits → list of waits[]
