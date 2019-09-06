@@ -118,7 +118,8 @@ def _loadEyeShapes():
 
     dir = os.path.dirname(os.path.abspath(__file__))
 
-    file = os.path.join(dir, eyeShapeFile)
+    #file = os.path.join(dir, eyeShapeFile)
+    file = eyeShapeFile
 
     tree = etree.parse(file)
 
@@ -151,9 +152,11 @@ def _loadEyeShapes():
 # Read speech database file into phraseList.
 def _loadSpeechDatabase():
     global phraseList
-    dir = os.path.dirname(os.path.abspath(__file__))
+    #dir = os.path.dirname(os.path.abspath(__file__))
 
-    file = os.path.join(dir, speechDatabaseFile)
+    #file = os.path.join(dir, speechDatabaseFile)
+    #file = "picohspeech.wav"
+    file = speechDatabaseFile
     rowList = []
 
     with open(file, 'rt')as f:
@@ -207,7 +210,8 @@ def _parseSAPIVoice(flag):
 def _speak(text):
     dir = os.path.dirname(os.path.abspath(__file__))
 
-    file = os.path.join(dir, speechAudioFile)
+    #file = os.path.join(dir, speechAudioFile)
+    file = speechAudioFile
     if platform.system() == "Windows":
         if ("sapi" in synthesizer.lower()):
             from comtypes.gen import SpeechLib
@@ -254,8 +258,8 @@ def _speak(text):
 
         dir = os.path.dirname(os.path.abspath(__file__))
 
-        file = os.path.join(dir, speechAudioFile)
-
+        #file = os.path.join(dir, speechAudioFile)
+        file = speechAudioFile
         bashcommand = synthesizer + file + ' --file-format=RF64 --data-format=LEI16@22050 -r' + str(
             speechRate) + ' -v ' + voice + ' "' + safetext + '"'
 
@@ -269,13 +273,14 @@ def _speak(text):
         # print(retval)
 
     if platform.system()== "Linux":
-        dir = os.path.dirname(os.path.abspath(__file__))
+        #dir = os.path.dirname(os.path.abspath(__file__))
 
-        file = os.path.join(dir, speechAudioFile)
+        #file = os.path.join(dir, speechAudioFile)
+        file = speechAudioFile
 
         # Remove any characters that are unsafe for a subprocess call
         safetext = re.sub(r'[^ .a-zA-Z0-9?\']+', '', text)
-        bashcommand = synthesizer + ' -w '+file + ' ' + voice + ' "' + safetext + '"'
+        bashcommand = synthesizer + ' -w picohspeech.wav ' + voice + ' "' + safetext + '"'
         # Execute bash command.
         subprocess.call(bashcommand,shell=True)
 
@@ -285,24 +290,21 @@ def init(portName):
 
     _loadEyeShapes()
 
+    dir = os.path.dirname(os.path.abspath(__file__))
+    silenceFile = os.path.join(dir, 'Silence1.wav')
+
     # get the sapi objects ready on Windows
     if platform.system() == "Windows":
         sapivoice = CreateObject("SAPI.SpVoice")
         sapistream = CreateObject("SAPI.SpFileStream")
-        dir = os.path.dirname(os.path.abspath(__file__))
-        silenceFile = os.path.join(dir, 'Silence1.wav')
         winsound.PlaySound(silenceFile, winsound.SND_FILENAME)
 
         # get the audio system warmed up on Mac
     if platform.system() == "Darwin":
-        dir = os.path.dirname(os.path.abspath(__file__))
-        silenceFile = os.path.join(dir, 'Silence1.wav')
         playsound(silenceFile)
 
         # get the audio system warmed up on linux
     if platform.system() == "Linux":
-        dir = os.path.dirname(os.path.abspath(__file__))
-        silenceFile = os.path.join(dir, 'Silence1.wav')
         os.system('aplay ' + silenceFile)
 
     # Search for the Picoh serial port
@@ -562,7 +564,7 @@ def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
     # open the file to calculate visemes. Festival on RPi has this built in but for espeak need to do it manually
 
     dir = os.path.dirname(os.path.abspath(__file__))
-    file = os.path.join(dir, 'picohspeech.wav')
+    file = speechAudioFile
 
     waveFile = wave.open(file, 'r')
 
@@ -653,29 +655,26 @@ def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
 
 def _sayLinux(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
 
-    dir = os.path.dirname(os.path.abspath(__file__))
-    file = os.path.join(dir, 'picohspeech.wav')
 
-    if ("festival" in synthesizer.lower()):
+    if "festival" in synthesizer.lower():
 
         if hdmiAudio:
             soundDelay = soundDelay - 1
 
         safetext = re.sub(r'[^ .a-zA-Z0-9?\']+', '', text)
 
-        bashcommand = "festival -b '(set! mytext (Utterance Text " + '"' + safetext + '"))' + "' '(utt.synth mytext)' '(utt.save.wave mytext " + '"ohbotspeech.wav")' + "' '(utt.save.segs mytext " + '"phonemes"' + ")'"
-        print(bashcommand)
-        # Create a bash command with the desired text. The command writes two files, a .wav with the speech audio and a .txt file containing the phonemes and the times.
-       # bashcommand = "festival -b '(set! mytext (Utterance Text " + '"' + safetext + '"))' + "' '(utt.synth mytext)' '(utt.save.wave mytext " + '"'+file+'")' + "' '(utt.save.segs mytext " + '"phonemes"' + ")'"
 
+
+        # Create a bash command with the desired text. The command writes two files, a .wav with the speech audio and a .txt file containing the phonemes and the times.
+
+        bashcommand = "festival -b '(set! mytext (Utterance Text " + '"' + safetext + '"))' + "' '(utt.synth mytext)' '(utt.save.wave mytext " + '"picohspeech.wav")' + "' '(utt.save.segs mytext " + '"phonemes"' + ")'"
 
         # Execute bash command.
         subprocess.call(bashcommand, shell=True)
 
         # Open the text file containing the phonemes
 
-        phonemeFile = os.path.join(dir, 'phonemes.txt')
-        f = open(phonemeFile, 'r')
+        f = open("phonemes", 'r')
 
         # Empty the lists that contain phoneme data and reset count
         phonemes = []
@@ -732,7 +731,7 @@ def _sayLinux(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0)
         _speak(text)
 
         # open the file to calculate visemes. Festival on RPi has this built in but for espeak need to do it manually
-        waveFile = wave.open(file, 'r')
+        waveFile = wave.open("picohspeech.wav", 'r')
 
         length = waveFile.getnframes()
         framerate = waveFile.getframerate()
@@ -792,18 +791,18 @@ def _sayLinux(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0)
         if lipSync:
             if soundDelay > 0:
                 # Set up a thread for the speech sound synthesis, delay start by soundDelay
-                t = threading.Timer(soundDelay, saySpeech, args=(hdmiAudio,), kwargs=None)
+                t = threading.Timer(soundDelay, _saySpeech, args=(hdmiAudio,), kwargs=None)
                 # Set up a thread for the speech movement
                 t2 = threading.Thread(target=_moveSpeech, args=(phonemes, times))
             else:
                 # Set up a thread for the speech sound synthesis
-                t = threading.Thread(target=saySpeech, args=(hdmiAudio,))
+                t = threading.Thread(target=_saySpeech, args=(hdmiAudio,))
                 # Set up a thread for the speech movement, delay start by - soundDelay
                 t2 = threading.Timer(-soundDelay, _moveSpeech, args=(phonemes, times), kwargs=None)
             t2.start()
         else:
             # Set up a thread for the speech sound synthesis
-            t = threading.Thread(target=saySpeech, args=(hdmiAudio,))
+            t = threading.Thread(target=_saySpeech, args=(hdmiAudio,))
         t.start()
 
         # if untilDone, keep running until speech has finished
@@ -827,9 +826,10 @@ def _limit(val):
 # Function to play back the speech wav file, if hmdi audio is being used play silence before speech sound
 def _saySpeech(addSilence):
     dir = os.path.dirname(os.path.abspath(__file__))
-    speechFile = os.path.join(dir, 'picohspeech.wav')
+    #speechFile = os.path.join(dir, 'picohspeech.wav')
     silenceFile = os.path.join(dir, 'Silence1.wav')
 
+    speechFile = os.path.join(dir, 'picohspeech.wav')
     if platform.system() == "Windows":
 
         if addSilence:
@@ -843,11 +843,10 @@ def _saySpeech(addSilence):
 
     if platform.system() == "Linux":
         if addSilence:
-            commandString = 'aplay ' + silenceFile + '\naplay '+ "picohSpeech.wav"
+            commandString = 'aplay ' + silenceFile + '\naplay picohspeech.wav'
             os.system(commandString)
         else:
-            os.system('aplay ' + speechFile)
-
+            os.system('aplay picohspeech.wav')
 
 
 # Function to move Picoh's lips in time with speech. Arguments | phonemes → list of phonemes[] | waits → list of waits[]
@@ -867,6 +866,7 @@ def _moveSpeech(phonemes, times):
                 currentX = x
     move(TOPLIP, 5)
     move(BOTTOMLIP, 5)
+
 
 def _moveSpeechFest(phonemes, times):
     startTime = time.time()

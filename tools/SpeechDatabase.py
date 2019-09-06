@@ -9,13 +9,13 @@ from picoh import picoh
 global phraseList, rowList, numberOfRows
 
 speechFile = 'PicohSpeech.csv'
-directory = picoh.dir
+#directory = picoh.dir
 
 numberOfRows = 0
 phraseList = []
 rowList = []
 
-file = os.path.join(directory, speechFile)
+file = speechFile
 
 
 class Phrase(object):
@@ -93,7 +93,6 @@ def refreshCanvas():
 
 def selectall(event):
     event.widget.tag_add("sel", "1.0", "end")
-    print("walahe")
     return "break"
 
 
@@ -136,7 +135,8 @@ def on_closing():
         root.destroy()
 
 
-with open(file, 'rt')as f:
+with open(file, 'w+')as f:
+
     data = csv.reader(f)
 
     for row in data:

@@ -495,9 +495,10 @@ class PicohEyeDesigner(Tk.Frame):
 
         my_tree = self.tree
 
-        directory = picoh.dir
+        #directory = picoh.dir
 
-        file = os.path.join(directory, 'Ohbot.obe')
+        #file = os.path.join(directory, 'Ohbot.obe')
+        file = 'Ohbot.obe'
 
         with open(file, 'wb') as f:
             f.write(etree.tostring(my_tree))
@@ -609,7 +610,8 @@ class PicohEyeDesigner(Tk.Frame):
 
         directory = picoh.dir
 
-        file = os.path.join(directory, 'Ohbot.obe')
+        #file = os.path.join(directory, 'Ohbot.obe')
+        file = 'Ohbot.obe'
 
         self.tree = etree.parse(file)
 
