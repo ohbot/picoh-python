@@ -2,8 +2,6 @@
 
 <a href=".images/PicohLogoPixels.png" target="_blank"><img src=".images/PicohLogoPixels.png" border="0" width = "30%"/></a>
 
-Setup
--------
 |||||
 |-------|-------|---------|-------|
 |macOs|[Setup](https://github.com/ohbot/picoh-python/blob/master/Docs/Setup_Mac.md)|[Examples](https://github.com/ohbot/picoh-python/tree/master/examples/Mac)|[Voice Documentation](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Mac.md)|
