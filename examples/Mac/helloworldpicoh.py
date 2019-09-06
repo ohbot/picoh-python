@@ -1,59 +1,38 @@
-# import the picoh module
-
 from picoh import picoh
 
-# Reset picoh
-
 picoh.reset()
 
-# Move turn picoh's head and eyes.
-picoh.move(1,2)
-picoh.move(3,1)
+picoh.wait(1)
 
-# Wait a few seconds for the motors to move
+picoh.setEyeShape("Eyeball")
 
-picoh.wait(2)
+picoh.say("Hello my name is Picoh. Good to meet you")
 
-# Move head back to the centre and say "Hello World"
-picoh.move(1,5,1)
-picoh.say("Hello World")
+picoh.move(picoh.HEADTURN,3)
+picoh.move(picoh.EYETURN,3)
 
-# Slowly increase the brightness of the eyes.
+picoh.wait(1)
 
-for x in range(0,10):
+picoh.move(picoh.HEADTURN,6)
+picoh.move(picoh.EYETURN,7)
 
-    picoh.eyeColour(x,x,x)
-    picoh.wait(0.1)
+picoh.baseColour(3,4,2)
 
-    picoh.eyeColour(0,0,0)
+picoh.wait(1)
+
+# Change the base to orange
+picoh.baseColour(10,3,0)
+
+picoh.setEyeShape("SunGlasses")
+
+# Slowly increase the brightness of Picoh's eyes.
+for x in range(0,50):
+    picoh.setEyeBrightness(x/10)
     picoh.wait(0.2)
 
-    
+# Get a random phrase from the speech database.
+phrase = picoh.getPhrase()
+picoh.say(phrase)
 
-picoh.move(1,5,1)
-picoh.wait(1)
-
-picoh.say("Now I am running in python you know",False)
-
-for x in range (0,10):
-    picoh.move(3,x)
-    picoh.eyeColour(x,10-x,x)
-    picoh.wait(0.3)
-
-picoh.say("I can do the robot")
-
-
-for y in range(0,4):
-    for x in range(0,10):
-        picoh.move(y,x)
-        picoh.eyeColour(y,x,10-x)
-        picoh.wait(0.2)
-        
-picoh.reset()
-picoh.say("and ventriloquism",True,False)
-picoh.eyeColour(0,0,10)
-picoh.wait(1)
-
-# close picoh at the end.
-
+picoh.wait(3)
 picoh.close()
