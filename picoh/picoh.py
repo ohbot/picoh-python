@@ -76,15 +76,24 @@ if platform.system() == "Darwin":
     synthesizer = "say -o "
 if platform.system() == "Linux":
     synthesizer = "festival"
-print(synthesizer)
+print("Speech Synthesizer: "synthesizer)
 
-# Variable to hold name of speech database and eyeshape files.
-speechDatabaseFile = 'PicohSpeech.csv'
-eyeShapeFile = 'ohbot.obe'
-speechAudioFile = 'picohspeech.wav'
 
 # Variable to hold the location of the picoh library folder.
 dir = os.path.dirname(os.path.abspath(__file__))
+
+if not path.exists('picohData/PicohSpeech.csv'):
+    if platform.system() == "Windows":
+        os.popen('copy ' + os.path.join(dir, 'PicohSpeech.csv') +' picohData/PicohSpeech.csv')
+    if platform.system() == "Darwin" or platform.system() == "Linux":
+        os.popen('cp ' + os.path.join(dir, 'PicohSpeech.csv') +' picohData/PicohSpeech.csv')
+
+# Variables to hold name of speech database and eyeshape files.
+
+speechDatabaseFile = 'picohData/PicohSpeech.csv'
+eyeShapeFile = 'picohData/ohbot.obe'
+speechAudioFile = 'picohData/picohspeech.wav'
+
 
 # Cache of pupil positions
 global lastfex, lastfey
@@ -92,7 +101,6 @@ lastfex = 5
 lastfey = 5
 
 ser = None
-
 
 class EyeShape(object):
 
