@@ -2,6 +2,10 @@
 
 <a href=".images/PicohLogoPixels.png" target="_blank"><img src=".images/PicohLogoPixels.png" border="0" width = "30%"/></a>
 
+Setup
+-------
+
+ [macOS](https://github.com/ohbot/picoh)
 
 Functions
 -------
@@ -9,7 +13,7 @@ Functions
 picoh.init(portName)
 ----------
 
-Called internally looking for a port with name containing "USB Serial Device" but if your port is different you can call it and override this port name. It returns True if the port is found and opened successfully, otherwise it returns false. This is likely with a versions of OSX in languages other than English. 
+Called internally looking for a port with name containing "USB Serial Device" but if your port is different you can call it and override this port name. It returns True if the port is found and opened successfully, otherwise it returns false. This is likely with Operating Systems in languages other than English.
 
 picoh.move(m, pos, speed=3)
 ----------
@@ -74,7 +78,6 @@ Seconds - float or int required wait time. picoh.wait(1.5)
 | Name| Range| Description  |
 | --- |------|-------------|
 | seconds   | float or int  | Length of wait in seconds|
-
 
 
 For Example:
