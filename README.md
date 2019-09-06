@@ -1,6 +1,6 @@
 # Picoh for Python
 
-<a href="images/PicohLogoPixels.png" target="_blank"><img src="images/PicohLogoPixels.png" border="0" width = "30%"/></a>
+<a href=".images/PicohLogoPixels.png" target="_blank"><img src=".images/PicohLogoPixels.png" border="0" width = "30%"/></a>
 
 
 Background
