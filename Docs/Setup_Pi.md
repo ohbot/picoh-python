@@ -1,50 +1,47 @@
-# Picoh for Python (Mac Setup)
+# Picoh for Pi
 
+This package is a starting point for people wanting to use Python 3 on a raspberry Pi to control Picoh. 
 
-Background
------
-
-These instructions allow you to program your Picoh using Python on a Raspberry Pi.
-
-More information about Picoh can be found on [ohbot.co.uk.](http://www.ohbot.co.uk)
-
-
-Setup
---------
-
-Install the latest version of Python from [here.](https://www.python.org/downloads/)
-
-Open the Terminal app and type the folloing:
-
-``sudo pip3 install picoh``
-
-You can find the Terminal app by searching for it in spotlight.
-
-<a href="https://github.com/picoh/ohbotMac-python/blob/master/images/ss.png" target="_blank"><img src="https://github.com/ohbot/ohbotMac-python/blob/master/images/ss.png" border="0" width = "60%"/></a>
+More information about Picoh can be found on [ohbot.co.uk](http://www.ohbot.co.uk)
 
 Dependencies
 ----------
 
-The ``pip3 install picoh`` command will install the following libraries:
+If you don't have pip3 (the python 3 package manager) installed, open terminal and execute the following:
 
+```
+sudo apt-get install python3
+sudo apt-get install python3-pip
+```
+
+Picoh requires some libraries to be installed. 
+
+To install libraries execute the corresponding terminal commands in your Raspberry Pi terminal:
 
 | Library    | Use         | Terminal command to install  |Link |
 | ---------- |-------------| -----------------------------|-----|
-| picoh   | Interface with Picoh          | ```pip3 install picoh```  |[picoh](https://github.com/ohbot/picoh/) 
-| serial    | Communicate with serial port| ```pip3 install pyserial```  |[pyserial](https://github.com/pyserial/pyserial/) |
-| lxml    | Import settings file          | ```pip3 install lxml```  |[lxml](https://github.com/lxml/lxml) |
-| playsound    | Play sound files       | ```pip3 install playsound```  |[playsound](https://github.com/TaylorSMarks/playsound) |
-| pyobjc    | Python Objective C library       | ```pip3 install objc```  |[pyobjc](https://pypi.org/project/pyobjc/) |
+| picoh   | Interface with Picoh          | ```sudo pip3 install picoh``` |[picoh](https://github.com/picoh/picoh-python/) |
+| festival    | Generate text to speech  | ```sudo apt-get install festival```  |- |
+| espeak (optional)    | Generate text to speech  | ```sudo apt-get install espeak```  |[espeak](http://espeak.sourceforge.net/) |
+| pico2wave (optional)    | Generate text to speech  | ```sudo apt-get install libttspico-utils```  |-|
+| lxml    | Import settings file          | ```sudo apt-get install python3-lxml``` |[lxml](https://github.com/lxml/lxml) |
+| serial    | Communicate with serial port | Included with Picoh |[pyserial](https://github.com/pyserial/pyserial/) |
+| threading    | Run multiple threads     | Included in Python 3  |- |
+| os    | Send commands to festival       | Included in Python 3  |- |
+| time    | Run timers                    | Included in Python 3  |- |
 
 
+You only need to install ```picoh```, ```lxml``` and ```festival```, ```serial``` should be installed automatically during the install of picoh. 
+
+Additonal voices can be used by installing ```espeak``` and ```pico2wave```
+
+Picoh is tested with Python 3 running on a Raspberry Pi 3 Model B. 
 
 To upgrade to the latest version of the library run the following in the console:
-<br>
 ```sudo pip3 install picoh --upgrade```
 
 
-
-Picoh library files (these will be installed with the `sudo pip3 install picoh` command above):
+|Picoh library files (these will be installed with the `sudo pip3 install picoh` command above):
 
 | File    | Use         |
 | ---------- |------------|
@@ -54,8 +51,7 @@ Picoh library files (these will be installed with the `sudo pip3 install picoh` 
 | Ohbot.obe | EyeShape Files|
 
 
-_Note: The text to speech module will generate an audio file, ‘picohspeech.wav’ inside /picohData in your working folder._
-
+---
 
 Hardware
 -----
@@ -63,9 +59,10 @@ Hardware
 Required:
 
 
-* Mac running macOS
+* Raspberry Pi
 * Picoh
 * USB Cable
+
 
 Setup:
 
@@ -73,17 +70,26 @@ Connect Picoh to your mac using the USB cable.
 
 ---
 
-Starting Python Programs
+Writing Programs
 --------
 
-Open <b>IDLE</b> from <b>Applications</b>.
+1. Open Python 3 (IDLE)
+2. Click File → New File
+3. Save your file as a python script (.py) in a new folder called Ohbot somewhere on your Pi.
 
-Select <b>New</b> from the <b>File menu.</b>
+Import
+-------
 
-Go to the [helloworldpicoh](https://github.com/ohbot/picoh-python/blob/master/examples/Mac/helloworldpicoh.py) example, copy the code and paste it into the new Python window.
+Make sure you import picoh library at the start of your program. 
+```python
+from picoh import picoh
+```
+
+Go to the [helloworldpicoh](https://github.com/ohbot/picoh-python/blob/master/examples/Pi/helloworldpicoh.py) example, copy the code and paste it into the new Python window.
 
 Select <b>Run Module</b> from the <b>Run</b> menu.
 
 Picoh should speak and move.
 
-More example programs can be found [here.](https://github.com/ohbot/picoh-python/tree/master/examples/Mac)
+More example programs can be found [here.](https://github.com/ohbot/picoh-python/tree/master/examples/Pi)
+
