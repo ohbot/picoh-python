@@ -1,133 +1,70 @@
-# Picoh for Python (Windows Setup)
-
-
-Background
------
-
-These instructions allow you to program your Picoh using Python on a Windows PC.
-
-More information about Picoh can be found on [ohbot.co.uk.](http://www.ohbot.co.uk)
-
-
-Setup
---------
-
-Install the latest version of Python from [here.](https://www.python.org/downloads/)
-
-Tick the option to Add Python 3.6 to PATH then click on Install Now. 
-
-Once install is complete type “Command” into the Windows search box.  Right click on <b>Command Prompt </b> and select <b>Run as administrator.</b>
-
-<br>
-
-<a href="https://github.com/ohbot/ohbotWin-python/blob/master/images/image2-24.tif" target="_blank"><img src="https://github.com/ohbot/ohbotWin-python/blob/master/images/image2-24.tif" border="0" width = "35%"/></a>
-
-<br>
-
-This will open a command prompt window. 
-
-Type the folloing:
-
-``pip install picoh``
-
-To upgrade to the latest version of the library run the following in the console:
-```sudo pip3 install picoh --upgrade```
-
-Installing more voices (optional)
---------
-
-The Picoh Python library will default to using SAPI voices which are the voices that are available through Windows Control Panel:Speech Propeties.
-
-You can change this to espeak or espeak-ng by calling picoh.setSynthesiser (“espeak”) or picoh.setSynthesizer (“espeak-ng”).
-
-Install the espeak library from [here.](http://espeak.sourceforge.net/download.html)
-
-
-Install espeak and then copy the espeak.exe file in Windows File Explorer from 
-
-C:\Program Files (x86)\eSpeak\command_line
-
-To 
-
-C:\Program Files\Python36
-
-To use the espeak-ng library install it from [here.](https://github.com/espeak-ng/espeak-ng#binaries)
-
-Install espeak-ng and then copy the espeak-ng.exe and espeak-ng.dll files in Windows File Explorer from 
-
-C:\Program Files\eSpeak NG
-
-To 
-
-C:\Program Files\Python36
-
-That should be it for the setup.
-
-Dependencies
+picoh.setSynthesizer(synth)
 ----------
 
-The ``pip install picoh`` command will install the following libraries:
+| synth | Full Name |
+|----|-------- |
+| “sapi” | SAPI speech |
+| “espeak-ng” | espeak-ng speech |
+| “espeak” | espeak speech |
 
 
-| Library    | Use         | Terminal command to install  |Link |
-| ---------- |-------------| -----------------------------|-----|
-| picoh   | Interface with Picoh          | ```pip install picoh```  |[picoh](https://github.com/picoh/picoh-python/) 
-| serial    | Communicate with serial port| ```pip install pyserial```  |[pyserial](https://github.com/pyserial/pyserial/) |
-| lxml    | Import settings file          | ```pip install lxml```  |[lxml](https://github.com/lxml/lxml) |
-| comtypes    | Required for serial communication      | ```pip install comtypes```  | [comtypes](https://github.com/enthought/comtypes) |
-| pyobjc    | Python Objective C library       | ```pip3 install objc```  |[pyobjc](https://pypi.org/project/pyobjc/) |
+For Example:
+```python
+picoh.setSynthesizer("espeak")
+```
+
+Note that the SAPI speech uses the voices available in Control Panel:Text to Speech.   It can’t use Cortana voices.
 
 
-To upgrade to the latest version of the library run the following in the console:
-```pip install picoh -- upgrade```
+picoh.setVoice(voice)
+------
+
+Use picoh.setVoice() to set the voice depending on the synthesizer:
+
+<b>Using SAPI</b>
+
+Use any of the following arguments:
+
+| Name| Description|
+| --- |------|
+| -a0 to -a100   | amplitude |
+| -r-10 to r10   | rate |
+| -v any part of the name of a SAPI voice (eg. -vHazel or -vZira) | voice |
+
+For Example:
+```python
+picoh.setVoice("-a82 -r12 -vzira")
+
+```
+
+<b>Using ESPEAK</b>
+
+http://espeak.sourceforge.net/commands.html<br>
+
+| Name| Description|
+| --- |------|
+| -v followed by a letter code|look in program files\espeak\espeak-data\voices to see what's available|
+|   +m1 to m7   | male voices |
+|   +f1 to f4   | remale voices |
+|   +croak or whisper   | tone |
+|   -a0 to a200   | amplitude |
+|   -s80 to s500   | speed |
+|   -p0 to p99   | pitch |
 
 
-Picoh library files (these will be installed with the `pip install picoh` command above):
+Examples:<br>
 
-| File    | Use         |
-| ---------- |------------|
-| picoh.py   | picoh package |
-| picohDefinitions.omd    | Motor settings file |
-| PicohSpeech.csv | Speech Database File |
-| Ohbot.obe | EyeShape Files|
+| Command | Result |
+| ------ | ------- |
+| ``picoh.setVoice("-ven+croak")`` | English croaky voice |
+| ``picoh.setVoice("-vzh+m2 -s26")`` | Chinese male voice, Fast |
+| ``picoh.setVoice("-vfr+f1 -p99 -s180")`` | French female whisper voice, medium speed and high pitched |
 
+More examples can be found in our [voices example program.](https://github.com/ohbot/picoh-python/blob/master/examples/Windows/changingVoices.py)
 
-_Note: The text to speech module will generate an audio file, ‘picohspeech.wav’ inside /picohData in your working folder._
+<b>Using ESPEAK-NG</b>
 
----
-
-Hardware
------
-
-Required:
+Supports some of the ESPEAK parameters but some are missing.
 
 
-* PC Running Windows.
-* Picoh
-* USB Cable
 
-
-Setup:
-
-Connect Picoh to your PC using the USB cable. 
-
----
-
-Starting Python Programs
---------
-
-Go to the Windows Menu and run IDLE from the Python folder:
-
-
-<a href="https://github.com/ohbot/ohbotWin-python/blob/master/images/image3-26.tif" target="_blank"><img src="https://github.com/ohbot/ohbotWin-python/blob/master/images/image3-26.tif" border="0" width = "35%"/></a>
-
-
-Select <b>New</b> from the <b>File menu.</b>
-
-Go to the [hellworldpicoh](https://github.com/ohbot/picoh-python/blob/master/examples/Windows/helloworldPicoh.py) example on Github, copy the code and paste it into the new Python window.
-
-Select <b>Run Module</b> from the <b>Run</b> menu.
-
-Picoh should speak and move.
-
-More example programs can be found [here.](https://github.com/ohbot/picoh-python/tree/master/examples/Windows)
