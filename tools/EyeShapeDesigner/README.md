@@ -7,4 +7,6 @@ Right click and save as: [EyeShapeDesigner.py](https://raw.githubusercontent.com
 The Eye Shape Designer will read and write from the Ohbot.obe file found within the picohData/ in your working directory. 
 
 
+<a href="..images/eyedesignerscreenshot.png" target="_blank"><img src="..images/eyedesignerscreenshot.png" border="0" width = "70%"/></a>
+
 
