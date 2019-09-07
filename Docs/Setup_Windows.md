@@ -16,13 +16,15 @@ Install the latest version of Python from [here.](https://www.python.org/downloa
 
 Tick the option to Add Python 3.7 to PATH then click on Install Now. 
 
-Once install is complete type “Command” into the Windows search box.  Right click on <b>Command Prompt </b> and select <b>Run as administrator.</b>
-
 <br>
 
 <a href="https://github.com/ohbot/picoh-python/blob/master/.images/install.png" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/install.png" border="0" width = "35%"/></a>
 
 <br>
+
+
+Once install is complete type “Command” into the Windows search box.  Right click on <b>Command Prompt </b> and select <b>Run as administrator.</b>
+
 
 This will open a command prompt window. 
 
@@ -49,7 +51,7 @@ C:\Program Files (x86)\eSpeak\command_line
 
 To 
 
-C:\Program Files\Python36
+C:\Program Files\Python37
 
 To use the espeak-ng library install it from [here.](https://github.com/espeak-ng/espeak-ng#binaries)
 
@@ -59,7 +61,7 @@ C:\Program Files\eSpeak NG
 
 To 
 
-C:\Program Files\Python36
+C:\Program Files\Python37
 
 That should be it for the setup.
 
@@ -79,7 +81,7 @@ The ``pip install picoh`` command will install the following libraries:
 
 
 To upgrade to the latest version of the library run the following in the console:
-```pip install picoh -- upgrade```
+```pip install picoh --upgrade```
 
 
 Picoh library files (these will be installed with the `pip install picoh` command above):
