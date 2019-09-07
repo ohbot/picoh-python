@@ -11,3 +11,5 @@ The speech database program will read and write from PicohSpeech.csv found withi
 
 
 <a href="https://raw.githubusercontent.com/ohbot/picoh-python/master/tools/SpeechDatabase/SpeechDatabase.py" download target="_blank">Click here to download</a>
+
+<a href="https://raw.githubusercontent.com/ohbot/picoh-python/master/tools/SpeechDatabase/SpeechDatabase.py" download="https://raw.githubusercontent.com/ohbot/picoh-python/master/tools/SpeechDatabase/SpeechDatabase.py">Download</a>
