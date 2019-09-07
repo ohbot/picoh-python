@@ -14,7 +14,7 @@ Setup
 
 Install the latest version of Python from [here.](https://www.python.org/downloads/)
 
-Tick the option to Add Python 3.6 to PATH then click on Install Now. 
+Tick the option to Add Python 3.7 to PATH then click on Install Now. 
 
 Once install is complete type “Command” into the Windows search box.  Right click on <b>Command Prompt </b> and select <b>Run as administrator.</b>
 
@@ -31,7 +31,7 @@ Type the folloing:
 ``pip install picoh``
 
 To upgrade to the latest version of the library run the following in the console:
-```sudo pip3 install picoh --upgrade```
+```pip3 install picoh --upgrade```
 
 Installing more voices (optional)
 --------

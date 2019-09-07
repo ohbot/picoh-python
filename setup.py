@@ -16,7 +16,7 @@ setup(
     packages = ['picoh'],
     package_data={'': ['picohdefinitions.omd','Silence1.wav','picohspeech.wav','PicohSpeech.csv','ohbot.obe','phonemes.txt']},
     include_package_data=True,
-    version = '0.167',
+    version = '1.00',
     description = 'Python library for controlling Picoh Robot',
     author = 'ohbot',
     author_email = 'info@ohbot.co.uk',
