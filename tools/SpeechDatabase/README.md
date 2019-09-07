@@ -2,6 +2,6 @@
 
 (Currently only optimised for macOS other platforms will be fixed soon) 
 
-Copy the code from [SpeechDatabse.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/tools/SpeechDatabase/SpeechDatabase.py) and paste into a new window in IDLE then run.
+Right click and save file as: [SpeechDatabse.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/tools/SpeechDatabase/SpeechDatabase.py) then run it in IDLE or a Python editor of your choice. 
 
 The speech database program will read and write from PicohSpeech.csv found within the picohData/ in your working directory. 
