@@ -226,14 +226,20 @@ canvasTwo.grid(column=0, row=3)
 canvasSpacer.grid(column=0, row=2)
 canvasThree.grid(column=0, row=0)
 
+directory = picoh.directory
+
+imageFile = os.path.join(directory, 'Images/plus.gif')
+plusImage = Tk.PhotoImage(file=imageFile)
+
 saveButton = Tk.Button(frameTwo, text="Save", command=callback, font=customFont)
 #saveButton.grid(column=1, row=1, sticky='w')
 
-plusImage = Tk.PhotoImage(file="./Images/plus.gif")
 addButton = Tk.Button(frameTwo, image=plusImage, command=new, font=customFont)
 addButton.grid(column=0, row=1, sticky='w')
 
-picohImage = Tk.PhotoImage(file="./Images/picohlogoSmall.gif")
+imageFile = os.path.join(directory, 'Images/picohlogoSmall.gif')
+picohImage = Tk.PhotoImage(file=imageFile)
+
 picohLabel = Tk.Label(frameTwo, image=picohImage)
 picohLabel.grid(column=2, row=1, sticky='w')
 

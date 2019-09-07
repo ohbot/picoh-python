@@ -3,20 +3,20 @@ from distutils.core import setup
 import platform
 
 if platform.system() == "Darwin":
-    includes =['pyserial','lxml','playsound','pyobjc','comtypes',]
+    includes =['pyserial','lxml','playsound','pyobjc','numpy','comtypes',]
 
 if platform.system() == "Windows":
-    includes =['pyserial','lxml','playsound','comtypes',]
+    includes =['pyserial','lxml','playsound''numpy','comtypes',]
 
 if platform.system() == "Linux":
-    includes =['pyserial','playsound']
+    includes =['pyserial','playsound','numpy']
 
 setup(
     name = 'picoh',
     packages = ['picoh'],
-      package_data={'': ['picohdefinitions.omd','Silence1.wav','picohspeech.wav','PicohSpeech.csv','ohbot.obe','phonemes.txt','Images/movedown.gif','Images/moveright.gif','Images/off.gif','Images/offsmaller.gif','Images/on.gif','Images/onsmaller.gif','Images/picohlogo.gif','Images/picohlogoOn.gif','Images/picohlogoSmall.gif','Images/plus.gif','Images/resetIcon.gif','Images/savebutton.gif','EyeShapeDesigner.py']},
+      package_data={'': ['picohdefinitions.omd','Silence1.wav','picohspeech.wav','PicohSpeech.csv','ohbot.obe','phonemes.txt','Images/movedown.gif','Images/moveright.gif','Images/off.gif','Images/offsmaller.gif','Images/on.gif','Images/onsmaller.gif','Images/picohlogo.gif','Images/picohlogoOn.gif','Images/picohlogoSmall.gif','Images/plus.gif','Images/resetIcon.gif','Images/savebutton.gif']},
     include_package_data=True,
-    version = '1.0208',
+    version = '1.0209',
     description = 'Python library for controlling Picoh Robot',
     author = 'ohbot',
     author_email = 'info@ohbot.co.uk',
