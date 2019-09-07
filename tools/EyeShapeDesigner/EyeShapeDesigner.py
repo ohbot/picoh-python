@@ -1251,7 +1251,7 @@ if __name__ == "__main__":
     root.geometry('%dx%d+%d+%d' % (wDim, hDim, xDim, yDim))
     root.configure(bg='white')
     root.resizable(0, 0)
-    dir = os.path.dirname(os.path.abspath(__file__))
+    dir = picoh.dir
     file=os.path.join(dir, '/Images/onsmaller.gif')
     onImage = Tk.PhotoImage(file)
     file=os.path.join(dir, '/Images/offsmaller.gif')
