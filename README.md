@@ -117,7 +117,7 @@ To see available eye shapes and design your own have a look at the EyeShape desi
 For Example:
 ```python
 
-picoh.setEyeShape("Large")
+picoh.setEyeShape("Glasses")
 
 ```
 or set pupils to different shapes using:
