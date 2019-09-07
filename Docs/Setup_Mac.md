@@ -80,7 +80,7 @@ Open <b>IDLE</b> from <b>Applications</b>.
 
 Select <b>New</b> from the <b>File menu.</b>
 
-Go to the [helloworldpicoh](https://github.com/ohbot/picoh-python/blob/master/examples/Mac/helloworldpicoh.py) example, copy the code and paste it into the new Python window.
+Go to the [helloworldpicoh](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/Mac/helloworldpicoh.py) example, copy the code and paste it into the new Python window.
 
 Select <b>Run Module</b> from the <b>Run</b> menu.
 
