@@ -138,7 +138,7 @@ picoh.setEyeBrightness(val)
 | --- |------|-------------|
 | val | 0-10 (int or float)  | Desired Brightness| 
 
-Use picoh.setEyeShape() to change the brightness of the pixels on Picoh's matrix display. 
+Use picoh.setEyeBrightness() to change the brightness of the pixels on Picoh's matrix display. 
 
 For Example:
 ```python
@@ -278,8 +278,8 @@ Use picoh.speechSpeed() to set speech rate in words per minute.
 
 Platform specific documentation for setting voices and languages.
 
-[macOS](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Mac.md).
+[macOS](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Mac.md)
 
-[Windows](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Windows.md).
+[Windows](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Windows.md)
 
-[Pi](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Pi.md).
+[Pi](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Pi.md)
