@@ -20,7 +20,7 @@ Once install is complete type “Command” into the Windows search box.  Right 
 
 <br>
 
-<a href="https://github.com/ohbot/ohbotWin-python/blob/master/images/image2-24.tif" target="_blank"><img src="https://github.com/ohbot/ohbotWin-python/blob/master/images/image2-24.tif" border="0" width = "35%"/></a>
+<a href="https://github.com/ohbot/picoh-python/blob/master/.images/install.png" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/install.png" border="0" width = "35%"/></a>
 
 <br>
 
