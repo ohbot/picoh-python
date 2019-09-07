@@ -126,7 +126,7 @@ Go to the Windows Menu and run IDLE from the Python folder:
 
 Select <b>New</b> from the <b>File menu.</b>
 
-Go to the [hellworldpicoh](https://github.com/ohbot/picoh-python/blob/master/examples/Windows/helloworldPicoh.py) example on Github, copy the code and paste it into the new Python window.
+Go to the [hellworldpicoh](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/Windows/helloworldPicoh.py) example on Github, copy the code and paste it into the new Python window.
 
 Select <b>Run Module</b> from the <b>Run</b> menu.
 

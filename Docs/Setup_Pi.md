@@ -85,7 +85,7 @@ Make sure you import picoh library at the start of your program.
 from picoh import picoh
 ```
 
-Go to the [helloworldpicoh](https://github.com/ohbot/picoh-python/blob/master/examples/Pi/helloworldpicoh.py) example, copy the code and paste it into the new Python window.
+Go to the [helloworldpicoh](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/Pi/helloworldpicoh.py) example, copy the code and paste it into the new Python window.
 
 Select <b>Run Module</b> from the <b>Run</b> menu.
 
