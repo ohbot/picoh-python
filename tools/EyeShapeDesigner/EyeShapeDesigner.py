@@ -293,7 +293,7 @@ class PicohEyeDesigner(Tk.Frame):
         self.picohButton.grid(row=0, column=27, columnspan=20, rowspan=3, sticky="s")
         self.picohButton.configure(highlightbackground=self.bgCol)
 
-        picohPanel = Tk.Label(self.frame, image=picohGraphic)
+        #picohPanel = Tk.Label(self.frame, image=picohGraphic)
         #  picohPanel.grid(row=9, column=8, columnspan=16, rowspan=16, sticky="sw")
 
         #  Generate button grids: (xStart,yStart,grid)
