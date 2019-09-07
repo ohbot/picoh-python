@@ -44,7 +44,7 @@ port = ""
 # define library version
 version = "1.0"
 
-global writing, voice, synthesizer, speechRate, connected, shapeList, phraseList, topLipFree
+global writing, voice, synthesizer, speechRate, connected, shapeList, phraseList, topLipFree, directory
 
 # flag to stop writing when writing for threading
 writing = False
@@ -88,13 +88,13 @@ except FileExistsError:
     pass
 
 # Variable to hold the location of the picoh library folder.
-dir = os.path.dirname(os.path.abspath(__file__))
+directory = os.path.dirname(os.path.abspath(__file__))
 
 if not path.exists('picohData/PicohSpeech.csv'):
-    shutil.copyfile(os.path.join(dir, 'PicohSpeech.csv'),'picohData/PicohSpeech.csv')
+    shutil.copyfile(os.path.join(directory, 'PicohSpeech.csv'),'picohData/PicohSpeech.csv')
 
 if not path.exists('picohData/ohbot.obe'):
-    shutil.copyfile(os.path.join(dir, 'ohbot.obe'),'picohData/ohbot.obe')
+    shutil.copyfile(os.path.join(directory, 'ohbot.obe'),'picohData/ohbot.obe')
 
 
 # Variables to hold name of speech database and eyeshape files.
@@ -393,7 +393,9 @@ if platform.system() == "Darwin":
 if platform.system() == "Linux":
     init("Arduino")
 
-
+def getDirectory():
+    global directory
+    return directory
 # Function to move Picoh's motors. Arguments | m (motor) → int (0-6) | pos (position) → int (0-10) | spd (speed) →
 # int (0-10) **eg move(4,3,9) or move(0,9,3)**
 def move(m, pos, spd=3, eye=0):
