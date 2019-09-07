@@ -1115,8 +1115,8 @@ class PicohEyeDesigner(Tk.Frame):
 
         # Map the pixel coordinate of the event to the corresponding grid coordinate.
 
-        coordinateX = ((event.x_root - 26 - offsetx) / 28)
-        coordinateY = ((event.y_root - 50 - offsety) / 32) - 1
+        coordinateX = ((event.x_root - 26 - offsetx) / 24)
+        coordinateY = ((event.y_root - 70 - offsety) / 24) - 1
 
         # print(str(coordinateX)+"\n"+str(coordinateY))
 
