@@ -128,7 +128,9 @@ picoh.wait(1)
 picoh.setEyeShape("Large","Heart")
 ```
 
-Default options for eye shapes: "Angry", "Crying", "Eyeball", "Glasses", "Heart", "Large", "Sad", "SmallBall", "Square","Sungalsses", "VerySad"
+Default options for eye shapes: 
+
+"Angry", "Crying", "Eyeball", "Glasses", "Heart", "Large", "Sad", "SmallBall", "Square","Sungalsses", "VerySad"
 
 
 picoh.setEyeBrightness(val)
