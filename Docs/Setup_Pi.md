@@ -7,11 +7,14 @@ More information about Picoh can be found on [ohbot.co.uk](http://www.ohbot.co.u
 Dependencies
 ----------
 
-If you don't have python or pip3 (the python 3 package manager) installed, open terminal and execute the following:
+If you don't have python or pip3 (the python 3 package manager) installed, open terminal and execute the following, one line at a time:
 
 ```
 sudo apt-get install python3
 sudo apt-get install python3-pip
+sudo apt-get install python3-lxml
+sudo apt-get install festival
+sudo pip3 install picoh
 ```
 
 Picoh requires some libraries to be installed. 
