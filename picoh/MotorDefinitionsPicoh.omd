@@ -1,0 +1,10 @@
+<Motors>
+  <Motor Name="HeadTurn" Min="0" Max="1000" Motor="1" Speed="80" Reverse="False" Acceleration="60" RestPosition="5" Avoid="" MotorType="Motor" />
+  <Motor Name="HeadNod" Min="300" Max="620" Motor="0" Speed="80" Reverse="True" Acceleration="60" RestPosition="5" Avoid="" MotorType="Motor" />
+  <Motor Name="EyeTurn" Min="0" Max="1000" Motor="2" Speed="0" Reverse="True" Acceleration="0" RestPosition="5" Avoid="" Matrix="False" MotorType="Matrix X" />
+  <Motor Name="EyeTilt" Min="0" Max="1000" Motor="6" Speed="0" Reverse="True" Acceleration="30" RestPosition="5" Avoid="" Matrix="False" MotorType="Matrix Y" />
+  <Motor Name="TopLip" Min="0" Max="550" Motor="4" Speed="0" Reverse="True" Acceleration="0" RestPosition="5" Avoid="" MotorType="Mouth Top" />
+  <Motor Name="BottomLip" Min="190" Max="842" Motor="5" Speed="0" Reverse="True" Acceleration="0" RestPosition="5" Avoid="" MotorType="Mouth Bottom" />
+  <Motor Name="LidBlink" Min="35" Max="305" Motor="3" Speed="0" Reverse="False" Acceleration="0" RestPosition="10" Avoid="" Matrix="False" MotorType="Matrix Lid" />
+  <Motor Name="MouthOpen" Min="80" Max="460" Motor="7" Speed="0" Reverse="False" Acceleration="0" RestPosition="10" Avoid="" />
+</Motors>

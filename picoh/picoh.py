@@ -96,12 +96,16 @@ if not path.exists('picohData/PicohSpeech.csv'):
 if not path.exists('picohData/ohbot.obe'):
     shutil.copyfile(os.path.join(directory, 'ohbot.obe'),'picohData/ohbot.obe')
 
+if not path.exists('picohData/MotorDefinitionsPicoh.omd'):
+    shutil.copyfile(os.path.join(directory, 'MotorDefinitionsPicoh.omd'),'picohData/MotorDefinitionsPicoh.omd')
+
 
 # Variables to hold name of speech database and eyeshape files.
 
 speechDatabaseFile = 'picohData/PicohSpeech.csv'
 eyeShapeFile = 'picohData/ohbot.obe'
 speechAudioFile = 'picohData/picohspeech.wav'
+picohMotorDefFile = 'picohData/MotorDefinitionsPicoh.omd'
 
 
 # Cache of pupil positions
@@ -351,9 +355,9 @@ def init(portName):
 
 # Startup Code
 # xml file for motor definitions
-dir = os.path.dirname(os.path.abspath(__file__))
-file = os.path.join(dir, 'picohdefinitions.omd')
-tree = etree.parse(file)
+#dir = os.path.dirname(os.path.abspath(__file__))
+#file = os.path.join(dir, 'picohdefinitions.omd')
+tree = etree.parse(picohMotorDefFile)
 root = tree.getroot()
 
 # Put motor ranges into lists
