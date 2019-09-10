@@ -62,7 +62,7 @@ topLipFree = False
 if platform.system() == "Windows":
     voice = ""
 if platform.system() == "Darwin":
-    voice = "Alex"
+    voice = ""
 if platform.system() == "Linux":
     voice = ""
 
@@ -269,8 +269,13 @@ def _speak(text):
         safetext = re.sub(r'[^ .a-zA-Z0-9?\']+', '', text)
 
         file = speechAudioFile
-        bashcommand = synthesizer + file + ' --file-format=RF64 --data-format=LEI16@22050 -r' + str(
-            speechRate) + ' -v ' + voice + ' "' + safetext + '"'
+
+        if voice:
+            bashcommand = synthesizer + file + ' --file-format=RF64 --data-format=LEI16@22050 -r' + str(speechRate) + ' -v ' + voice + ' "' + safetext + '"'
+        else:
+            bashcommand = synthesizer + file + ' --file-format=RF64 --data-format=LEI16@22050 -r' + str(speechRate) + ' "' + safetext + '"'
+
+
 
         # Execute bash command.
         ret = subprocess.Popen(bashcommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -348,7 +353,10 @@ def init(portName):
 
     # Create a bash command with the desired text. The command writes two files, a .wav with the speech audio and a
     # .txt file containing the phonemes and the times.
-    _speak(text)
+
+    if synthesizer != "festival":
+        _speak(text)
+
     _loadSpeechDatabase()
     return True
 
