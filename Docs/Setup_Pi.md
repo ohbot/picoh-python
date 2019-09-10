@@ -21,6 +21,10 @@ Picoh requires some libraries to be installed.
 
 To install libraries execute the corresponding terminal commands in your Raspberry Pi terminal:
 
+You only need to install ```picoh```, ```lxml``` and ```festival```, ```serial``` should be installed automatically during the install of picoh. 
+
+Additonal voices can be used by installing ```espeak``` and ```pico2wave```
+
 | Library    | Use         | Terminal command to install  |Link |
 | ---------- |-------------| -----------------------------|-----|
 | picoh   | Interface with Picoh          | ```sudo pip3 install picoh``` |[picoh](https://github.com/picoh/picoh-python/) |
@@ -34,11 +38,7 @@ To install libraries execute the corresponding terminal commands in your Raspber
 | time    | Run timers                    | Included in Python 3  |- |
 
 
-You only need to install ```picoh```, ```lxml``` and ```festival```, ```serial``` should be installed automatically during the install of picoh. 
-
-Additonal voices can be used by installing ```espeak``` and ```pico2wave```
-
-Picoh is tested with Python 3 running on a Raspberry Pi 3 Model B. 
+Picoh is tested with Python 3 running on a Raspberry Pi 3 Model B.
 
 To upgrade to the latest version of the library run the following in the console:
 ```sudo pip3 install picoh --upgrade```
@@ -73,7 +73,12 @@ Connect Picoh to your pi using the USB cable.
 
 Set the sound output of your pi to Picoh's speaker. 
 
-<a href="https://github.com/ohbot/picoh-python/blob/master/.images/pisound1.png" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/pisound1.png" border="0" width = "50%"/></a>
+Open Audio Device Settings on your pi. 
+
+<a href="https://github.com/ohbot/picoh-python/blob/master/.images/pisound1.png" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/pisound1.png" border="0" width = "70%"/></a>
+
+Select Picoh's speaker, "USB Audio DAC"
+
 <a href="https://github.com/ohbot/picoh-python/blob/master/.images/pisound2.png" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/pisound2.png" border="0" width = "50%"/></a>
 
 ---
@@ -93,11 +98,12 @@ Make sure you import picoh library at the start of your program.
 from picoh import picoh
 ```
 
-Go to the [helloworldpicoh](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/Pi/helloworldpicoh.py) example, copy the code and paste it into the new Python window.
+Go to the [helloworldpicoh](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/Pi/helloworldpicoh.py) example, save it or copy to a new file in IDLE. 
 
 Select <b>Run Module</b> from the <b>Run</b> menu.
 
 Picoh should speak and move.
 
 More example programs can be found [here.](https://github.com/ohbot/picoh-python/tree/master/examples/Pi)
+
 
