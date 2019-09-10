@@ -2,7 +2,7 @@
 
 This package is a starting point for people wanting to use Python 3 on a raspberry Pi to control Picoh. 
 
-More information about Picoh can be found on [ohbot.co.uk](http://www.ohbot.co.uk)
+More information about Picoh can be found on [ohbot.co.uk](http://www.ohbot.co.uk) Please contact [info@ohbot.co.uk.](info@ohbot.co.uk) if you have any problems installing or running Picoh. 
 
 Dependencies
 ----------
