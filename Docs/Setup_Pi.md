@@ -47,7 +47,6 @@ Picoh is tested with Python 3 running on a Raspberry Pi 3 Model B.
 To upgrade to the latest version of the library run the following in the console:
 ```sudo pip3 install picoh --upgrade```
 
-
 |Picoh library files (these will be installed with the `sudo pip3 install picoh` command above):
 
 | File    | Use         |
@@ -56,7 +55,6 @@ To upgrade to the latest version of the library run the following in the console
 | picohdefinitions.omd    | Motor settings file |
 | PicohSpeech.csv | Speech Database File |
 | Ohbot.obe | EyeShape Files|
-
 
 ---
 
@@ -79,10 +77,8 @@ Set the sound output of your pi to Picoh's speaker.
 
 Open Audio Device Settings on your pi and select 'USB Audio DAC' (Picoh's speaker)
 
-<a href="https://github.com/ohbot/picoh-python/blob/master/.images/pisound1.png" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/pisound1.png" border="0" width = "30%"/></a>
-
-
-<a href="https://github.com/ohbot/picoh-python/blob/master/.images/pisound2.png" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/pisound2.png" border="0" width = "70%"/></a>
+<a href="https://github.com/ohbot/picoh-python/blob/master/.images/pisound1.png" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/pisound1.png" border="0" width = "40%"/></a>
+<a href="https://github.com/ohbot/picoh-python/blob/master/.images/pisound2.png" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/pisound2.png" border="0" width = "55%"/></a>
 
 ---
 
