@@ -110,6 +110,6 @@ Picoh should speak and move.
 
 More example programs can be found [here.](https://github.com/ohbot/picoh-python/tree/master/examples/Pi)
 
-More information on using other voices can be found (here)[https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Pi.md]
+More information on using other voices can be found [here](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Pi.md)
 
 
