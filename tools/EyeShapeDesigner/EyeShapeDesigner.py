@@ -608,9 +608,6 @@ class PicohEyeDesigner(Tk.Frame):
     # Function to read XML files
     def xmlReadin(self):
 
-        directory = picoh.dir
-
-        #file = os.path.join(directory, 'Ohbot.obe')
         file = 'picohData/Ohbot.obe'
 
         self.tree = etree.parse(file)
