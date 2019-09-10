@@ -24,7 +24,7 @@ http://espeak.sourceforge.net/commands.html<br>
 
 | Name| Description|
 | --- |------|
-| -v followed by a letter code| enter 'espeak --voices' in terminal to see what's available|
+| -v followed by a letter code| execute 'espeak --voices' in terminal to see what's available |
 |   +m1 to m7   | male voices |
 |   +f1 to f4   | female voices |
 |   +croak or whisper   | tone |
