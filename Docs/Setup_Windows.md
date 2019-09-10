@@ -6,7 +6,7 @@ Background
 
 These instructions allow you to program your Picoh using Python on a Windows PC.
 
-More information about Picoh can be found on [ohbot.co.uk.](http://www.ohbot.co.uk)
+More information about Picoh can be found on [ohbot.co.uk.](http://www.ohbot.co.uk) Please contact [info@ohbot.co.uk.](info@ohbot.co.uk) if you have any problems installing or running Picoh. 
 
 
 Setup
@@ -112,6 +112,8 @@ Required:
 Setup:
 
 Connect Picoh to your PC using the USB cable. 
+
+Select 'USB Audio DAC' as audio output device. 
 
 ---
 
