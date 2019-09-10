@@ -6,7 +6,7 @@ Background
 
 These instructions allow you to program your Picoh using Python on a Mac.
 
-More information about Picoh can be found on [ohbot.co.uk.](http://www.ohbot.co.uk)
+More information about Picoh can be found on [ohbot.co.uk.](http://www.ohbot.co.uk) Please contact [info@ohbot.co.uk.](info@ohbot.co.uk) if you have any problems installing or running Picoh. 
 
 
 Setup
@@ -70,6 +70,7 @@ Required:
 Setup:
 
 Connect Picoh to your mac using the USB cable. 
+Set audio output device to 'USB Audio DAC'
 
 ---
 
