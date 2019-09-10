@@ -77,13 +77,12 @@ Connect Picoh to your pi using the USB cable.
 
 Set the sound output of your pi to Picoh's speaker. 
 
-Open Audio Device Settings on your pi. 
+Open Audio Device Settings on your pi and select 'USB Audio DAC' (Picoh's speaker)
 
-<a href="https://github.com/ohbot/picoh-python/blob/master/.images/pisound1.png" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/pisound1.png" border="0" width = "70%"/></a>
+<a href="https://github.com/ohbot/picoh-python/blob/master/.images/pisound1.png" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/pisound1.png" border="0" width = "30%"/></a>
 
-Select Picoh's speaker, "USB Audio DAC"
 
-<a href="https://github.com/ohbot/picoh-python/blob/master/.images/pisound2.png" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/pisound2.png" border="0" width = "50%"/></a>
+<a href="https://github.com/ohbot/picoh-python/blob/master/.images/pisound2.png" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/pisound2.png" border="0" width = "70%"/></a>
 
 ---
 
