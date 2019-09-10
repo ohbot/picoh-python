@@ -845,10 +845,10 @@ def _saySpeech(addSilence):
 
     if platform.system() == "Linux":
         if addSilence:
-            commandString = 'aplay ' + silenceFile + '\naplay picohData/picohspeech.wav'
+            commandString = 'aplay -D plug:default ' + silenceFile + '\naplay picohData/picohspeech.wav'
             os.system(commandString)
         else:
-            os.system('aplay picohData/picohspeech.wav')
+            os.system('aplay -D plug:default picohData/picohspeech.wav')
 
 
 # Function to move Picoh's lips in time with speech. Arguments | phonemes → list of phonemes[] | waits → list of waits[]
