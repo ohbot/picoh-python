@@ -25,8 +25,8 @@ sudo pip3 install picoh
 Additonal voices can be used by installing ```espeak``` and ```pico2wave```
 
  ```
- sudo apt-get install libttspico-utils
  sudo apt-get install espeak
+ sudo apt-get install libttspico-utils
  ```
  
 | Library    | Use         | Terminal command to install  |Link |
