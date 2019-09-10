@@ -69,7 +69,12 @@ Required:
 
 Setup:
 
-Connect Picoh to your mac using the USB cable. 
+Connect Picoh to your pi using the USB cable. 
+
+Set the sound output of your pi to Picoh's speaker. 
+
+<a href="https://github.com/ohbot/picoh-python/blob/master/.images/pisound1.png" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/pisound1.png" border="0" width = "40%"/></a>
+<a href="https://github.com/ohbot/picoh-python/blob/master/.images/pisound2.png" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/pisound2.png" border="0" width = "40%"/></a>
 
 ---
 
