@@ -7,24 +7,28 @@ More information about Picoh can be found on [ohbot.co.uk](http://www.ohbot.co.u
 Dependencies
 ----------
 
-If you don't have python or pip3 (the python 3 package manager) installed, open terminal and execute the following, one line at a time:
+If you don't have Python or pip3 (the Python package manager) installed, open terminal and execute the following, one line at a time:
 
 ```
 sudo apt-get install python3
 sudo apt-get install python3-pip
+```
+
+Picoh requires some libraries to be installed execute the following to install lxml, festival and finally the picoh package. 
+
+```
 sudo apt-get install python3-lxml
 sudo apt-get install festival
 sudo pip3 install picoh
 ```
 
-Picoh requires some libraries to be installed. 
-
-To install libraries execute the corresponding terminal commands in your Raspberry Pi terminal:
-
-You only need to install ```picoh```, ```lxml``` and ```festival```, ```serial``` should be installed automatically during the install of picoh. 
-
 Additonal voices can be used by installing ```espeak``` and ```pico2wave```
 
+ ```
+ sudo apt-get install libttspico-utils
+ sudo apt-get install espeak
+ ```
+ 
 | Library    | Use         | Terminal command to install  |Link |
 | ---------- |-------------| -----------------------------|-----|
 | picoh   | Interface with Picoh          | ```sudo pip3 install picoh``` |[picoh](https://github.com/picoh/picoh-python/) |
