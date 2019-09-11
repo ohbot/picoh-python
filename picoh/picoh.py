@@ -77,6 +77,7 @@ if platform.system() == "Darwin":
     synthesizer = "say -o "
 if platform.system() == "Linux":
     synthesizer = "festival"
+
 print("Speech Synthesizer: " + synthesizer)
 
 dirName = 'picohData'
@@ -416,6 +417,7 @@ def move(m, pos, spd=3, eye=0):
     # Limit values to keep then within range
     pos = _limit(pos)
     spd = _limit(spd)
+
 
     # Keeping track of whether the top lip is pushed below the centre stop.
 
@@ -871,10 +873,10 @@ def _moveSpeech(phonemes, times):
             if timeNow > times[x] and x > currentX:
                 posTop = _phonememapTop(phonemes[x])
                 posBottom = _phonememapBottom(phonemes[x])
-                move(TOPLIP, posTop, 10)
+                #move(TOPLIP, posTop, 10)
                 move(BOTTOMLIP, posBottom, 10)
                 currentX = x
-    move(TOPLIP, 5)
+   # move(TOPLIP, 5)
     move(BOTTOMLIP, 5)
 
 
@@ -889,10 +891,12 @@ def _moveSpeechFest(phonemes, times):
             if timeNow > times[x] and x > currentX:
                 posTop = _phonememapTopFest(phonemes[x])
                 posBottom = _phonememapBottomFest(phonemes[x])
-                move(TOPLIP,posTop,10)
+                posBottom = 5 + (posBottom * 3 / 10)
+                #move(TOPLIP,posTop,10)
+
                 move(BOTTOMLIP,posBottom,10)
                 currentX = x
-    move(TOPLIP,5)
+    #move(TOPLIP,5)
     move(BOTTOMLIP,5)
 
 
@@ -998,7 +1002,7 @@ def _phonememapTop(val):
 # Function mapping phonemes to top lip positions.
 # Bottom lip never goes over 9
 def _phonememapBottom(val):
-    return 5 + (_limit(val) * 4 / 10)
+    return 5 + (_limit(val) * 3 / 10)
 
 
 # Legacy function to support Ohbot programs with eyeColour. Passes onto baseColour.
@@ -1171,7 +1175,7 @@ def setEyeShape(shapeNameLeft, shapeNameRight=''):
     leftHex = ''
 
     for index, shape in enumerate(shapeList):
-        if shape.name == shapeNameLeft:
+        if shape.name == shapeNameRight:
             leftHex = shape.hexString
             if shape.autoMirror:
                 autoMirrorVar = True
@@ -1179,7 +1183,7 @@ def setEyeShape(shapeNameLeft, shapeNameRight=''):
                 autoMirrorVar = False
 
     for index, shape in enumerate(shapeList):
-        if shape.name == shapeNameRight:
+        if shape.name == shapeNameLeft:
             rightHex = shape.hexString
             if shape.autoMirror:
                 autoMirrorVar = True
