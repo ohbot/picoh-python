@@ -35,6 +35,8 @@ TOPLIP = 4
 BOTTOMLIP = 5
 EYETILT = 6
 
+debug = False
+
 # array to hold 
 sensors = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
@@ -91,14 +93,23 @@ except FileExistsError:
 # Variable to hold the location of the picoh library folder.
 directory = os.path.dirname(os.path.abspath(__file__))
 
+if debug:
+    print("Picoh Library Directory " + directory)
+
 if not path.exists('picohData/PicohSpeech.csv'):
     shutil.copyfile(os.path.join(directory, 'PicohSpeech.csv'),'picohData/PicohSpeech.csv')
+    if debug:
+        print("Copied PicohSpeech.csv from :" + directory + " to picohData/" )
 
 if not path.exists('picohData/ohbot.obe'):
     shutil.copyfile(os.path.join(directory, 'ohbot.obe'),'picohData/ohbot.obe')
+    if debug:
+        print("Copied ohbot.obe from :" + directory + " to picohData/" )
 
 if not path.exists('picohData/MotorDefinitionsPicoh.omd'):
     shutil.copyfile(os.path.join(directory, 'MotorDefinitionsPicoh.omd'),'picohData/MotorDefinitionsPicoh.omd')
+    if debug:
+        print("Copied MotorDefinitionsPicoh.omd from :" + directory + " to picohData/" )
 
 
 # Variables to hold name of speech database and eyeshape files.
@@ -264,6 +275,9 @@ def _speak(text):
             bashcommand = synthesizer + ' -w ' + file + ' ' + voice + ' "' + safetext + '"'
             # Execute bash command.
             subprocess.call(bashcommand, shell=True)
+            if debug:
+                print("Speech Bash Command")
+                print(bashcommand)
 
     if platform.system() == "Darwin":
         # Remove any characters that are unsafe for a subprocess call
@@ -276,7 +290,9 @@ def _speak(text):
         else:
             bashcommand = synthesizer + file + ' --file-format=RF64 --data-format=LEI16@22050 -r' + str(speechRate) + ' "' + safetext + '"'
 
-
+        if debug:
+            print("Speech Bash Command")
+            print(bashcommand)
 
         # Execute bash command.
         ret = subprocess.Popen(bashcommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -291,6 +307,10 @@ def _speak(text):
         bashcommand = synthesizer + ' -w picohData/picohspeech.wav ' + voice + ' "' + safetext + '"'
         # Execute bash command.
         subprocess.call(bashcommand,shell=True)
+
+        if debug:
+            print("Speech Bash Command")
+            print(bashcommand)
 
 def init(portName):
     # pickup global instances of port, ser and sapi variables   
@@ -359,6 +379,7 @@ def init(portName):
         _speak(text)
 
     _loadSpeechDatabase()
+
     return True
 
 
@@ -411,8 +432,11 @@ def getDirectory():
     return directory
 # Function to move Picoh's motors. Arguments | m (motor) → int (0-6) | pos (position) → int (0-10) | spd (speed) →
 # int (0-10) **eg move(4,3,9) or move(0,9,3)**
-def move(m, pos, spd=3, eye=0):
+def move(m, pos, spd=5, eye=0):
     global lastfex, lastfey, topLipFree
+
+    if debug:
+        print("Moved motor number " + str(m) + " to position " + str(pos) )
 
     # Limit values to keep then within range
     pos = _limit(pos)
@@ -426,6 +450,10 @@ def move(m, pos, spd=3, eye=0):
 
     if pos <= 5 and m == BOTTOMLIP:
         topLipFree = False
+
+    if pos < 5 and m == BOTTOMLIP:
+        pos = 5 - ((5-pos)/1.5)
+
 
     # Reverse the motor if necessary
     if motorRev[m]:
@@ -683,6 +711,8 @@ def _sayLinux(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0)
 
         # Execute bash command.
         subprocess.call(bashcommand, shell=True)
+        if debug:
+            print (bashcommand)
 
         # Open the text file containing the phonemes
 
@@ -1052,6 +1082,7 @@ def close():
 
 def reset():
     baseColour(0, 0, 0)
+    setEyeShape("Eyeball","Eyeball")
     for x in range(0, len(restPos) - 1):
         move(x, restPos[x])
 
