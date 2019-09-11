@@ -512,6 +512,10 @@ def move(m, pos, spd=5, eye=0):
 # Function to write to serial port
 def _serwrite(s):
     global connected, writing
+
+    if debug:
+        print("Serial command sent to Picoh:")
+        print(s)
     if platform.system() == "Windows" or platform.system()=="Linux":
         # wait until previous write is finished
         while (writing):
