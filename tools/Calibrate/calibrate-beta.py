@@ -128,6 +128,7 @@ def sel():
 
     if stage == 2:
         root.destroy()
+        picoh.close()
         sys.exit()
         
 
