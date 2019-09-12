@@ -435,8 +435,7 @@ def getDirectory():
 def move(m, pos, spd=5, eye=0):
     global lastfex, lastfey, topLipFree
 
-    if debug:
-        print("Moved motor number " + str(m) + " to position " + str(pos) )
+
 
     # Limit values to keep then within range
     pos = _limit(pos)
@@ -452,12 +451,15 @@ def move(m, pos, spd=5, eye=0):
         topLipFree = False
 
     if pos < 5 and m == BOTTOMLIP:
-        pos = 5 - ((5-pos)/1.5)
+        pos = 5 - ((5-pos)/2)
 
 
     # Reverse the motor if necessary
     if motorRev[m]:
         pos = 10 - pos
+
+    if debug:
+        print("Moved motor number " + str(m) + " to position " + str(pos))
 
     # Eyeturn
     if (motorType[m] == "Matrix X"):
