@@ -23,9 +23,9 @@ There are a various tools you can use to help edit these data files. When using 
 
 The data files include: 
 
-Ohbot.obe - Containing eye shape patterns for Picoh's matrix display edited with the [Eyeshape Designer Tool]{https://github.com/ohbot/picoh-python/tree/master/tools/EyeShapeDesigner}. Eye shapes are accessed in picoh programs using picoh.setEyeShape(), see below for examples. 
+Ohbot.obe - Containing eye shape patterns for Picoh's matrix display edited with the [Eyeshape Designer Tool](https://github.com/ohbot/picoh-python/tree/master/tools/EyeShapeDesigner). Eye shapes are accessed in picoh programs using picoh.setEyeShape(), see below for examples. 
 
-picohspeech.csv - Holds phrases for Picoh to say. Edit using the  [Speech Database Tool]{https://github.com/ohbot/picoh-python/tree/master/tools/SpeechDatabase} Phrases are accessed using picoh.getPhrase(), see below for more information. 
+picohspeech.csv - Holds phrases for Picoh to say. Edit using the  [Speech Database Tool](https://github.com/ohbot/picoh-python/tree/master/tools/SpeechDatabase) Phrases are accessed using picoh.getPhrase(), see below for more information. 
 
 MotorDefinitionsPicoh.omd - Holds motor minimums, maximums and ranges. Modified using the [Calibrate Tool](https://github.com/ohbot/picoh-python/tree/master/tools/Calibrate). This just calibrates the lip for now but will soon be able to calibrate all motors. 
 
