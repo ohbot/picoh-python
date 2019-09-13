@@ -15,7 +15,7 @@ To be expanded soon!
 
 picohData Folder
 -------
-Whenever you run a Picoh prorgam a folder called /picohData is created in your working directory. This folder is used to store various files that you can read from in your Picoh programs, these include SpeechDatabase file, a Motor Definitions file and an EyeShapes file. 
+The fist time you run a Picoh program a new folder called picohData is created in your working directory. This folder is used to store various files that you can read from within your Picoh programs, these include SpeechDatabase file, a Motor Definitions file and an EyeShapes file. 
 
 
 There are a various tools you can use to help edit these data files. When using a tool please download it and save it in the same folder as the your Picoh program file, this will ensure it is reading and writing to the correct folder. 
@@ -23,11 +23,11 @@ There are a various tools you can use to help edit these data files. When using 
 
 The data files include: 
 
-Ohbot.obe - Containing eye shape patterns for Picoh's matrix display edited with the [Eyeshape Designer Tool](https://github.com/ohbot/picoh-python/tree/master/tools/EyeShapeDesigner). Eye shapes are accessed in picoh programs using picoh.setEyeShape(), see below for examples. 
+Ohbot.obe - Containing eye shape patterns for Picoh's matrix display edited with the [Eyeshape Designer Tool](https://github.com/ohbot/picoh-python/tree/master/tools/EyeShapeDesigner). Eye shapes are accessed in Picoh programs using picoh.setEyeShape(), see below for examples. 
 
 picohspeech.csv - Holds phrases for Picoh to say. Edit using the  [Speech Database Tool.](https://github.com/ohbot/picoh-python/tree/master/tools/SpeechDatabase) Phrases are accessed using picoh.getPhrase(), see below for more information. 
 
-MotorDefinitionsPicoh.omd - Holds motor minimums, maximums and ranges. Modified using the [Calibrate Tool](https://github.com/ohbot/picoh-python/tree/master/tools/Calibrate). This just calibrates the lip for now but will soon be able to calibrate all motors. 
+MotorDefinitionsPicoh.omd - Holds motor minimums, maximums and ranges. Modified using the [Calibrate Tool.](https://github.com/ohbot/picoh-python/tree/master/tools/Calibrate) Just calibrates the lip for now but will soon be able to calibrate all motors. 
 
 
 If you delete a file in picohData (or the whole folder) the default files will be copied back over from the picoh library folder.  
