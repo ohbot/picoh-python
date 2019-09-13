@@ -1,6 +1,6 @@
 # Eye Shape Designer. 
 
-(Currently only optimised for macOS other platforms will be fixed soon) 
+(Currently only optimised for macOS and Windows, Pi will be fixed soon) 
 
 Right click and save as: [EyeShapeDesigner.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/tools/EyeShapeDesigner/EyeShapeDesigner.py) and run in IDLE or a python editor of your choice. 
 

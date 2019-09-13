@@ -25,9 +25,13 @@ The data files include:
 
 Ohbot.obe - Containing eye shape patterns for Picoh's matrix display edited with the [Eyeshape Designer Tool](https://github.com/ohbot/picoh-python/tree/master/tools/EyeShapeDesigner). Eye shapes are accessed in picoh programs using picoh.setEyeShape(), see below for examples. 
 
-picohspeech.csv - Holds phrases for Picoh to say. Edit using the  [Speech Database Tool](https://github.com/ohbot/picoh-python/tree/master/tools/SpeechDatabase) Phrases are accessed using picoh.getPhrase(), see below for more information. 
+picohspeech.csv - Holds phrases for Picoh to say. Edit using the  [Speech Database Tool.](https://github.com/ohbot/picoh-python/tree/master/tools/SpeechDatabase) Phrases are accessed using picoh.getPhrase(), see below for more information. 
 
 MotorDefinitionsPicoh.omd - Holds motor minimums, maximums and ranges. Modified using the [Calibrate Tool](https://github.com/ohbot/picoh-python/tree/master/tools/Calibrate). This just calibrates the lip for now but will soon be able to calibrate all motors. 
+
+
+If you delete a file in picohData (or the whole folder) the default files will be copied back over from the picoh library folder.  
+
 
 You can share the picohData between multiple programs by saving them in the same folder. 
 
@@ -47,7 +51,6 @@ picohPrograms
 ```
 Alternatively you can have seperate picohData folders by saving your programs in differnt folders, you will need a copy of the tools you want to use in the folder as well:
 ```
-
 picohPrograms
 └───programOne
 │   │   picohTest1.py
