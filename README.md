@@ -58,7 +58,7 @@ picohProgramsFolder
 │   │   EyeShapeDesigner.py
 |   |   SpeechDatabase.py
 |   |   
-│   └───picohData
+│   └───picohData (Created Automatically)
 │           Ohbot.obe
 │           MotorDefinitionsPicoh.omd
 │           picohspeech.csv
@@ -69,7 +69,7 @@ picohProgramsFolder
     │   EyeShapeDesigner.py
     |   SpeechDatabase.py
     |   
-    └───picohData
+    └───picohData (Created Automatically)
             Ohbot.obe
             MotorDefinitionsPicoh.omd
             picohspeech.csv
