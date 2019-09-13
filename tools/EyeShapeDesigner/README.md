@@ -1,10 +1,12 @@
 # Eye Shape Designer. 
 
-(Currently only optimised for macOS and Windows 10, Pi will be fixed soon) 
-
-Tested on Python 3.7.  
+Tested on Python 3.7.  on macOS and Windows 10 and Python 3.4 on Raspberry Pi. 
 
 Right click and save as: [EyeShapeDesigner.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/tools/EyeShapeDesigner/EyeShapeDesigner.py) and run in IDLE or a python editor of your choice. 
+
+Use the EyeShapeDesigner 
+
+
 
 The Eye Shape Designer will read and write eyeshapes from the Ohbot.obe file found within the picohData/ in your working directory.
 
