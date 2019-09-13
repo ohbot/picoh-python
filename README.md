@@ -59,9 +59,9 @@ picohPrograms
 |   |   SpeechDatabase.py
 |   |   
 │   └───picohData
-│       │   Ohbot.obe
-│       │   MotorDefinitionsPicoh.omd
-│       │   picohspeech.csv
+│           Ohbot.obe
+│           MotorDefinitionsPicoh.omd
+│           picohspeech.csv
 │   
 └───programTwo
     │   picohTest2.py
@@ -70,9 +70,9 @@ picohPrograms
     |   SpeechDatabase.py
     |   
     └───picohData
-        │   Ohbot.obe
-        │   MotorDefinitionsPicoh.omd
-        │   picohspeech.csv
+            Ohbot.obe
+            MotorDefinitionsPicoh.omd
+            picohspeech.csv
 
 
 ```
