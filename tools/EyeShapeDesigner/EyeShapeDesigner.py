@@ -126,10 +126,10 @@ class PicohEyeDesigner(Tk.Frame):
         self.entryPop = Tk.Entry(self.frame, width=20, text="Test", font=self.customFont)
         self.entryPop.bind('<Return>', self.newShape)
 
-        # Add pupil overlay  and track checkboxes
+        # Add pupil overlay and pupil track checkboxes
 
         checkbox = Tk.Checkbutton(self.frame, text="Overlay Pupil", variable=self.pupilVar, command=self.checkBoxAction)
-        checkbox.grid(row=4, rowspan=1, column=18, columnspan=7, sticky="w")
+        checkbox.grid(row=1, rowspan=1, column=18, columnspan=7, sticky="w")
         checkbox.configure(bg=self.bgCol, font=self.customFont)
 
         pupilTrackBox = Tk.Checkbutton(self.frame, text="Mouse-Pupil", variable=self.pupilTrack,
@@ -166,7 +166,7 @@ class PicohEyeDesigner(Tk.Frame):
         self.textLab = Tk.Label(self.frame, text='Are You Sure?', font=self.customFont)
 
         self.filenamelabel = Tk.Label(self.frame, text="")
-        #            self.filenamelabel.grid(row=13,column = 0,columnspan = 10,sticky = "W", padx = (10,0))
+        #self.filenamelabel.grid(row=13,column = 0,columnspan = 10,sticky = "W", padx = (10,0))
 
         #  Create 2D arrays with 0's to hold button states.
         for x in range(0, 6):
