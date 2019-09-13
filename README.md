@@ -13,6 +13,68 @@ If you are new to Python here is a short guide explaining some of the key concep
 
 To be expanded soon!
 
+picohData Folder
+-------
+Whenever you run a Picoh prorgam a folder called /picohData is created in your working directory. This folder is used to store various files that you can read from in your Picoh programs, these include SpeechDatabase file, a Motor Definitions file and an EyeShapes file. 
+
+
+There are a various tools you can use to help edit these data files. When using a tool please download it and save it in the same folder as the your Picoh program file, this will ensure it is reading and writing to the correct folder. 
+
+
+The data files include: 
+
+Ohbot.obe - Containing eye shape patterns for Picoh's matrix display edited with the [Eyeshape Designer Tool]{https://github.com/ohbot/picoh-python/tree/master/tools/EyeShapeDesigner}. Eye shapes are accessed in picoh programs using picoh.setEyeShape(), see below for examples. 
+
+picohspeech.csv - Holds phrases for Picoh to say. Edit using the  [Speech Database Tool]{https://github.com/ohbot/picoh-python/tree/master/tools/SpeechDatabase} Phrases are accessed using picoh.getPhrase(), see below for more information. 
+
+MotorDefinitionsPicoh.omd - Holds motor minimums, maximums and ranges. Modified using the [Calibrate Tool](https://github.com/ohbot/picoh-python/tree/master/tools/Calibrate). This just calibrates the lip for now but will soon be able to calibrate all motors. 
+
+You can share the picohData between multiple programs by saving them in the same folder. 
+
+For example:
+```
+picohPrograms
+│   picohTest1.py
+|   picohTest2.py
+│   EyeShapeDesigner.py 
+|   SpeechDatabse.py 
+│   Calibrate.py   
+|
+└───picohData (Created Automatically)
+        Ohbot.obe
+        MotorDefinitionsPicoh.omd
+        picohspeech.csv
+```
+Alternatively you can have seperate picohData folders by saving your programs in differnt folders, you will need a copy of the tools you want to use in the folder as well:
+```
+
+picohPrograms
+└───programOne
+│   │   picohTest1.py
+│   │   Calibrate.py 
+│   │   EyeShapeDesigner.py
+|   |   SpeechDatabase.py
+|   |   
+│   └───picohData
+│       │   Ohbot.obe
+│       │   MotorDefinitionsPicoh.omd
+│       │   picohspeech.csv
+│   
+└───programTwo
+│   │   picohTest2.py
+│   │   Calibrate.py 
+│   │   EyeShapeDesigner.py
+|   |   SpeechDatabase.py
+|   |   
+│   └───picohData
+│       │   Ohbot.obe
+│       │   MotorDefinitionsPicoh.omd
+│       │   picohspeech.csv
+
+
+```
+
+
 Functions
 -------
 
