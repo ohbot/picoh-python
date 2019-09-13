@@ -94,7 +94,7 @@ class PicohEyeDesigner(Tk.Frame):
         if platform.system() == "Darwin":
             self.customFont = tkFont.Font(family="Letter Gothic Std", size=12)
         if platform.system() == "Windows":
-            self.customFont = tkFont.Font(family="Tahoma", size=12)
+            self.customFont = tkFont.Font(family="Tahoma", size=8)
 
         self.frame = Tk.Frame(self.parent)
         self.frame.configure(bg=self.bgCol)
@@ -423,7 +423,7 @@ class PicohEyeDesigner(Tk.Frame):
             self.rangeCheckbox.configure(compound="c", image=pixelImage, height=winRowheight,
                                          width=self.buttonWidth * 7)
             pupilTrackBox.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 7)
-            checkbox.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
+            checkbox.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 7)
 
             self.yRangeLabel.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 7)
             self.xRangeLabel.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 7)
