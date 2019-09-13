@@ -61,15 +61,15 @@ picohPrograms
 │       │   picohspeech.csv
 │   
 └───programTwo
-│   │   picohTest2.py
-│   │   Calibrate.py 
-│   │   EyeShapeDesigner.py
-|   |   SpeechDatabase.py
-|   |   
-│   └───picohData
-│       │   Ohbot.obe
-│       │   MotorDefinitionsPicoh.omd
-│       │   picohspeech.csv
+    │   picohTest2.py
+    │   Calibrate.py 
+    │   EyeShapeDesigner.py
+    |   SpeechDatabase.py
+    |   
+    └───picohData
+        │   Ohbot.obe
+        │   MotorDefinitionsPicoh.omd
+        │   picohspeech.csv
 
 
 ```
