@@ -14,9 +14,9 @@ if platform.system() == "Linux":
 setup(
     name = 'picoh',
     packages = ['picoh'],
-      package_data={'': ['picohdefinitions.omd','Silence1.wav','picohspeech.wav','PicohSpeech.csv','ohbot.obe','phonemes.txt','Images/movedown.gif','Images/moveright.gif','Images/off.gif','Images/offsmaller.gif','Images/on.gif','Images/onsmaller.gif','Images/picohlogo.gif','Images/picohlogoOn.gif','Images/picohlogoSmall.gif','Images/plus.gif','Images/resetIcon.gif','Images/savebutton.gif','MotorDefinitionsPicoh.omd']},
+      package_data={'': ['picohdefinitions.omd','Silence1.wav','picohspeech.wav','PicohSpeech.csv','ohbot.obe','phonemes.txt','Images/movedown.gif','Images/moveright.gif','Images/off.gif','Images/offsmaller.gif','Images/on.gif','Images/onsmaller.gif','Images/picohlogo.gif','Images/picohlogoOn.gif','Images/picohlogoSmall.gif','Images/plus.gif','Images/resetIcon.gif','Images/savebutton.gif','MotorDefinitionsPicoh.omd','Images/pixel.gif']},
     include_package_data=True,
-    version = '1.0232',
+    version = '1.0234',
     description = 'Python library for controlling Picoh Robot',
     author = 'ohbot',
     author_email = 'info@ohbot.co.uk',

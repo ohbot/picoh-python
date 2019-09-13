@@ -13,8 +13,10 @@ from lxml import etree
 import os
 from picoh import picoh
 from copy import deepcopy
+import platform
 
 from threading import Timer
+
 
 # Class to hold Eyeshape information. Same fields as Picoh.obe xml file.
 
@@ -68,15 +70,18 @@ class PicohEyeDesigner(Tk.Frame):
     bgCol = 'white'
     textCol = 'black'
     buttonCol = 'white'
+
+    if platform.system() == 'Windows':
+        buttonCol = 'grey'
+
     # pupilButtonHighlightColour = '#408bf9'
     pupilButtonHighlightColour = 'SkyBlue1'
 
     buttonWidth = 10
+    buttonHeight = 3
     tickWidth = 15
 
     tree = None
-
-
 
     def initialize(self):
 
@@ -86,7 +91,10 @@ class PicohEyeDesigner(Tk.Frame):
         self.parent.grid_rowconfigure(1, weight=0)
         self.parent.grid_columnconfigure(1, weight=0)
 
-        self.customFont = tkFont.Font(family="Letter Gothic Std", size=12)
+        if platform.system() == "Darwin":
+            self.customFont = tkFont.Font(family="Letter Gothic Std", size=12)
+        if platform.system() == "Windows":
+            self.customFont = tkFont.Font(family="Agency FB", size=12)
 
         self.frame = Tk.Frame(self.parent)
         self.frame.configure(bg=self.bgCol)
@@ -94,7 +102,7 @@ class PicohEyeDesigner(Tk.Frame):
         self.screen_width = root.winfo_screenwidth()
         self.screen_height = root.winfo_screenheight()
 
-        #Variables to track tick boxes:
+        # Variables to track tick boxes:
         self.pupilVar = Tk.BooleanVar()
         self.pupilVar.set(True)
 
@@ -160,7 +168,7 @@ class PicohEyeDesigner(Tk.Frame):
         self.filenamelabel = Tk.Label(self.frame, text="")
         #            self.filenamelabel.grid(row=13,column = 0,columnspan = 10,sticky = "W", padx = (10,0))
 
-        #  Create 2D arrays with 0's to hold button states.
+        #  Create 2D arrays with 0's to hold button states.
         for x in range(0, 6):
             for j in range(9):
                 column = []
@@ -169,7 +177,7 @@ class PicohEyeDesigner(Tk.Frame):
                 self.getButtonArray(x).append(column)
 
         # New Button
-        self.newButton = Tk.Button(self.frame, text="New", command=self.newButton, width=self.buttonWidth)
+        self.newButton = Tk.Button(self.frame, text="New", image="", command=self.newButton, width=self.buttonWidth)
         self.newButton.grid(row=4, column=27, columnspan=4, sticky="w")
         self.newButton.configure(highlightbackground=self.bgCol, font=self.customFont)
 
@@ -198,11 +206,11 @@ class PicohEyeDesigner(Tk.Frame):
         # self.speakTickBox.grid(row=8, column=31, columnspan = 4, sticky="e")
         self.speakTickBox.config(bg=self.bgCol, highlightcolor=self.textCol, font=self.customFont, width=self.tickWidth)
 
-        #  Reset buttons for each grid
+        #  Reset buttons for each grid
 
         self.resetButton = Tk.Button(self.frame, text='Clear', command=lambda: self.reset(0))
         self.resetButton.grid(row=0, column=5, columnspan=3, sticky="E")
-        self.resetButton.configure(highlightbackground=self.bgCol, bg=self.bgCol, fg=self.textCol, font=self.customFont)
+        self.resetButton.configure(highlightbackground=self.bgCol, fg=self.textCol, font=self.customFont)
 
         self.resetButtonOne = Tk.Button(self.frame, text="Clear", command=lambda: self.reset(1))
         self.resetButtonOne.grid(row=0, column=14, columnspan=3, sticky="E")
@@ -285,18 +293,22 @@ class PicohEyeDesigner(Tk.Frame):
         # Picoh button, toggles sending data to Picoh. If not Picoh detected default to off.
         if self.picohConnected:
             chosenLogo = logoOn
+            picoh.reset()
+            picoh.close()
         else:
             chosenLogo = logo
 
         # Create Picoh logo button.
         self.picohButton = Tk.Button(self.frame, command=self.picohToggle, image=chosenLogo)
         self.picohButton.grid(row=0, column=27, columnspan=20, rowspan=3, sticky="s")
+        if platform.system() == "Windows":
+            self.picohButton.grid(rowspan=3, sticky="n", row=0)
         self.picohButton.configure(highlightbackground=self.bgCol)
 
-        #picohPanel = Tk.Label(self.frame, image=picohGraphic)
+        # picohPanel = Tk.Label(self.frame, image=picohGraphic)
         #  picohPanel.grid(row=9, column=8, columnspan=16, rowspan=16, sticky="sw")
 
-        #  Generate button grids: (xStart,yStart,grid)
+        #  Generate button grids: (xStart,yStart,grid)
         self.generateButtons(0, 1, 0)
         self.generateButtons(9, 1, 1)
         self.generateButtons(0, 11, 2)
@@ -329,22 +341,22 @@ class PicohEyeDesigner(Tk.Frame):
 
         self.xRangeEntry = Tk.Entry(self.frame, width=2, textvariable=self.xRangeVar)
 
-        self.xRangeEntry.grid(row=7, column=22, columnspan=5, sticky='w')
+        # self.xRangeEntry.grid(row=7, column=23, columnspan=5, sticky='w')
         self.xRangeEntry.config(bg='white', font=self.customFont)
 
         self.yRangeEntry = Tk.Entry(self.frame, width=2, textvariable=self.yRangeVar)
 
-        self.yRangeEntry.grid(row=8, column=22, columnspan=5, sticky='w')
+        # self.yRangeEntry.grid(row=8, column=23, columnspan=5, sticky='w')
         self.yRangeEntry.config(bg='white', font=self.customFont)
 
-        self.xRangeLabel = Tk.Label(self.frame, text="Pupil Range X", font=self.customFont)
+        self.xRangeLabel = Tk.Label(self.frame, text="Pupil Range X", height=1, font=self.customFont)
 
-        self.xRangeLabel.grid(row=7, column=18, columnspan=5, sticky='w')
+        # self.xRangeLabel.grid(row=7, column=18, columnspan=5, sticky='w')
         self.xRangeLabel.config(bg=self.bgCol, fg=self.textCol)
 
         self.yRangeLabel = Tk.Label(self.frame, text="Pupil Range Y")
 
-        self.yRangeLabel.grid(row=8, column=18, columnspan=5, sticky='w')
+        #  self.yRangeLabel.grid(row=8, column=18, columnspan=5, sticky='w')
         self.yRangeLabel.config(bg=self.bgCol, fg=self.textCol, font=self.customFont)
 
         self.xRangeVar.trace_variable("w", self.updateRange)
@@ -368,18 +380,59 @@ class PicohEyeDesigner(Tk.Frame):
 
         root.bind('<Motion>', self.motion)
 
-        #Load first shape in the list.
+        # Load first shape in the list.
         self.shapeIndex = 0
         self.loadShape(True, shapeName=self.shapeList[self.shapeIndex].name, loading=True)
-        self.updatePicoh()
+        #self.updatePicoh()
 
         self.checkBoxAction()
         checkbox.invoke()
 
-        if self.picohConnected:
-            picoh.reset()
-            picoh.close()
 
+        if platform.system() == "Windows":
+            winRowheight = 13
+            self.newButton.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
+            self.renameButton.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
+            self.dupButton.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
+            self.delButton.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
+
+            self.blinkButton.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
+
+            self.okayOne.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
+            self.okayTwo.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
+            self.cancelOne.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
+            self.cancelTwo.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
+
+            self.but.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
+            self.butCancel.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
+
+            self.resetButton.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
+            self.resetButtonOne.configure(compound="c", image=pixelImage, height=winRowheight,
+                                          width=self.buttonWidth * 5)
+            self.resetButtonTwo.configure(compound="c", image=pixelImage, height=winRowheight,
+                                          width=self.buttonWidth * 5)
+            self.resetButtonThree.configure(compound="c", image=pixelImage, height=winRowheight,
+                                            width=self.buttonWidth * 5)
+            self.resetButtonFour.configure(compound="c", image=pixelImage, height=winRowheight,
+                                           width=self.buttonWidth * 5)
+            self.resetButtonFive.configure(compound="c", image=pixelImage, height=winRowheight,
+                                           width=self.buttonWidth * 5)
+
+            self.mirrorCheckbox.configure(compound="c", image=pixelImage, height=winRowheight,
+                                          width=self.buttonWidth * 7)
+            self.rangeCheckbox.configure(compound="c", image=pixelImage, height=winRowheight,
+                                         width=self.buttonWidth * 7)
+            pupilTrackBox.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 7)
+            checkbox.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
+
+            self.yRangeLabel.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 7)
+            self.xRangeLabel.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 7)
+
+            self.popupMenu.configure(compound="c", image=pixelImage, height=8, width=self.buttonWidth * 14)
+
+            self.textLab.configure(compound="c", image=pixelImage, height=8, width=self.buttonWidth * 7)
+
+        self.updatePicoh()
         root.mainloop()
 
     def __init__(self, parent):
@@ -394,6 +447,8 @@ class PicohEyeDesigner(Tk.Frame):
 
                 b = Tk.Button(self.frame, highlightbackground=self.buttonCol, height=0, borderwidth=0,
                               highlightthickness=2, padx=0, pady=0)
+                if platform.system() == "Windows":
+                    b.config(bg=buttonCol)
 
                 if j == 0 and grid == 0 or j == 0 and grid == 2:
                     b.grid(row=i + buttonStartY, column=j + buttonStartX, padx=(10, 0))
@@ -495,9 +550,9 @@ class PicohEyeDesigner(Tk.Frame):
 
         my_tree = self.tree
 
-        #directory = picoh.dir
+        # directory = picoh.dir
 
-        #file = os.path.join(directory, 'Ohbot.obe')
+        # file = os.path.join(directory, 'Ohbot.obe')
         file = 'picohData/Ohbot.obe'
 
         with open(file, 'wb') as f:
@@ -534,15 +589,21 @@ class PicohEyeDesigner(Tk.Frame):
             for j in range(0, 8):
 
                 if self.gridArrayOne[i][j]:
-                    self.buttonArrayOne[i][j].config(highlightbackground='white')
+                    self.buttonArrayOne[i][j].config(highlightbackground='grey')
+                    if platform.system() == "Windows":
+                        self.buttonArrayOne[i][j].config(bg=self.buttonCol)
 
                 else:
-                    self.buttonArrayOne[i][j].config(highlightbackground=self.buttonCol)
+                    self.buttonArrayOne[i][j].config(highlightbackground='grey')
+                    if platform.system() == "Windows":
+                        self.buttonArrayOne[i][j].config(bg=self.buttonCol)
 
         for i in range(xStart, xStart + xRange):
             for j in range(yStart, yStart + yRange):
                 if self.rangeVar.get():
                     self.getButtonArray(1)[j][i].config(highlightbackground=self.pupilButtonHighlightColour)
+                    if platform.system() == "Windows":
+                        self.getButtonArray(1)[j][i].config(bg=self.pupilButtonHighlightColour)
 
         self.xRangeVar.set(str(xRange))
         self.yRangeVar.set(str(yRange))
@@ -582,7 +643,12 @@ class PicohEyeDesigner(Tk.Frame):
 
         self.popupMenu.grid(row=3, column=27, columnspan=14, sticky="w")
 
-        self.popupMenu.configure(bg=self.bgCol, width=20, font=self.customFont)
+        self.popupMenu.configure(width=20, font=self.customFont)
+
+        if platform.system() == "Windows":
+            self.popupMenu.configure(compound="c", image=pixelImage, height=8, width=self.buttonWidth * 15,
+                                     justify=Tk.LEFT)
+            self.popupMenu.grid(columnspan=15)
 
     def duplicate(self):
 
@@ -700,17 +766,23 @@ class PicohEyeDesigner(Tk.Frame):
 
         if self.gridArray[i][j]:
             self.buttonArray[i][j].config(image=onImage)
-            self.buttonArray[i][j].config(highlightbackground='white')
+            self.buttonArray[i][j].config(highlightbackground='grey')
 
         else:
             self.buttonArray[i][j].config(image=offImage)
-            self.buttonArray[i][j].config(highlightbackground=self.buttonCol)
+            self.buttonArray[i][j].config(highlightbackground='grey')
+
+        if platform.system() == "Windows":
+            self.buttonArray[i][j].config(bg=self.buttonCol)
 
     # Turn pupil off at coordinate i,j
     def turnPupilOff(self, i, j):
 
         if self.pupilVar:
             self.buttonArray[i][j].config(highlightbackground=self.pupilButtonHighlightColour)
+            if platform.system() == "Windows":
+                pass
+                # self.buttonArray[i][j].config(bg=self.pupilButtonHighlightColour)
             self.buttonArray[i][j].config(image=offImage)
 
     # Turn button on at coordinate i,j
@@ -722,8 +794,9 @@ class PicohEyeDesigner(Tk.Frame):
             return
 
         self.getGridArray(grid)[i][j] = 1
-        self.getButtonArray(grid)[i][j].config(highlightbackground='white', image=onImage)
-
+        self.getButtonArray(grid)[i][j].config(highlightbackground='grey', image=onImage)
+        if platform.system() == "Windows":
+            bg = self.buttonCol
         self.saved = False
 
     # Turn button off at coordinate i,j
@@ -735,8 +808,9 @@ class PicohEyeDesigner(Tk.Frame):
             return
 
         self.getGridArray(grid)[i][j] = 0
-        self.getButtonArray(grid)[i][j].config(highlightbackground=self.buttonCol, image=offImage)
-
+        self.getButtonArray(grid)[i][j].config(highlightbackground='grey', image=offImage)
+        if platform.system() == "Windows":
+            bg = self.buttonCol
         self.saved = False
 
     """
@@ -764,7 +838,7 @@ class PicohEyeDesigner(Tk.Frame):
     def updatePicoh(self):
         if self.picohConnected:
             hexToSend = self.hexFromGrids()
-            picoh._setEyes(hexToSend, hexToSend,self.shapeList[self.shapeIndex].autoMirror)
+            picoh._setEyes(hexToSend, hexToSend, self.shapeList[self.shapeIndex].autoMirror)
 
     # Toggle sending data to Picoh.
     def picohToggle(self):
@@ -1097,7 +1171,7 @@ class PicohEyeDesigner(Tk.Frame):
         if grid == 0 or grid == 1:
             self.updatePicoh()
 
-    #  Action for mouse move
+    #  Action for mouse move
     def OnMouseMove(self, event, grid):
 
         # If mouse is not outside original button do nothing.
@@ -1114,6 +1188,13 @@ class PicohEyeDesigner(Tk.Frame):
 
         coordinateX = ((event.x_root - 26 - offsetx) / 24)
         coordinateY = ((event.y_root - 70 - offsety) / 24) - 1
+
+        if platform.system() == "Windows":
+            coordinateX = ((event.x_root - 26 - offsetx) / 25)
+            coordinateY = ((event.y_root - 70 - offsety) / 25) - 1
+
+            if grid > 3:
+                coordinateX = coordinateX + 1
 
         # print(str(coordinateX)+"\n"+str(coordinateY))
 
@@ -1138,7 +1219,7 @@ class PicohEyeDesigner(Tk.Frame):
             coordinateY = 0
 
         # If in drawing mode, turn on the button at the coordinate and update Picoh's matrix.
-        #  Otherwise, turn off button at the coordinate and update Picoh's matrix.
+        #  Otherwise, turn off button at the coordinate and update Picoh's matrix.
 
         if self.drawing:
             self.turnButtonOn(int(coordinateY), int(coordinateX), grid, loading=False)
@@ -1169,22 +1250,6 @@ class PicohEyeDesigner(Tk.Frame):
 
         scaledY = y / parent.winfo_height()
         scaledY = scaledY * 10
-
-        """
-        x = root.winfo_pointerx()
-
-        y = root.winfo_pointery()
-        abs_coord_x = root.winfo_pointerx() - root.winfo_rootx()
-
-        abs_coord_y = root.winfo_pointery() - root.winfo_rooty()
-
-        scaledX = abs_coord_x/x
-        scaledX = scaledX*10
-
-        scaledY = abs_coord_y/y
-        scaledY = scaledY*10
-        
-        """
 
         if scaledX < 10 or scaledX > 0 or scaledY < 10 or scaledY > 0:
             picoh.move(picoh.EYETURN, scaledX)
@@ -1241,10 +1306,17 @@ class PicohEyeDesigner(Tk.Frame):
 
 if __name__ == "__main__":
     root = Tk.Tk()
-    xDim = 20
-    yDim = 40
-    hDim = 485
-    wDim = 845
+
+    if platform.system() == "Darwin":
+        xDim = 20
+        yDim = 40
+        hDim = 485
+        wDim = 845
+    elif platform.system() == "Windows":
+        xDim = 20
+        yDim = 40
+        hDim = 495
+        wDim = 850
     root.geometry('%dx%d+%d+%d' % (wDim, hDim, xDim, yDim))
     root.configure(bg='white')
     root.resizable(0, 0)
@@ -1263,6 +1335,8 @@ if __name__ == "__main__":
     copyDown = Tk.PhotoImage(file=imageFile)
     imageFile = os.path.join(directory, 'Images/moveright.gif')
     copyRight = Tk.PhotoImage(file=imageFile)
+    imageFile = os.path.join(directory, 'Images/pixel.gif')
+    pixelImage = Tk.PhotoImage(file=imageFile)
 
     app = PicohEyeDesigner(root)
     root.mainloop()
