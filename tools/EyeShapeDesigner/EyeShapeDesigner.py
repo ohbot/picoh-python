@@ -81,7 +81,11 @@ class PicohEyeDesigner(Tk.Frame):
 
     buttonWidth = 10
     buttonHeight = 3
-    tickWidth = 15
+
+    if operatingSystem == "Linux":
+        tickWidth = 11
+    else:
+        tickWidth = 15
 
     tree = None
 
@@ -95,8 +99,8 @@ class PicohEyeDesigner(Tk.Frame):
 
         if self.operatingSystem == "Darwin":
             self.customFont = tkFont.Font(family="Letter Gothic Std", size=12)
-        if self.operatingSystem == "Windows":
-            self.customFont = tkFont.Font(family="Tahoma", size=8)
+        if self.operatingSystem == "Windows" or self.operatingSystem == "Linux":
+            self.customFont = tkFont.Font(family="Helvetica", size=8)
 
         self.frame = Tk.Frame(self.parent)
         self.frame.configure(bg=self.bgCol)
@@ -168,7 +172,7 @@ class PicohEyeDesigner(Tk.Frame):
         self.textLab = Tk.Label(self.frame, text='Are You Sure?', font=self.customFont)
 
         self.filenamelabel = Tk.Label(self.frame, text="")
-        #self.filenamelabel.grid(row=13,column = 0,columnspan = 10,sticky = "W", padx = (10,0))
+        # self.filenamelabel.grid(row=13,column = 0,columnspan = 10,sticky = "W", padx = (10,0))
 
         #  Create 2D arrays with 0's to hold button states.
         for x in range(0, 6):
@@ -374,7 +378,7 @@ class PicohEyeDesigner(Tk.Frame):
 
         self.rangeCheckbox = Tk.Checkbutton(self.frame, text="Show Pupil Range", variable=self.rangeVar,
                                             command=self.displayRange)
-        #self.rangeCheckbox.grid(row=5, rowspan=1, column=18, columnspan=7, sticky="w")
+        # self.rangeCheckbox.grid(row=5, rowspan=1, column=18, columnspan=7, sticky="w")
         self.rangeCheckbox.config(bg=self.bgCol, fg=self.textCol, font=self.customFont)
 
         # Pack frame.
@@ -385,14 +389,19 @@ class PicohEyeDesigner(Tk.Frame):
         # Load first shape in the list.
         self.shapeIndex = 0
         self.loadShape(True, shapeName=self.shapeList[self.shapeIndex].name, loading=True)
-        #self.updatePicoh()
+        # self.updatePicoh()
 
         self.checkBoxAction()
         checkbox.invoke()
 
+        if self.operatingSystem == "Windows" or self.operatingSystem == "Linux":
 
-        if self.operatingSystem == "Windows":
-            winRowheight = 13
+            if self.operatingSystem == "Linux":
+                winRowheight = 11
+
+            if self.operatingSystem == "Windows":
+                winRowheight = 13
+
             self.newButton.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
             self.renameButton.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
             self.dupButton.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
@@ -419,13 +428,19 @@ class PicohEyeDesigner(Tk.Frame):
                                            width=self.buttonWidth * 5)
             self.resetButtonFive.configure(compound="c", image=pixelImage, height=winRowheight,
                                            width=self.buttonWidth * 5)
+            if self.operatingSystem != "Linux":
+                self.mirrorCheckbox.configure(compound="c", image=pixelImage, height=winRowheight,
+                                              width=self.buttonWidth * 7)
+                pupilTrackBox.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 7)
+                checkbox.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 7)
 
-            self.mirrorCheckbox.configure(compound="c", image=pixelImage, height=winRowheight,
-                                          width=self.buttonWidth * 7)
             self.rangeCheckbox.configure(compound="c", image=pixelImage, height=winRowheight,
                                          width=self.buttonWidth * 7)
-            pupilTrackBox.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 7)
-            checkbox.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 7)
+
+            if self.operatingSystem == "Linux":
+                self.mirrorCheckbox.config(width=self.tickWidth)
+                pupilTrackBox.config(width=self.tickWidth)
+                checkbox.config(width=self.tickWidth)
 
             self.yRangeLabel.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 7)
             self.xRangeLabel.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 7)
@@ -433,6 +448,10 @@ class PicohEyeDesigner(Tk.Frame):
             self.popupMenu.configure(compound="c", image=pixelImage, height=8, width=self.buttonWidth * 14)
 
             self.textLab.configure(compound="c", image=pixelImage, height=8, width=self.buttonWidth * 7)
+
+        picoh.reset()
+        picoh.wait(1)
+        picoh.close()
 
         self.updatePicoh()
         root.mainloop()
@@ -555,7 +574,7 @@ class PicohEyeDesigner(Tk.Frame):
         # directory = picoh.dir
 
         # file = os.path.join(directory, 'Ohbot.obe')
-        file = 'picohData/Ohbot.obe'
+        file = 'picohData/ohbot.obe'
 
         with open(file, 'wb') as f:
             f.write(etree.tostring(my_tree))
@@ -607,8 +626,9 @@ class PicohEyeDesigner(Tk.Frame):
                     if self.operatingSystem == "Windows":
                         self.getButtonArray(1)[j][i].config(bg=self.pupilButtonHighlightColour)
 
-        self.xRangeVar.set(str(xRange))
-        self.yRangeVar.set(str(yRange))
+        if self.operatingSystem != "Linux":
+            self.xRangeVar.set(str(xRange))
+            self.yRangeVar.set(str(yRange))
 
     def pupilTrackAction(self):
         if self.pupilTrack.get():
@@ -676,7 +696,7 @@ class PicohEyeDesigner(Tk.Frame):
     # Function to read XML files
     def xmlReadin(self):
 
-        file = 'picohData/Ohbot.obe'
+        file = 'picohData/ohbot.obe'
 
         self.tree = etree.parse(file)
 
@@ -1013,8 +1033,9 @@ class PicohEyeDesigner(Tk.Frame):
 
         self.displayRange()
 
-        self.xRangeVar.set(str(chosenShape.pupilRangeX))
-        self.yRangeVar.set(str(chosenShape.pupilRangeY))
+        if self.operatingSystem != "Linux":
+            self.xRangeVar.set(str(chosenShape.pupilRangeX))
+            self.yRangeVar.set(str(chosenShape.pupilRangeY))
 
         if chosenShape.autoMirror:
             self.mirrorVar.set(1)
@@ -1198,6 +1219,10 @@ class PicohEyeDesigner(Tk.Frame):
             if grid > 3:
                 coordinateX = coordinateX + 1
 
+        if self.operatingSystem == "Linux":
+            coordinateX = ((event.x_root - 30 - offsetx) / 26)
+            coordinateY = ((event.y_root - 50 - offsety) / 26) - 1
+
         # print(str(coordinateX)+"\n"+str(coordinateY))
 
         if coordinateY > 9:
@@ -1314,11 +1339,18 @@ if __name__ == "__main__":
         yDim = 40
         hDim = 485
         wDim = 845
-    elif platform.system() == "Windows":
+    if platform.system() == "Windows":
         xDim = 20
         yDim = 40
         hDim = 495
         wDim = 850
+
+    if platform.system() == "Linux":
+        xDim = 20
+        yDim = 40
+        hDim = 520
+        wDim = 915
+
     root.geometry('%dx%d+%d+%d' % (wDim, hDim, xDim, yDim))
     root.configure(bg='white')
     root.resizable(0, 0)
