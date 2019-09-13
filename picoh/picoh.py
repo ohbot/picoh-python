@@ -111,6 +111,11 @@ if not path.exists('picohData/MotorDefinitionsPicoh.omd'):
     if debug:
         print("Copied MotorDefinitionsPicoh.omd from :" + directory + " to picohData/" )
 
+if not path.exists('picohSounds/'):
+    shutil.copyfile(os.path.join(directory, 'MotorDefinitionsPicoh.omd'),'picohData/MotorDefinitionsPicoh.omd')
+    if debug:
+        print("Copied MotorDefinitionsPicoh.omd from :" + directory + " to picohData/" )
+
 
 # Variables to hold name of speech database and eyeshape files.
 
@@ -149,9 +154,6 @@ class Phrase(object):
 def _loadEyeShapes():
     global shapeList
 
-   # dir = os.path.dirname(os.path.abspath(__file__))
-
-    #file = os.path.join(dir, eyeShapeFile)
     file = eyeShapeFile
 
     tree = etree.parse(file)
