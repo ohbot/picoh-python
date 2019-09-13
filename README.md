@@ -51,7 +51,7 @@ picohProgramsFolder
 ```
 Alternatively you can have seperate picohData folders by saving your programs in differnt folders, you will need a copy of the tools you want to use in the folder as well:
 ```
-picohPrograms
+picohProgramsFolder
 └───folderOne
 │   │   picohTest1.py
 │   │   Calibrate.py 
