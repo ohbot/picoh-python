@@ -129,7 +129,7 @@ def sel():
     if stage == 2:
         root.destroy()
         
-        picoh.reset(1)
+        picoh.reset()
         
         picoh.wait(1)
         
