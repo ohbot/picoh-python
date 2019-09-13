@@ -372,7 +372,7 @@ class PicohEyeDesigner(Tk.Frame):
 
         self.rangeCheckbox = Tk.Checkbutton(self.frame, text="Show Pupil Range", variable=self.rangeVar,
                                             command=self.displayRange)
-        self.rangeCheckbox.grid(row=5, rowspan=1, column=18, columnspan=7, sticky="w")
+        #self.rangeCheckbox.grid(row=5, rowspan=1, column=18, columnspan=7, sticky="w")
         self.rangeCheckbox.config(bg=self.bgCol, fg=self.textCol, font=self.customFont)
 
         # Pack frame.
