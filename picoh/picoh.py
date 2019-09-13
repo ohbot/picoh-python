@@ -1203,30 +1203,26 @@ def _reverseBits(str):
     return "%0.2X" % r
 
 
-def setEyeShape(shapeNameLeft, shapeNameRight=''):
+def setEyeShape(shapeNameRight,shapeNameLeft = ''):
     global shapeList
 
-    if shapeNameRight == '':
-        shapeNameRight = shapeNameLeft
+    if shapeNameLeft == '':
+        shapeNameLeft = shapeNameRight
 
     leftHex = ''
 
     for index, shape in enumerate(shapeList):
         if shape.name == shapeNameRight:
+            rightHex = shape.hexString
+
+    for index, shape in enumerate(shapeList):
+        if shape.name == shapeNameLeft:
             leftHex = shape.hexString
             if shape.autoMirror:
                 autoMirrorVar = True
             else:
                 autoMirrorVar = False
 
-    for index, shape in enumerate(shapeList):
-        if shape.name == shapeNameLeft:
-            rightHex = shape.hexString
-            if shape.autoMirror:
-                autoMirrorVar = True
-            else:
-                autoMirrorVar = False
-    #    print(autoMirrorVar)
     # Send hex to Picoh.
 
     if leftHex == '':

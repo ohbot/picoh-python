@@ -17,7 +17,7 @@
       <PupilRangeY>7</PupilRangeY>
       <Matrix />
       <Hex>00001F1F1F1F1F00000000000004000000000000000E0A0E00000000001F1115111F00000000000E0A0E000000000000000C0C000000</Hex>
-      <AutoMirror>true</AutoMirror>
+      <AutoMirror>false</AutoMirror>
     </EyeShape>
     <EyeShape>
       <Name>BoxRight</Name>
