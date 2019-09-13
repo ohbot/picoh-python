@@ -98,7 +98,7 @@ class PicohEyeDesigner(Tk.Frame):
         self.parent.grid_columnconfigure(1, weight=0)
 
         if self.operatingSystem == "Darwin":
-            self.customFont = tkFont.Font(family="Letter Gothic Std", size=12)
+            self.customFont = tkFont.Font(family="Letter Gothic Std", size=11)
         if self.operatingSystem == "Windows" or self.operatingSystem == "Linux":
             self.customFont = tkFont.Font(family="Helvetica", size=8)
 
@@ -667,9 +667,8 @@ class PicohEyeDesigner(Tk.Frame):
 
         self.popupMenu.configure(width=20, font=self.customFont)
 
-        if self.operatingSystem == "Windows":
-            self.popupMenu.configure(compound="c", image=pixelImage, height=8, width=self.buttonWidth * 14,
-                                     justify=Tk.LEFT)
+        if self.operatingSystem == "Windows" or self.operatingSystem == "Linux":
+            self.popupMenu.configure(compound="c", image=pixelImage, height=8, width=self.buttonWidth * 14,justify=Tk.LEFT)
             self.popupMenu.grid(columnspan=15)
 
     def duplicate(self):
