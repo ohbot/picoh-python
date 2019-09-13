@@ -448,7 +448,7 @@ class PicohEyeDesigner(Tk.Frame):
                 b = Tk.Button(self.frame, highlightbackground=self.buttonCol, height=0, borderwidth=0,
                               highlightthickness=2, padx=0, pady=0)
                 if platform.system() == "Windows":
-                    b.config(bg=buttonCol)
+                    b.config(bg=self.buttonCol)
 
                 if j == 0 and grid == 0 or j == 0 and grid == 2:
                     b.grid(row=i + buttonStartY, column=j + buttonStartX, padx=(10, 0))
@@ -646,7 +646,7 @@ class PicohEyeDesigner(Tk.Frame):
         self.popupMenu.configure(width=20, font=self.customFont)
 
         if platform.system() == "Windows":
-            self.popupMenu.configure(compound="c", image=pixelImage, height=8, width=self.buttonWidth * 15,
+            self.popupMenu.configure(compound="c", image=pixelImage, height=8, width=self.buttonWidth * 14,
                                      justify=Tk.LEFT)
             self.popupMenu.grid(columnspan=15)
 
