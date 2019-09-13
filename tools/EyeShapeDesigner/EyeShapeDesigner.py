@@ -94,7 +94,7 @@ class PicohEyeDesigner(Tk.Frame):
         if platform.system() == "Darwin":
             self.customFont = tkFont.Font(family="Letter Gothic Std", size=12)
         if platform.system() == "Windows":
-            self.customFont = tkFont.Font(family="Agency FB", size=12)
+            self.customFont = tkFont.Font(family="Tahoma", size=12)
 
         self.frame = Tk.Frame(self.parent)
         self.frame.configure(bg=self.bgCol)
