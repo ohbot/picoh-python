@@ -37,7 +37,7 @@ You can share the picohData between multiple programs by saving them in the same
 
 For example:
 ```
-picohPrograms
+picohProgramsFolder
 │   picohTest1.py
 |   picohTest2.py
 │   EyeShapeDesigner.py 
@@ -52,7 +52,7 @@ picohPrograms
 Alternatively you can have seperate picohData folders by saving your programs in differnt folders, you will need a copy of the tools you want to use in the folder as well:
 ```
 picohPrograms
-└───programOne
+└───folderOne
 │   │   picohTest1.py
 │   │   Calibrate.py 
 │   │   EyeShapeDesigner.py
@@ -63,7 +63,7 @@ picohPrograms
 │           MotorDefinitionsPicoh.omd
 │           picohspeech.csv
 │   
-└───programTwo
+└───folderTwo
     │   picohTest2.py
     │   Calibrate.py 
     │   EyeShapeDesigner.py
