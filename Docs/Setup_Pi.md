@@ -95,7 +95,11 @@ Import the picoh library at the start of your program.
 from picoh import picoh
 ```
 
-Go to the [helloworldpicoh](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/Pi/helloworldpicoh.py) example, save it or copy to a new file in IDLE. 
+Firstly to calibrate Picoh's lips please go to: 
+[calibrate](https://github.com/ohbot/picoh-python/tree/master/tools/Calibrate) and follow the instructions.
+
+
+Then go to the [helloworldpicoh](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/Pi/helloworldpicoh.py) example, save it or copy to a new file in IDLE. 
 
 Select <b>Run Module</b> from the <b>Run</b> menu.
 
