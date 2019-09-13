@@ -33,6 +33,8 @@ class EyeShape(object):
 class PicohEyeDesigner(Tk.Frame):
     # Class variables
 
+    operatingSystem = platform.system()
+
     # %%%%
     picohConnected = picoh.connected
 
@@ -71,7 +73,7 @@ class PicohEyeDesigner(Tk.Frame):
     textCol = 'black'
     buttonCol = 'white'
 
-    if platform.system() == 'Windows':
+    if operatingSystem == 'Windows':
         buttonCol = 'grey'
 
     # pupilButtonHighlightColour = '#408bf9'
@@ -91,9 +93,9 @@ class PicohEyeDesigner(Tk.Frame):
         self.parent.grid_rowconfigure(1, weight=0)
         self.parent.grid_columnconfigure(1, weight=0)
 
-        if platform.system() == "Darwin":
+        if self.operatingSystem == "Darwin":
             self.customFont = tkFont.Font(family="Letter Gothic Std", size=12)
-        if platform.system() == "Windows":
+        if self.operatingSystem == "Windows":
             self.customFont = tkFont.Font(family="Tahoma", size=8)
 
         self.frame = Tk.Frame(self.parent)
@@ -301,7 +303,7 @@ class PicohEyeDesigner(Tk.Frame):
         # Create Picoh logo button.
         self.picohButton = Tk.Button(self.frame, command=self.picohToggle, image=chosenLogo)
         self.picohButton.grid(row=0, column=27, columnspan=20, rowspan=3, sticky="s")
-        if platform.system() == "Windows":
+        if self.operatingSystem == "Windows":
             self.picohButton.grid(rowspan=3, sticky="n", row=0)
         self.picohButton.configure(highlightbackground=self.bgCol)
 
@@ -389,7 +391,7 @@ class PicohEyeDesigner(Tk.Frame):
         checkbox.invoke()
 
 
-        if platform.system() == "Windows":
+        if self.operatingSystem == "Windows":
             winRowheight = 13
             self.newButton.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
             self.renameButton.configure(compound="c", image=pixelImage, height=winRowheight, width=self.buttonWidth * 5)
@@ -447,7 +449,7 @@ class PicohEyeDesigner(Tk.Frame):
 
                 b = Tk.Button(self.frame, highlightbackground=self.buttonCol, height=0, borderwidth=0,
                               highlightthickness=2, padx=0, pady=0)
-                if platform.system() == "Windows":
+                if self.operatingSystem == "Windows":
                     b.config(bg=self.buttonCol)
 
                 if j == 0 and grid == 0 or j == 0 and grid == 2:
@@ -590,19 +592,19 @@ class PicohEyeDesigner(Tk.Frame):
 
                 if self.gridArrayOne[i][j]:
                     self.buttonArrayOne[i][j].config(highlightbackground='grey')
-                    if platform.system() == "Windows":
+                    if self.operatingSystem == "Windows":
                         self.buttonArrayOne[i][j].config(bg=self.buttonCol)
 
                 else:
                     self.buttonArrayOne[i][j].config(highlightbackground='grey')
-                    if platform.system() == "Windows":
+                    if self.operatingSystem == "Windows":
                         self.buttonArrayOne[i][j].config(bg=self.buttonCol)
 
         for i in range(xStart, xStart + xRange):
             for j in range(yStart, yStart + yRange):
                 if self.rangeVar.get():
                     self.getButtonArray(1)[j][i].config(highlightbackground=self.pupilButtonHighlightColour)
-                    if platform.system() == "Windows":
+                    if self.operatingSystem == "Windows":
                         self.getButtonArray(1)[j][i].config(bg=self.pupilButtonHighlightColour)
 
         self.xRangeVar.set(str(xRange))
@@ -645,7 +647,7 @@ class PicohEyeDesigner(Tk.Frame):
 
         self.popupMenu.configure(width=20, font=self.customFont)
 
-        if platform.system() == "Windows":
+        if self.operatingSystem == "Windows":
             self.popupMenu.configure(compound="c", image=pixelImage, height=8, width=self.buttonWidth * 14,
                                      justify=Tk.LEFT)
             self.popupMenu.grid(columnspan=15)
@@ -772,7 +774,7 @@ class PicohEyeDesigner(Tk.Frame):
             self.buttonArray[i][j].config(image=offImage)
             self.buttonArray[i][j].config(highlightbackground='grey')
 
-        if platform.system() == "Windows":
+        if self.operatingSystem == "Windows":
             self.buttonArray[i][j].config(bg=self.buttonCol)
 
     # Turn pupil off at coordinate i,j
@@ -780,7 +782,7 @@ class PicohEyeDesigner(Tk.Frame):
 
         if self.pupilVar:
             self.buttonArray[i][j].config(highlightbackground=self.pupilButtonHighlightColour)
-            if platform.system() == "Windows":
+            if self.operatingSystem == "Windows":
                 pass
                 # self.buttonArray[i][j].config(bg=self.pupilButtonHighlightColour)
             self.buttonArray[i][j].config(image=offImage)
@@ -795,7 +797,7 @@ class PicohEyeDesigner(Tk.Frame):
 
         self.getGridArray(grid)[i][j] = 1
         self.getButtonArray(grid)[i][j].config(highlightbackground='grey', image=onImage)
-        if platform.system() == "Windows":
+        if self.operatingSystem == "Windows":
             bg = self.buttonCol
         self.saved = False
 
@@ -809,7 +811,7 @@ class PicohEyeDesigner(Tk.Frame):
 
         self.getGridArray(grid)[i][j] = 0
         self.getButtonArray(grid)[i][j].config(highlightbackground='grey', image=offImage)
-        if platform.system() == "Windows":
+        if self.operatingSystem == "Windows":
             bg = self.buttonCol
         self.saved = False
 
@@ -1189,7 +1191,7 @@ class PicohEyeDesigner(Tk.Frame):
         coordinateX = ((event.x_root - 26 - offsetx) / 24)
         coordinateY = ((event.y_root - 70 - offsety) / 24) - 1
 
-        if platform.system() == "Windows":
+        if self.operatingSystem == "Windows":
             coordinateX = ((event.x_root - 26 - offsetx) / 25)
             coordinateY = ((event.y_root - 70 - offsety) / 25) - 1
 
