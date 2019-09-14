@@ -32,25 +32,27 @@ Using Eye Shapes
 The Eye Shape Designer will read and write eyeshapes from the Ohbot.obe file found within the picohData folder in your working directory.
 
 
-If you want to use a shape you have designed in a program eg:
+If you want to use a shape you have designed in a program for example:
 
 ```python
 
 picoh.setEyeShape("TestEyeShape")
-```
-Please ensure you save your program inside the same folder as the eye shape designer so they can both access the same copy of the picohData folder. See the Picoh Data folder section on the main [readme](https://github.com/ohbot/picoh-python/blob/master/README.md) for more information.
 
-Set the left and right eyes to different shapes like this:
+```
+or
 
 ```python
 
 picoh.setEyeShape("TestEyeShapeRight","TestEyeShapeLeft")
+
 ```
+Please ensure you save your program inside the same folder as the eye shape designer so they can both access the same copy of the picohData folder. See the Picoh Data folder section on the main [README](https://github.com/ohbot/picoh-python/blob/master/README.md) for more information.
+
 
 Auto Mirror
 ----------
 
-Many eye shapes work well when the left eye is a mirror of the right eye, check the automirror box in the eye shape designer to toggle this setting for your eye shapes. For shapes where automirror is on the image in the right eye will be mirrored automatically. 
+Many eye shapes work well when the left eye is a mirror of the right eye, check the automirror box in the eye shape designer to toggle this setting for your eye shapes. For shapes where automirror is turned on, the image in the right eye will be mirrored automatically. 
 
 
 Picoh Button
