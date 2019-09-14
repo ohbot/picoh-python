@@ -40,7 +40,7 @@ picoh.say(picoh.getPhrase(variable=2))
 # Picoh will say a random phrase with variable = 2.
 
 picoh.say(picoh.getPhrase())
-# Picoh will say a random phrase from the whole databse. 
+# Picoh will say a random phrase from the whole database. 
 
 ```
 Please ensure you save your program inside the same folder as the speech database tool so they can both access the same copy of the picohData folder. See the picohData Folder section on the main [README](https://github.com/ohbot/picoh-python/blob/master/README.md) for more information.
