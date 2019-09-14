@@ -344,8 +344,8 @@ picoh.speechSpeed(params)
 ------
 Use picoh.speechSpeed() to set speech rate in words per minute.
 
-
-
+More on speech
+---
 
 Platform specific documentation for setting voices and languages:
 
