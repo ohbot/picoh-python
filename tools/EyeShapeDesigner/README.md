@@ -57,7 +57,7 @@ Many eye shapes work well when the left eye is a mirror of the right eye, check 
 <a href="https://github.com/ohbot/picoh-python/blob/master/.images/angryeye.png?raw=true" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/angryeye.png?raw=true" border="0" width = "20%"/></a>
 
 
-Picoh Button
+Picoh Button<a href="https://github.com/ohbot/picoh-python/blob/master/.images/picohlogo.gif?raw=true" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/picohlogo.gif?raw=true" border="0" width = "10%"/></a>
 ----------
 
 Press the Picoh button to disable/enable Picoh previewing your drawing on its display. 
