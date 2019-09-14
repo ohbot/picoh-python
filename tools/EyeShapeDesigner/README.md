@@ -1,4 +1,4 @@
-# Eye Shape Designer. 
+# Eye Shape Designer Tool. 
 
 Use the EyeShapeDesigner to draw your own eye shapes to use in your Picoh programs. Design the eye shape, pupil shape and the 4 stages of blink animation. 
 
@@ -10,7 +10,7 @@ How to run
 ----------
 1) Right click and save in your working directory: [EyeShapeDesigner.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/tools/EyeShapeDesigner/EyeShapeDesigner.py)  
 
-2) Ensure Picoh is plugged in. 
+2) Plug in Picoh (Optional, connect Picoh to preview your drawings on the matrix display) 
 
 3) Run in IDLE or a Python editor/launcher of your choice. 
 
@@ -22,7 +22,7 @@ Features
 
 * Enable and disable an eyeshape's auto mirror setting.
 
-* Animate Picoh's pupil using the mouse position to test your eye shape. 
+* Animate Picoh's pupil using your mouse position to help test your eye shape. 
 
 * Test the blink animation you have draw using a button click. 
 
@@ -46,7 +46,7 @@ or
 picoh.setEyeShape("TestEyeShapeRight","TestEyeShapeLeft")
 
 ```
-Please ensure you save your program inside the same folder as the eye shape designer so they can both access the same copy of the picohData folder. See the Picoh Data folder section on the main [README](https://github.com/ohbot/picoh-python/blob/master/README.md) for more information.
+Please ensure you save your program inside the same folder as the eye shape designer so they can both access the same copy of the picohData folder. See the picohData Folder section on the main [README](https://github.com/ohbot/picoh-python/blob/master/README.md) for more information.
 
 
 Auto Mirror
@@ -60,6 +60,6 @@ Many eye shapes work well when the left eye is a mirror of the right eye, check 
 Picoh Button
 ----------
 
-Press the Picoh button to disable/enable Picoh previewing your drawing on its display. 
+Toggle the Picoh button to disable/enable Picoh previewing your drawing on its display. 
 
 <a href="https://github.com/ohbot/picoh-python/blob/master/.images/picohlogo.gif?raw=true" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/picohlogo.gif?raw=true" border="0" width = "10%"/></a>
