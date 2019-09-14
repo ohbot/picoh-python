@@ -15,15 +15,15 @@ How to run
 
 Features
 ----------
--Draw, modify and rename and delete eyeshapes.
+*Draw, modify and rename and delete eyeshapes.
 
--See your drawing on Picoh's matrix in real time. 
+*See your drawing on Picoh's matrix in real time. 
 
--Enable and disable an eyeshape's auto mirror setting.
+*Enable and disable an eyeshape's auto mirror setting.
 
--Animate Picoh's pupil using the mouse position to test your eye shape. 
+*Animate Picoh's pupil using the mouse position to test your eye shape. 
 
--Test the blink animation you have draw using a button click. 
+*Test the blink animation you have draw using a button click. 
 
 
 Using Eye Shapes
