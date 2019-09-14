@@ -82,15 +82,16 @@ if platform.system() == "Linux":
 
 print("Speech Synthesizer: " + synthesizer)
 
-dirName = 'picohData'
+'''
+dirName = 'picohSounds'
 
 try:
     # Create target Directory
     os.mkdir(dirName)
 except FileExistsError:
     pass
-
-dirName = 'picohSounds'
+'''
+dirName = 'picohData'
 
 try:
     # Create target Directory
@@ -105,25 +106,26 @@ if debug:
     print("Picoh Library Directory " + directory)
 
 if not path.exists('picohData/PicohSpeech.csv'):
-    shutil.copyfile(os.path.join(directory, 'PicohSpeech.csv'),'picohData/PicohSpeech.csv')
+    shutil.copyfile(os.path.join(directory, 'PicohSpeech.csv'), 'picohData/PicohSpeech.csv')
     if debug:
-        print("Copied PicohSpeech.csv from :" + directory + " to picohData/" )
+        print("Copied PicohSpeech.csv from :" + directory + " to picohData/")
 
 if not path.exists('picohData/ohbot.obe'):
-    shutil.copyfile(os.path.join(directory, 'ohbot.obe'),'picohData/ohbot.obe')
+    shutil.copyfile(os.path.join(directory, 'ohbot.obe'), 'picohData/ohbot.obe')
     if debug:
-        print("Copied ohbot.obe from :" + directory + " to picohData/" )
+        print("Copied ohbot.obe from :" + directory + " to picohData/")
 
 if not path.exists('picohData/MotorDefinitionsPicoh.omd'):
-    shutil.copyfile(os.path.join(directory, 'MotorDefinitionsPicoh.omd'),'picohData/MotorDefinitionsPicoh.omd')
+    shutil.copyfile(os.path.join(directory, 'MotorDefinitionsPicoh.omd'), 'picohData/MotorDefinitionsPicoh.omd')
     if debug:
-        print("Copied MotorDefinitionsPicoh.omd from :" + directory + " to picohData/" )
+        print("Copied MotorDefinitionsPicoh.omd from :" + directory + " to picohData/")
 
-if not path.exists('picohSounds/'):
-    shutil.copyfile(os.path.join(directory, 'MotorDefinitionsPicoh.omd'),'picohData/MotorDefinitionsPicoh.omd')
+if not path.exists('picohData/Sounds'):
+
+    shutil.copytree(os.path.join(directory, 'Sounds'), 'picohData/Sounds')
+
     if debug:
-        print("Copied MotorDefinitionsPicoh.omd from :" + directory + " to picohData/" )
-
+        print("Copied Sounds from :" + directory + " to PicohData/")
 
 # Variables to hold name of speech database and eyeshape files.
 
@@ -131,7 +133,7 @@ speechDatabaseFile = 'picohData/PicohSpeech.csv'
 eyeShapeFile = 'picohData/ohbot.obe'
 speechAudioFile = 'picohData/picohspeech.wav'
 picohMotorDefFile = 'picohData/MotorDefinitionsPicoh.omd'
-
+soundFolder = 'picohData/Sounds'
 
 # Cache of pupil positions
 global lastfex, lastfey
@@ -139,6 +141,7 @@ lastfex = 5
 lastfey = 5
 
 ser = None
+
 
 class EyeShape(object):
 
@@ -190,6 +193,7 @@ def _loadEyeShapes():
                 shapeList[index].autoMirror = False
 
             index = index + 1
+
 
 # Read speech database file into phraseList.
 def _loadSpeechDatabase():
@@ -246,7 +250,6 @@ def _parseSAPIVoice(flag):
 
 # speak depending on synthesizer
 def _speak(text):
-
     file = speechAudioFile
     if platform.system() == "Windows":
         if ("sapi" in synthesizer.lower()):
@@ -296,9 +299,11 @@ def _speak(text):
         file = speechAudioFile
 
         if voice:
-            bashcommand = synthesizer + file + ' --file-format=RF64 --data-format=LEI16@22050 -r' + str(speechRate) + ' -v ' + voice + ' "' + safetext + '"'
+            bashcommand = synthesizer + file + ' --file-format=RF64 --data-format=LEI16@22050 -r' + str(
+                speechRate) + ' -v ' + voice + ' "' + safetext + '"'
         else:
-            bashcommand = synthesizer + file + ' --file-format=RF64 --data-format=LEI16@22050 -r' + str(speechRate) + ' "' + safetext + '"'
+            bashcommand = synthesizer + file + ' --file-format=RF64 --data-format=LEI16@22050 -r' + str(
+                speechRate) + ' "' + safetext + '"'
 
         if debug:
             print("Speech Bash Command")
@@ -310,20 +315,21 @@ def _speak(text):
         retval = ret.wait()
         # print(retval)
 
-    if platform.system()== "Linux":
+    if platform.system() == "Linux":
 
         # Remove any characters that are unsafe for a subprocess call
         safetext = re.sub(r'[^ .a-zA-Z0-9?\']+', '', text)
         bashcommand = synthesizer + ' -w picohData/picohspeech.wav ' + voice + ' "' + safetext + '"'
         # Execute bash command.
-        subprocess.call(bashcommand,shell=True)
+        subprocess.call(bashcommand, shell=True)
 
         if debug:
             print("Speech Bash Command")
             print(bashcommand)
 
+
 def init(portName):
-    # pickup global instances of port, ser and sapi variables   
+    # pickup global instances of port, ser and sapi variables
     global port, ser, sapivoice, sapistream, connected
 
     _loadEyeShapes()
@@ -395,8 +401,8 @@ def init(portName):
 
 # Startup Code
 # xml file for motor definitions
-#dir = os.path.dirname(os.path.abspath(__file__))
-#file = os.path.join(dir, 'picohdefinitions.omd')
+# dir = os.path.dirname(os.path.abspath(__file__))
+# file = os.path.join(dir, 'picohdefinitions.omd')
 tree = etree.parse(picohMotorDefFile)
 root = tree.getroot()
 
@@ -437,20 +443,20 @@ if platform.system() == "Darwin":
 if platform.system() == "Linux":
     init("Arduino")
 
+
 def getDirectory():
     global directory
     return directory
+
+
 # Function to move Picoh's motors. Arguments | m (motor) → int (0-6) | pos (position) → int (0-10) | spd (speed) →
 # int (0-10) **eg move(4,3,9) or move(0,9,3)**
 def move(m, pos, spd=5, eye=0):
     global lastfex, lastfey, topLipFree
 
-
-
     # Limit values to keep then within range
     pos = _limit(pos)
     spd = _limit(spd)
-
 
     # Keeping track of whether the top lip is pushed below the centre stop.
 
@@ -461,8 +467,7 @@ def move(m, pos, spd=5, eye=0):
         topLipFree = False
 
     if pos < 5 and m == BOTTOMLIP:
-        pos = 5 - ((5-pos)/2)
-
+        pos = 5 - ((5 - pos) / 2)
 
     # Reverse the motor if necessary
     if motorRev[m]:
@@ -502,7 +507,7 @@ def move(m, pos, spd=5, eye=0):
         _serwrite(msg)
         return
 
-    # Attach motor       
+    # Attach motor
     attach(m)
 
     # Convert position (0-10) to a motor position in degrees
@@ -528,7 +533,7 @@ def _serwrite(s):
     if debug:
         print("Serial command sent to Picoh:")
         print(s)
-    if platform.system() == "Windows" or platform.system()=="Linux":
+    if platform.system() == "Windows" or platform.system() == "Linux":
         # wait until previous write is finished
         while (writing):
             pass
@@ -608,13 +613,11 @@ def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
     text = text.replace("Picoh", "peek oh")
 
     if platform.system() == "Linux":
-        _sayLinux(text,untilDone,lipSync,hdmiAudio,soundDelay)
+        _sayLinux(text, untilDone, lipSync, hdmiAudio, soundDelay)
         return
 
     if hdmiAudio:
         soundDelay = soundDelay - 1
-
-
 
     # Create a bash command with the desired text. espeak.exe or another synthesizer must be in the current folder.  the -w parameter forces the speech to a file
     _speak(text)
@@ -703,7 +706,7 @@ def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
         t = threading.Thread(target=_saySpeech, args=(hdmiAudio,))
     t.start()
 
-    # if untilDone, keep running until speech has finished    
+    # if untilDone, keep running until speech has finished
     if untilDone:
         totalTime = times[len(times) - 1]
         startTime = time.time()
@@ -712,8 +715,6 @@ def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
 
 
 def _sayLinux(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
-
-
     if "festival" in synthesizer.lower():
 
         if hdmiAudio:
@@ -884,7 +885,7 @@ def _limit(val):
 # Function to play back the speech wav file, if hmdi audio is being used play silence before speech sound
 def _saySpeech(addSilence):
     dir = os.path.dirname(os.path.abspath(__file__))
-    #speechFile = os.path.join(dir, 'picohspeech.wav')
+    # speechFile = os.path.join(dir, 'picohspeech.wav')
     silenceFile = os.path.join(dir, 'Silence1.wav')
 
     speechFile = speechAudioFile
@@ -919,31 +920,31 @@ def _moveSpeech(phonemes, times):
             if timeNow > times[x] and x > currentX:
                 posTop = _phonememapTop(phonemes[x])
                 posBottom = _phonememapBottom(phonemes[x])
-                #move(TOPLIP, posTop, 10)
+                # move(TOPLIP, posTop, 10)
                 move(BOTTOMLIP, posBottom, 10)
                 currentX = x
-   # move(TOPLIP, 5)
+    # move(TOPLIP, 5)
     move(BOTTOMLIP, 5)
 
 
 def _moveSpeechFest(phonemes, times):
     startTime = time.time()
     timeNow = 0
-    totalTime = times[len(times)-1]
+    totalTime = times[len(times) - 1]
     currentX = -1
     while timeNow < totalTime:
         timeNow = time.time() - startTime
-        for x in range (0,len(times)):
+        for x in range(0, len(times)):
             if timeNow > times[x] and x > currentX:
                 posTop = _phonememapTopFest(phonemes[x])
                 posBottom = _phonememapBottomFest(phonemes[x])
                 posBottom = 5 + (posBottom * 3 / 10)
-                #move(TOPLIP,posTop,10)
+                # move(TOPLIP,posTop,10)
 
-                move(BOTTOMLIP,posBottom,10)
+                move(BOTTOMLIP, posBottom, 10)
                 currentX = x
-    #move(TOPLIP,5)
-    move(BOTTOMLIP,5)
+    # move(TOPLIP,5)
+    move(BOTTOMLIP, 5)
 
 
 # Function mapping phonemes to top lip positions. Argument | val → phoneme | returns a position as int
@@ -1098,7 +1099,7 @@ def close():
 
 def reset():
     baseColour(0, 0, 0)
-    setEyeShape("Eyeball","Eyeball")
+    setEyeShape("Eyeball", "Eyeball")
     for x in range(0, len(restPos) - 1):
         move(x, restPos[x])
 
@@ -1142,7 +1143,7 @@ def setEyeBrightness(val):
 # eysshape definition is 6 sets of 9 hex pairs which set the bits of half of the screen
 # the other half of the screen is a mirror copy
 # the first 5 sets of pairs set the normal eye and 4 blink positions
-# the last set of pairs set the pupil 
+# the last set of pairs set the pupil
 # set the eye shape according to the passed in eyeshapedefinition
 # eyeshape definition is 6 sets of 9 hex pairs which set the bits of half of the screen
 # the other half of the screen is a mirror copy
@@ -1213,7 +1214,7 @@ def _reverseBits(str):
     return "%0.2X" % r
 
 
-def setEyeShape(shapeNameRight,shapeNameLeft = ''):
+def setEyeShape(shapeNameRight, shapeNameLeft=''):
     global shapeList
 
     if shapeNameLeft == '':
@@ -1255,9 +1256,29 @@ def getPhrase(set='None', variable='None'):
     length = len(possiblePhrases)
     if length == 0:
         print(
-            "No matching phrase found for set: " + str(set) + " variable: " + str(variable) + " in: " + speechFile)
+                "No matching phrase found for set: " + str(set) + " variable: " + str(variable) + " in: " + speechFile)
         return ""
     elif length == 1:
         return possiblePhrases[0]
     else:
         return possiblePhrases[random.randint(0, length - 1)]
+
+
+def playSound(name=""):
+    if not name:
+        return
+    name = name + ".wav"
+    dir = soundFolder
+    soundFile = os.path.join(dir, name)
+
+    # get the sapi objects ready on Windows
+    if platform.system() == "Windows":
+        winsound.PlaySound(soundFile, winsound.SND_FILENAME)
+
+    # get the audio system warmed up on Mac
+    if platform.system() == "Darwin":
+        playsound(soundFile)
+
+    # get the audio system warmed up on linux
+    if platform.system() == "Linux":
+        os.system('aplay ' + soundFile)

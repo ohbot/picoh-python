@@ -21,4 +21,9 @@ picoh/Images/pixel.gif
 picoh/Images/plus.gif
 picoh/Images/resetIcon.gif
 picoh/Images/savebutton.gif
+picoh/Sounds/fanfare.wav
+picoh/Sounds/loop.wav
+picoh/Sounds/ohbot.wav
+picoh/Sounds/smash.wav
+picoh/Sounds/spring.wav
 test/test.py
