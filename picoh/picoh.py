@@ -90,6 +90,14 @@ try:
 except FileExistsError:
     pass
 
+dirName = 'picohSounds'
+
+try:
+    # Create target Directory
+    os.mkdir(dirName)
+except FileExistsError:
+    pass
+
 # Variable to hold the location of the picoh library folder.
 directory = os.path.dirname(os.path.abspath(__file__))
 

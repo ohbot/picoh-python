@@ -172,14 +172,14 @@ picoh.move(1,4,2)
 ```
 ---
 
-picoh.setEyeShape(shapeNameLeft,shapeNameRight)
+picoh.setEyeShape(shapeNameRight,shapeNameLeft)
 ------
 
-shapeNameLeft: String - Eyeshape name. 
 shapeNameRight: String - Eyeshape name. 
+shapeNameLeft: String - Eyeshape name. 
 
 Use picoh.setEyeShape() to change the shape of pixels displayed on Picoh's matrix display. 
-To see available eye shapes and design your own have a look at the EyeShape designer tool.
+To see available eye shapes and design your own have a look at the [EyeShape designer tool](https://github.com/ohbot/picoh-python/tree/master/tools/EyeShapeDesigner).
 
 For Example:
 ```python
@@ -237,7 +237,7 @@ You can view and edit the speech database using the Speech Databse tool. Each en
 
 If more than one phrase matches the set and variable provided a random match is returned. 
 
-To see available eye shapes and design your own have a look at the EyeShape designer tool.
+To see available phrases and write your own see the [Speech Database Tool](https://github.com/ohbot/picoh-python/tree/master/tools/SpeechDatabase). 
 
 For Example:
 ```python
