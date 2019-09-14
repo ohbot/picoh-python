@@ -315,8 +315,6 @@ picoh.close()
 picoh.readSensor(sensorNumber)
 ----------
 
-Seconds - float or int required wait time. picoh.wait(1.5)
-
 | Name| Range| Description  |
 | --- |------|-------------|
 | sensorNumber   | 0-6 (int) | the pin the sensor is connected to |
@@ -328,6 +326,33 @@ For Example:
 reading = picoh.readSensor(3)
 
 picoh.move(picoh.HEADTURN, reading)
+
+```
+
+picoh.playSound(sound)
+----------
+
+sound - string name of sound.
+
+sounds are read from picohData/Sounds/ add new sound files to this folder to access them. .Wav files only for the moment. When writing the file name please do not include the .wav file extension. 
+
+Some demo sounds will be pre installed:
+
+* fanfare
+* loop
+* ohbot
+* smash
+* spring
+
+For Example:
+```python
+picoh.playSound('fanfare')
+
+```
+or
+
+```python
+picoh.playSound('spring')
 
 ```
 
