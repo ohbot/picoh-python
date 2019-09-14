@@ -4,14 +4,15 @@ Use the EyeShapeDesigner to draw your own eye shapes to use in your Picoh progra
 
 <a href="https://github.com/ohbot/picoh-python/blob/master/.images/eyedesignerscreenshot2.png?raw=true" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/eyedesignerscreenshot2.png?raw=true" border="0" width = "100%"/></a>
 
-Tested on Python 3.7.  on macOS and Windows 10 and Python 3.4 on Raspberry Pi. 
+* Tested on Python 3.7.  on macOS and Windows 10 and Python 3.4 on Raspberry Pi. *
 
 How to run
 ----------
-
 1) Right click and save in your working directory: [EyeShapeDesigner.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/tools/EyeShapeDesigner/EyeShapeDesigner.py)  
 
-2) Run in IDLE or a Python editor of your choice. 
+2) Ensure Picoh is plugged in. 
+
+3) Run in IDLE or a Python editor/launcher of your choice. 
 
 Features
 ----------
@@ -49,10 +50,10 @@ picoh.setEyeShape("TestEyeShapeRight","TestEyeShapeLeft")
 Auto Mirror
 ----------
 
-Many eye shapes work well when the left eye is a mirror of the right eye, check the automirror box in the eye shape designer to toggle this setting for your eye shapes.For shapes where automirror is on the image in the right eye will be mirrored automatically. 
+Many eye shapes work well when the left eye is a mirror of the right eye, check the automirror box in the eye shape designer to toggle this setting for your eye shapes. For shapes where automirror is on the image in the right eye will be mirrored automatically. 
 
 
 Picoh Button
 ----------
 
-Press the Picoh button to disable/enable your drawings being previewed on Picoh. 
+Press the Picoh button to disable/enable Picoh previewing your drawing on its display. 
