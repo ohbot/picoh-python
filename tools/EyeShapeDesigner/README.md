@@ -4,7 +4,7 @@ Use the EyeShapeDesigner to draw your own eye shapes to use in your Picoh progra
 
 <a href="https://github.com/ohbot/picoh-python/blob/master/.images/eyedesignerscreenshot2.png?raw=true" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/eyedesignerscreenshot2.png?raw=true" border="0" width = "100%"/></a>
 
-* Tested on Python 3.7.  on macOS and Windows 10 and Python 3.4 on Raspberry Pi. *
+* Tested on Python 3.7.  on macOS and Windows 10 and Python 3.4 on Raspberry Pi.
 
 How to run
 ----------
