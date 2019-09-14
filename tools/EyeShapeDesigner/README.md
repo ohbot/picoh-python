@@ -16,7 +16,7 @@ How to run
 
 Features
 ----------
-* Draw, modify and rename and delete eyeshapes.
+* Draw, modify, rename and delete eyeshapes.
 
 * See your drawing on Picoh's matrix in real time. 
 
@@ -54,8 +54,12 @@ Auto Mirror
 
 Many eye shapes work well when the left eye is a mirror of the right eye, check the automirror box in the eye shape designer to toggle this setting for your eye shapes. For shapes where automirror is turned on, the image in the right eye will be mirrored automatically. 
 
+<a href="https://github.com/ohbot/picoh-python/blob/master/.images/angryeye.png?raw=true" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/angryeye.png?raw=true" border="0" width = "20%"/></a>
+
 
 Picoh Button
 ----------
 
 Press the Picoh button to disable/enable Picoh previewing your drawing on its display. 
+
+<a href="https://github.com/ohbot/picoh-python/blob/master/.images/picohLogo.gif?raw=true" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/picohLogo.gif?raw=true" border="0" width = "10%"/></a>
