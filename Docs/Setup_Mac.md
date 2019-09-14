@@ -93,3 +93,6 @@ Picoh should speak and move.
 More example programs can be found [here.](https://github.com/ohbot/picoh-python/tree/master/examples/Mac)
 
 Information on how to use different Mac voices can be found [here.](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Mac.md)
+
+* [Eye Designer Tool](https://github.com/ohbot/picoh-python/tree/master/tools/EyeShapeDesigner)
+* [Speech Databse Tool](https://github.com/ohbot/picoh-python/tree/master/tools/SpeechDatabase)

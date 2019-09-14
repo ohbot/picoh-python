@@ -109,6 +109,7 @@ More example programs can be found [here.](https://github.com/ohbot/picoh-python
 
 More information on using other voices can be found [here.](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Pi.md)
 
-* [Eye Designer Tool] (https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Pi.md)
+* [Eye Designer Tool](https://github.com/ohbot/picoh-python/tree/master/tools/EyeShapeDesigner)
+* [Speech Databse Tool](https://github.com/ohbot/picoh-python/tree/master/tools/SpeechDatabase)
 
 
