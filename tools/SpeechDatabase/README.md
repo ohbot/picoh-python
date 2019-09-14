@@ -16,10 +16,10 @@ How to run
 
 Using phrases from your database. 
 ----------
-The speech database program will read and write from PicohSpeech.csv found within the picohData/ in your working directory. 
+The speech database tool will read and write from PicohSpeech.csv found within the picohData/ in your working directory. 
 
 
-To use a phrase in you can select it using its set and variable for example:
+To use a phrase in a Picoh program select it using its set and/or variable for example:
 
 
 ```python
@@ -27,7 +27,7 @@ To use a phrase in you can select it using its set and variable for example:
 picoh.getPhrase(1,2)
 
 ```
-This command would make Picoh say "how can I help?" if you are using the default speech database.   
+This command would make Picoh say "how can I help?" if you are using the default speech database as this is the only phrase where set = 1 and variable = 2.   
 
 or
 
