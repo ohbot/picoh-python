@@ -347,9 +347,10 @@ Use picoh.speechSpeed() to set speech rate in words per minute.
 
 
 Platform specific documentation for setting voices and languages:
+---
 
-[macOS](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Mac.md)
+* [macOS](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Mac.md)
 
-[Windows](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Windows.md)
+* [Windows](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Windows.md)
 
-[Pi](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Pi.md)
+* [Pi](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Pi.md)
