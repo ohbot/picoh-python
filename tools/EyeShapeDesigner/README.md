@@ -46,7 +46,7 @@ or
 picoh.setEyeShape("TestEyeShapeRight","TestEyeShapeLeft")
 
 ```
-Please ensure you save your program inside the same folder as the eye shape designer so they can both access the same copy of the picohData folder. See the picohData Folder section on the main [README](https://github.com/ohbot/picoh-python/blob/master/README.md) for more information.
+Please ensure you save your program inside the same folder as the eye shape designer so they can both access the same copy of the picohData folder. See the picohData Folder section in the main [README](https://github.com/ohbot/picoh-python/blob/master/README.md) for more information.
 
 
 Auto Mirror

@@ -334,7 +334,7 @@ picoh.playSound(sound)
 
 sound - string name of sound.
 
-sounds are read from picohData/Sounds/ add new sound files to this folder to access them. .Wav files only for the moment. When writing the file name please do not include the .wav file extension. 
+sounds are read from picohData/Sounds/ add new sound files to this folder to access them. .wav files only for the moment. When writing the file name please do not include the .wav file extension. 
 
 Some demo sounds will be pre installed:
 
