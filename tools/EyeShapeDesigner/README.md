@@ -41,11 +41,11 @@ You can use the setEyeShape command.
 picoh.setEyeShape("TestEyeShape")
 
 ```
-or
+or set the left and right eye to different shapes. 
 
 ```python
 
-picoh.setEyeShape("TestEyeShapeRight","TestEyeShapeLeft")
+picoh.setEyeShape("TestEyeShapeOne","TestEyeShapeTwo")
 
 ```
 Please ensure you save your program inside the same folder as the eye shape designer so they can both access the same copy of the picohData folder. See the picohData Folder section in the main [README](https://github.com/ohbot/picoh-python/blob/master/README.md) for more information.
