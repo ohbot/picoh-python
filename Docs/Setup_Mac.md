@@ -84,7 +84,7 @@ Select <b>New</b> from the <b>File menu.</b>
 Firstly to calibrate Picoh's lips please go to: 
 [calibrate](https://github.com/ohbot/picoh-python/tree/master/tools/Calibrate) and follow the instructions.
 
-Go to the [helloWorldPicoh](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/helloWorldPicoh.py) example, copy or save the code and open in IDLE.
+Next go to the [helloWorldPicoh](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/helloWorldPicoh.py) example, copy or save the code and open in IDLE.
 
 Select <b>Run Module</b> from the <b>Run</b> menu.
 
