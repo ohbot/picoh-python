@@ -329,12 +329,13 @@ picoh.move(picoh.HEADTURN, reading)
 
 ```
 
-picoh.playSound(sound)
+picoh.playSound(sound,untilDone = True)
 ----------
 
 sound - string name of sound.
+untilDone - wait till sound has finished before moving to next line in  your program. Defaults to True. This is useful if you want to move Picoh while a sound is playing. 
 
-sounds are read from picohData/Sounds/ add new sound files to this folder to access them. .wav files only for the moment. When writing the file name please do not include the .wav file extension. 
+sounds are read from picohData/Sounds/ add new sound files to this folder to access them. .wav files only for the moment. When writing the file name in your program please do not include the .wav file extension. 
 
 Some demo sounds will be pre installed:
 
@@ -352,7 +353,7 @@ picoh.playSound('fanfare')
 or
 
 ```python
-picoh.playSound('spring')
+picoh.playSound('spring',False)
 
 ```
 
