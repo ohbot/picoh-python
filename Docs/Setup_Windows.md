@@ -140,5 +140,8 @@ More example programs can be found [here.](https://github.com/ohbot/picoh-python
 
 Information on how to use different Windows voices can be found [here.](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Windows.md)
 
+Tools
+--------
+
 * [Eye Designer Tool](https://github.com/ohbot/picoh-python/tree/master/tools/EyeShapeDesigner)
 * [Speech Database Tool](https://github.com/ohbot/picoh-python/tree/master/tools/SpeechDatabase)
