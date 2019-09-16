@@ -37,7 +37,7 @@ EYETILT = 6
 
 debug = False
 
-# array to hold 
+# array to hold
 sensors = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
 # define a module level variable for the serial port
@@ -1264,21 +1264,38 @@ def getPhrase(set='None', variable='None'):
         return possiblePhrases[random.randint(0, length - 1)]
 
 
-def playSound(name=""):
+# Function to play sounds located in the picohData/Sounds/ folder.
+def playSound(name="", untilDone=True):
     if not name:
         return
+
+    # Set up a thread to play the sound.
+    soundThread = threading.Thread(target=_playSoundThread, args=(name,))
+
+    # Start the thread.
+    soundThread.start()
+
+    # If untilDone is True join the main thread to soundThread.
+    if untilDone:
+        soundThread.join()
+
+
+def _playSoundThread(name=""):
+    if not name:
+        return
+
     name = name + ".wav"
     dir = soundFolder
     soundFile = os.path.join(dir, name)
 
-    # get the sapi objects ready on Windows
+    # play the sound on Windows
     if platform.system() == "Windows":
         winsound.PlaySound(soundFile, winsound.SND_FILENAME)
 
-    # get the audio system warmed up on Mac
+    # play the sound on Mac
     if platform.system() == "Darwin":
         playsound(soundFile)
 
-    # get the audio system warmed up on linux
+    # play the sound on Linux
     if platform.system() == "Linux":
         os.system('aplay ' + soundFile)
