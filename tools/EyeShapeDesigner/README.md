@@ -26,13 +26,15 @@ Features
 
 * Test the blink animation you have draw using a button click. 
 
-
 Using Eye Shapes
 ----------
 The Eye Shape Designer will read and write eyeshapes from the Ohbot.obe file found within the picohData folder in your working directory.
 
-
 If you want to use a shape you have designed in a program for example:
+
+<a href="https://github.com/ohbot/picoh-python/blob/master/.images/TestEyeShape.png?raw=true" target="_blank"><img src="https://github.com/ohbot/picoh-python/blob/master/.images/TestEyeShape.png?raw=true" border="0" width = "100%"/></a>
+
+You can use the setEyeShape command. 
 
 ```python
 
