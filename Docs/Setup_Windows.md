@@ -131,14 +131,13 @@ Select <b>New</b> from the <b>File menu.</b>
 Firstly to calibrate Picoh's lips please go to: 
 [calibrate](https://github.com/ohbot/picoh-python/tree/master/tools/Calibrate) and follow the instructions.
 
-
 Then go to the [hellworldpicoh](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/Windows/helloworldPicoh.py) example on Github, copy the code and paste or save the code and run in IDLE.
 
 Select <b>Run Module</b> from the <b>Run</b> menu.
 
 Picoh should speak and move.
 
-More example programs can be found [here.](https://github.com/ohbot/picoh-python/tree/master/examples/Windows)
+More example programs can be found [here.](https://github.com/ohbot/picoh-python/tree/master/examples/)
 
 Information on how to use different Windows voices can be found [here.](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Windows.md)
 
