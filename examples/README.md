@@ -4,8 +4,14 @@ Hello, this directory contains some examples to help you get to grips with progr
 
 ***Don't forget if you are new to Python here is a short guide explaining some of the key concepts:*** [Programming Picoh in Python](https://docs.google.com/document/d/e/2PACX-1vTM9FmTBpGGJ4Ddvutpv3kxXkS0oyT4U9JPBV95UXdSJU10TD5JC1XWTf2cRGjHWApHOrTC6JLizD64/pub)
 
+All the functions in the picoh library are also documented if you scroll down in the main [README](https://github.com/ohbot/picoh-python/blob/master/README.md).
 
-Right click and save file as a file below, then open and run in IDLE or whatever Python editor/launcher you prefer. 
+Run an example
+-
+
+1) Right click and select save as on one of the files below.
+
+2) Open and run in IDLE or whatever Python editor/launcher you prefer. 
 
 [helloWorldPicoh.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/helloWorldPicoh.py)
 -
@@ -40,3 +46,12 @@ Windows:
 ```pip install wolframalpha```  
 
 ```pip install wikipedia``` 
+
+Voice Examples
+-
+The examples demonstrating how to use different voices are platform specific so have been split into folders:
+
+* [Mac Voice Examples](https://github.com/ohbot/picoh-python/tree/master/examples/Mac)
+* [Windows Voice Examples](https://github.com/ohbot/picoh-python/tree/master/examples/Windows)
+* [Pi Voice Examples](https://github.com/ohbot/picoh-python/tree/master/examples/Pi)
+
