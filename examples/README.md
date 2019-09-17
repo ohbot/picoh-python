@@ -23,6 +23,7 @@ This program makes Picoh wake up every quarter of an hour and say the time.
  [wolframAlphaPicoh](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/wolframAlphaPicoh.py)
 -
 This program uses the wolfram alpha and wikipedia web services to get definitions of words users type in. 
+
 Requires:
 
 Mac and Pi:
