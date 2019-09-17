@@ -28,7 +28,8 @@ Requires:
 Mac and Pi:
 ```sudo pip3 install wolframalpha``` 
 ```sudo pip3 install wikipedia``` 
-Windows
+
+Windows:
 ```pip install wolframalpha``` 
 ```pip install wikipedia``` 
 
