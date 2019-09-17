@@ -46,3 +46,12 @@ Windows:
 ```pip install wolframalpha```  
 
 ```pip install wikipedia``` 
+
+Voice Examples
+-
+The examples demonstrating how to use different voices are platform specific so have been split into folders:
+
+* [Mac Voice Examples](https://github.com/ohbot/picoh-python/tree/master/examples/Mac)
+* [Windows Voice Examples](https://github.com/ohbot/picoh-python/tree/master/examples/Windows)
+* [Pi Voice Examples](https://github.com/ohbot/picoh-python/tree/master/examples/Pi)
+
