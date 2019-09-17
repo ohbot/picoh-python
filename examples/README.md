@@ -27,11 +27,11 @@ This program uses the wolfram alpha and wikipedia web services to get definition
 Requires:
 
 Mac and Pi:
-```sudo pip3 install wolframalpha``` 
+```sudo pip3 install wolframalpha```  and 
 ```sudo pip3 install wikipedia``` 
 
 Windows:
-```pip install wolframalpha``` 
+```pip install wolframalpha```  and 
 ```pip install wikipedia``` 
 
 
