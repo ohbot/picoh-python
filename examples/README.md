@@ -21,11 +21,11 @@ A program that demonstrates how to play sounds using picoh.playSound()
 
  [ohClock.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/ohClock.py)
 -
-This program makes Picoh wake up every quarter of an hour and say the time. 
+This program makes Picoh wake up every quarter of an hour and say the time. It also uses a second thread to blink Picoh's eyes.  
 
  [wolframAlphaPicoh](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/wolframAlphaPicoh.py)
 -
-This program uses the wolfram alpha and wikipedia web services to get definitions of words users type in. 
+This program uses the wolfram alpha and wikipedia web services to get definitions of words users type in. It builds upon the movements from the threadingExample. 
 
 Requires:
 
