@@ -17,6 +17,7 @@ import random
 import re
 import csv
 
+# Import the correct sound library depending on platform.
 if platform.system() == "Windows":
     import winsound
     # For SAPI speech
@@ -25,6 +26,11 @@ if platform.system() == "Darwin":
     from playsound import playsound
 if platform.system() == "Linux":
     from playsound import playsound
+
+global writing, voice, synthesizer, speechRate, connected, shapeList, phraseList, topLipFree, directory
+
+# Global variable to turn on and off printing debug info.
+debug = False
 
 # define constants for motors
 HEADNOD = 0
@@ -35,10 +41,21 @@ TOPLIP = 4
 BOTTOMLIP = 5
 EYETILT = 6
 
-debug = False
-
-# array to hold
+# array to hold sensor values.
 sensors = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+# Put motor ranges into lists
+motorPos = [11, 11, 11, 11, 11, 11, 11, 11]
+motorMins = [0, 0, 0, 0, 0, 0, 0, 0]
+motorMaxs = [0, 0, 0, 0, 0, 0, 0, 0]
+motorRev = [False, False, False, False, False, False, False, False]
+restPos = [0, 0, 0, 0, 0, 0, 0, 0]
+isAttached = [False, False, False, False, False, False, False, False]
+motorType = ["", "", "", "", "", "", "", ""]
+
+# empty lists to hold eye shapes and phrases from speech databa se.
+shapeList = []
+phraseList = []
 
 # define a module level variable for the serial port
 port = ""
@@ -46,18 +63,13 @@ port = ""
 # define library version
 version = "1.0"
 
-global writing, voice, synthesizer, speechRate, connected, shapeList, phraseList, topLipFree, directory
-
 # flag to stop writing when writing for threading
 writing = False
 
 # flag to allow the library to run when not connected
 connected = False
 
-shapeList = []
-phraseList = []
-
-# Flag to track if top lip is below centre.
+# flag to track if top lip is below centre.
 topLipFree = False
 
 # global to set the params to speech synthesizer which control the voice
@@ -82,17 +94,10 @@ if platform.system() == "Linux":
 
 print("Speech Synthesizer: " + synthesizer)
 
-'''
-dirName = 'picohSounds'
-
-try:
-    # Create target Directory
-    os.mkdir(dirName)
-except FileExistsError:
-    pass
-'''
+# name of directory that holds eye shape, motor definition and speech db files.
 dirName = 'picohData'
 
+# If the picohData folder does not exist, create it.
 try:
     # Create target Directory
     os.mkdir(dirName)
@@ -142,6 +147,7 @@ lastfey = 5
 
 ser = None
 
+# A class that defines eye shape objects.
 
 class EyeShape(object):
 
@@ -152,6 +158,7 @@ class EyeShape(object):
         self.pupilRangeX = pupilRangeX_value
         self.pupilRangeY = pupilRangeY_value
 
+# A class that defines speech phrase objects.
 
 class Phrase(object):
 
@@ -159,6 +166,32 @@ class Phrase(object):
         self.set = set
         self.variable = variable
         self.text = text
+
+# Used during calibration.
+def _revertMotorDefsFile():
+    shutil.copyfile(os.path.join(directory, 'MotorDefinitionsPicoh.omd'), 'picohData/MotorDefinitionsPicoh.omd')
+    _loadMotorDefs()
+
+# Read motor definitions file.
+def _loadMotorDefs():
+    tree = etree.parse(picohMotorDefFile)
+    root = tree.getroot()
+    # For each line in motor defs file
+    for child in root:
+        indexStr = child.get("Motor")
+        index = int(indexStr)
+        motorMins[index] = int(int(child.get("Min")) / 1000 * 180)
+        motorMaxs[index] = int(int(child.get("Max")) / 1000 * 180)
+        motorPos[index] = int(child.get("RestPosition"))
+        restPos[index] = int(child.get("RestPosition"))
+        motorType[index] = child.get("MotorType")
+
+        if child.get("Reverse") == "True":
+            rev = True
+            motorRev[index] = rev
+        else:
+            rev = False
+            motorRev[index] = rev
 
 
 # Read eyeshape file into eyeshape list.
@@ -340,6 +373,7 @@ def init(portName):
     global port, ser, sapivoice, sapistream, connected
 
     _loadEyeShapes()
+    _loadMotorDefs()
 
     dir = os.path.dirname(os.path.abspath(__file__))
     silenceFile = os.path.join(dir, 'Silence1.wav')
@@ -404,42 +438,6 @@ def init(portName):
     _loadSpeechDatabase()
 
     return True
-
-
-# Startup Code
-# xml file for motor definitions
-# dir = os.path.dirname(os.path.abspath(__file__))
-# file = os.path.join(dir, 'picohdefinitions.omd')
-tree = etree.parse(picohMotorDefFile)
-root = tree.getroot()
-
-# Put motor ranges into lists
-motorPos = [11, 11, 11, 11, 11, 11, 11, 11]
-motorMins = [0, 0, 0, 0, 0, 0, 0, 0]
-motorMaxs = [0, 0, 0, 0, 0, 0, 0, 0]
-motorRev = [False, False, False, False, False, False, False, False]
-restPos = [0, 0, 0, 0, 0, 0, 0, 0]
-isAttached = [False, False, False, False, False, False, False, False]
-motorType = ["", "", "", "", "", "", "", ""]
-
-shapesList = []
-
-# For each line in motor defs file
-for child in root:
-    indexStr = child.get("Motor")
-    index = int(indexStr)
-    motorMins[index] = int(int(child.get("Min")) / 1000 * 180)
-    motorMaxs[index] = int(int(child.get("Max")) / 1000 * 180)
-    motorPos[index] = int(child.get("RestPosition"))
-    restPos[index] = int(child.get("RestPosition"))
-    motorType[index] = child.get("MotorType")
-
-    if child.get("Reverse") == "True":
-        rev = True
-        motorRev[index] = rev
-    else:
-        rev = False
-        motorRev[index] = rev
 
 # initialise with any port that has USB Serial Device in the name
 
