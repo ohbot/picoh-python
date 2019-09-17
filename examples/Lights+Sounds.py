@@ -5,7 +5,7 @@ import random
 
 picoh.reset()
 picoh.wait(1)
-picih.close()
+picoh.close()
 picoh.move(picoh.LIDBLINK,0)
 
 picoh.setEyeShape('Heart')

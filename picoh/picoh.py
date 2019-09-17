@@ -165,6 +165,9 @@ class Phrase(object):
 def _loadEyeShapes():
     global shapeList
 
+    # Clear the shapeList
+    shapeList = []
+
     file = eyeShapeFile
 
     tree = etree.parse(file)
@@ -198,6 +201,10 @@ def _loadEyeShapes():
 # Read speech database file into phraseList.
 def _loadSpeechDatabase():
     global phraseList
+
+    # Clear the phrase list.
+
+    phraseList = []
 
     file = speechDatabaseFile
 
