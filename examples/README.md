@@ -3,12 +3,12 @@
 Hello, this directory contains some examples to help you get to grips with programming Picoh. 
 
 
-* [helloWorldPicoh.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/helloWorldPicoh.py)
-
+ [helloWorldPicoh.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/helloWorldPicoh.py)
+-
 A simple program that makes Picoh move and speak. 
 
-* [threadingExample](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/threadingExample.py)
-
+ [threadingExample](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/threadingExample.py)
+-
 A more slightly more complicated program that uses threads to make Picoh do more than one thing at a time. 
 
 * [Lights+Sounds.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/Lights%2BSounds.py)
