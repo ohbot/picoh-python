@@ -9,7 +9,7 @@ All the functions in the picoh library are also documented if you scroll down in
 Run an example
 -
 
-1) Right click and save as one of the files below.
+1) Right click and select save as on one of the files below.
 
 2) Open and run in IDLE or whatever Python editor/launcher you prefer. 
 
