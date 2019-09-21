@@ -120,9 +120,10 @@ picoh.move(picoh.EYETURN,2, eye = 1)
 Motor index reference:
 
 | m | 0 | 1 | 2 | 3 | 5 | 6 |
-| ----| --- | --- |  --- |  --- |  --- |  --- |  --- |
+| ----| --- | --- |  --- |  --- |  --- |  --- |
 | constant | HEADNOD | HEADTURN | EYETURN | LIDBLINK | BOTTOMLIP | EYETILT | 
   
+---
 
 picoh.say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0)
 ---------
