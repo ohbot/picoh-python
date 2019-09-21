@@ -112,7 +112,6 @@ or you can use a constant from the library to specify the motor:
 ```python
 picoh.move(picoh.EYETURN,3) 
 ```
-
 to move just one eye
 ```python
 picoh.move(picoh.EYETURN,2, eye = 1) 
@@ -126,7 +125,7 @@ Motor index reference:
   
 
 picoh.say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0)
-----------
+---------
 
 | Name| Range| Description | Default |
 | --- |------|-------------|---------|
