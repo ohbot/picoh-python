@@ -1,4 +1,4 @@
-Festival is the default speech synthesizer Picoh usses on Raspberry Pi.
+Festival is the default speech synthesizer Picoh uses on Raspberry Pi.
 
 Additonal voices can be used by installing the ```espeak``` or ```pico2wave``` synthesizers.
 
