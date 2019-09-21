@@ -88,7 +88,7 @@ picoh.init(portName)
 
 Called internally looking for a port with name containing "USB Serial Device" but if your port is different you can call it and override this port name. It returns True if the port is found and opened successfully, otherwise it returns false. This is likely with Operating Systems in languages other than English.
 
-picoh.move(m, pos, speed=3)
+picoh.move(m, pos, speed=5, eye =0)
 ----------
 
 
@@ -96,7 +96,8 @@ picoh.move(m, pos, speed=3)
 | --- |------|-------------|---------|
 | m   | 0-6 (int)  | Motor Number| - |
 | pos | 0-10 (int)  | Desired Position| - |
-| speed | 0-10 (int) | Motor Speed| 3 |
+| speed | 0-10 (int) | Motor Speed| 5 |
+| eye | 0-2 (int) | Eye to move. 0 - Both, 1 - Right, 2 - Left| 0 (Both) |
 
 
 For Example:
@@ -109,13 +110,18 @@ picoh.move(2,3,1)
 ```
 or you can use a constant from the library to specify the motor:
 ```python
-picoh.move(picoh.EYETURN,3,1) 
+picoh.move(picoh.EYETURN,3) 
 ```
+
+to move just one eye
+```python
+picoh.move(picoh.EYETURN,2, eye = 1) 
+
 Motor index reference:
 
-| m | 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+| m | 0 | 1 | 2 | 3 | 5 | 6 |
 | ----| --- | --- |  --- |  --- |  --- |  --- |  --- |
-| constant | HEADNOD | HEADTURN | EYETURN | LIDBLINK | TOPLIP | BOTTOMLIP | EYETILT | 
+| constant | HEADNOD | HEADTURN | EYETURN | LIDBLINK | BOTTOMLIP | EYETILT | 
   
 
 picoh.say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0)
