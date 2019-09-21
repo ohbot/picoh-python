@@ -25,6 +25,10 @@ A more slightly more complicated program that uses threads to make Picoh do more
 -
 A program that demonstrates how to play sounds using picoh.playSound()
 
+[simpleMouseAndKeyboard.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/simpleMouseAndKeyboard.py)
+-
+Control Picoh's motor positions using the mouse and trigger actions using the a, b or c key on keyboard. 
+
  [ohClock.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/ohClock.py)
 -
 This program makes Picoh wake up every quarter of an hour and say the time. It also uses a second thread to blink Picoh's eyes.  
