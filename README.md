@@ -150,6 +150,19 @@ picoh.say('Goodbye',soundDelay = 0.3)
 ```
 ---
 
+More info on speech
+---
+
+Platform specific documentation for setting voices and languages:
+
+
+* [macOS](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Mac.md)
+
+* [Windows](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Windows.md)
+
+* [Pi](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Pi.md)
+
+
 picoh.wait(seconds)
 ----------
 
@@ -363,28 +376,3 @@ or
 picoh.playSound('spring',False)
 
 ```
-
-picoh.setSynthesizer(synth)
-----------
-Use picoh.speechSpeed() to set text to speech engine used by Picoh.
-
-picoh.setVoice(voice)
-------
-Use picoh.speechSpeed() to set the voice used by Pioch. 
-
-
-picoh.speechSpeed(params)
-------
-Use picoh.speechSpeed() to set speech rate in words per minute.
-
-More info on speech
----
-
-Platform specific documentation for setting voices and languages:
-
-
-* [macOS](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Mac.md)
-
-* [Windows](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Windows.md)
-
-* [Pi](https://github.com/ohbot/picoh-python/blob/master/Docs/VoiceDoc_Pi.md)
