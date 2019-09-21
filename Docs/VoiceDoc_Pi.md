@@ -1,3 +1,12 @@
+Festival is the default speech synthesizer Picoh usses on Raspberry Pi.
+
+Additonal voices can be used by installing the ```espeak``` or ```pico2wave``` synthesizers.
+
+ ```
+ sudo apt-get install espeak
+ sudo apt-get install libttspico-utils
+ ```
+
 picoh.setSynthesizer(synth)
 ----------
 
@@ -11,6 +20,12 @@ picoh.setSynthesizer(synth)
 For Example:
 ```python
 picoh.setSynthesizer("espeak")
+```
+
+or 
+
+```python
+picoh.setSynthesizer("pico2wave")
 ```
 
 picoh.setVoice(voice)
