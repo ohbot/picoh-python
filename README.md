@@ -31,6 +31,7 @@ The data files include:
 
 * MotorDefinitionsPicoh.omd - Holds motor minimums, maximums and ranges. Modified using the [Calibrate Tool.](https://github.com/ohbot/picoh-python/tree/master/tools/Calibrate) Just calibrates the lip for now but will soon be able to calibrate all motors. 
 
+* Sounds/... A folder that can be accessed using the picoh.playSound() function. See the [lightAndSounds example](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/lightsAndSounds.py) for more information. The picoh library copies 5 sounds to get you started, add your own by putting move sound files in the sounds folder. .wav's only for now. Preloaded sounds are: 'spring', 'smash', 'loop', 'ohbot' and 'fanfare' 
 
 If you delete a file in picohData (or the whole folder) the default files will be copied back over from the picoh library folder.  
 
@@ -47,9 +48,10 @@ picohProgramsFolder
 │   Calibrate.py   
 |
 └───picohData (Created Automatically)
-        Ohbot.obe
-        MotorDefinitionsPicoh.omd
-        picohspeech.csv
+    |   Ohbot.obe
+    |   MotorDefinitionsPicoh.omd
+    |   picohspeech.csv
+    └───Sounds/...
 ```
 Alternatively you can have seperate picohData folders by saving your programs in different folders, you will need a copy of the tools you want to use in the folder as well:
 ```
@@ -61,10 +63,11 @@ picohProgramsFolder
 |   |   SpeechDatabase.py
 |   |   
 │   └───picohData (Created Automatically)
-│           Ohbot.obe
-│           MotorDefinitionsPicoh.omd
-│           picohspeech.csv
-│   
+│       |   Ohbot.obe
+│       |   MotorDefinitionsPicoh.omd
+│       |   picohspeech.csv
+|       └───Sounds/...
+|
 └───folderTwo
     │   picohTest2.py
     │   Calibrate.py 
@@ -72,11 +75,11 @@ picohProgramsFolder
     |   SpeechDatabase.py
     |   
     └───picohData (Created Automatically)
-            Ohbot.obe
-            MotorDefinitionsPicoh.omd
-            picohspeech.csv
-
-
+        |   Ohbot.obe
+        |   MotorDefinitionsPicoh.omd
+        |   picohspeech.csv
+        └───Sounds/...
+        
 ```
 
 
