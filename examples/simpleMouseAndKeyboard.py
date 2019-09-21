@@ -1,6 +1,6 @@
 # Picoh - simple mouse and keyboard control example.
 # Pioch will follow mouse movements and speak when 'a','b' or 'c' keys are pressed. 
-'
+
 from tkinter import *
 from picoh import picoh
 
