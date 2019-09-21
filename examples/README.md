@@ -21,7 +21,7 @@ A simple program that makes Picoh move and speak.
 -
 A more slightly more complicated program that uses threads to make Picoh do more than one thing at a time. 
 
- [Lights+Sounds.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/Lights%2BSounds.py)
+ [lightsAndSounds.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/lightsAndSounds.py)
 -
 A program that demonstrates how to play sounds using picoh.playSound()
 
