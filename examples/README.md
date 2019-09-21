@@ -21,6 +21,10 @@ A simple program that makes Picoh move and speak.
 -
 A more slightly more complicated program that uses threads to make Picoh do more than one thing at a time. 
 
+[movementExample](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/movementExample.py)
+-
+A step by step explanation of how to use the picoh.move() function. Read through the script before running to see how it works. 
+
  [lightsAndSounds.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/lightsAndSounds.py)
 -
 A program that demonstrates how to play sounds using picoh.playSound()
