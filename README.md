@@ -17,7 +17,7 @@ To be expanded soon!
 
 picohData Folder
 -------
-The fist time you run a Picoh program a new folder called picohData is created in your working directory. This folder is used to store various files that you can read from within your Picoh programs, these include SpeechDatabase file, a Motor Definitions file and an EyeShapes file. 
+The first time you run a Picoh program a new folder called picohData is created in your working directory. This folder is used to store various files that you can read from within your Picoh programs, these include SpeechDatabase file, a Motor Definitions file and an EyeShapes file. 
 
 
 There are a various tools you can use to help edit these data files. When using a tool please download it and save it in the same folder as the your Picoh program file, this will ensure it is reading and writing to the correct folder. 
