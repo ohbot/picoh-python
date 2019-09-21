@@ -116,6 +116,7 @@ picoh.move(picoh.EYETURN,3)
 to move just one eye
 ```python
 picoh.move(picoh.EYETURN,2, eye = 1) 
+```
 
 Motor index reference:
 
