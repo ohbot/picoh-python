@@ -41,7 +41,7 @@ Examples:<br>
 | ``picoh.setVoice("-vzh+m2 -s26")`` | Chinese male voice, Fast |
 | ``picoh.setVoice("-vfr+f1 -p99 -s180")`` | French female whisper voice, medium speed and high pitched |
 
-More examples can be found in our [espeakVoices example program](https://github.com/ohbot/picoh-python/blob/master/examples/Pi/espeakVoices.py)  and  [pico2wave example program.](https://github.com/ohbot/picoh-python/blob/master/examples/Pi/pico2waveSpeech.py)
+More examples can be found in our [espeakVoices example program](https://github.com/ohbot/picoh-python/raw/master/examples/Pi/espeakVoices.py)  and  [pico2wave example program.](https://github.com/ohbot/picoh-python/raw/master/examples/Pi/pico2waveSpeech.py)
 
 
 **_Press fn + f5 to run your program_**
