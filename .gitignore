@@ -14,3 +14,4 @@ test/picohData/ohbot.obe
 test/picohData/PicohSpeech.csv
 test/test.py
 test/picohData/picohspeech.wav
+*.icloud
