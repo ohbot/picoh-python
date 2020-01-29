@@ -1060,7 +1060,14 @@ def _phonememapBottom(val):
 # Legacy function to support Ohbot programs with eyeColour. Passes onto baseColour.
 def eyeColour(r, g, b, swapRandG=False):
     baseColour(r, g, b, swapRandG)
+    
+# Clone of base colour to keep consitency with set eyeShape etc. 
+def setBaseColour(r, g, b, swapRandG=False):
+    baseColour(r, g, b, swapRandG)
 
+# US Spelling
+def setBaseColor(r, g, b, swapRandG=False):
+    baseColour(r, g, b, swapRandG)
 
 # Function to set the color of the LEDs in Picoh's base. Arguments | r (red) → int (0-10) | g (green) → int (0-10) | b (blue) → int (0-10)
 # swapRandG is used to swap the red and green values as this is required for some LEDs
@@ -1228,11 +1235,11 @@ def setEyeShape(shapeNameRight, shapeNameLeft=''):
     leftHex = ''
 
     for index, shape in enumerate(shapeList):
-        if shape.name == shapeNameRight:
+        if shape.name.capitalize() == shapeNameRight.capitalize():
             rightHex = shape.hexString
 
     for index, shape in enumerate(shapeList):
-        if shape.name == shapeNameLeft:
+        if shape.name.capitalize() == shapeNameLeft.capitalize():
             leftHex = shape.hexString
             if shape.autoMirror:
                 autoMirrorVar = True
