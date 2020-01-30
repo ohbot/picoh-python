@@ -17,6 +17,13 @@ import random
 import re
 import csv
 
+try:
+    # Display logo on Pi-Top[4]
+    from ptoled import PTOLEDDisplay
+    oled_screen = PTOLEDDisplay()
+    oled_screen.draw_image_file("Screen/gif.gif")
+except:
+    pass
 # Import the correct sound library depending on platform.
 if platform.system() == "Windows":
     import winsound
@@ -26,11 +33,16 @@ if platform.system() == "Darwin":
     from playsound import playsound
 if platform.system() == "Linux":
     from playsound import playsound
+    from gtts import gTTS
+    from pydub import AudioSegment
 
-global writing, voice, synthesizer, speechRate, connected, shapeList, phraseList, topLipFree, directory
+global writing, language, voice, synthesizer, speechRate, connected, shapeList, phraseList, topLipFree, directory
 
 # Global variable to turn on and off printing debug info.
 debug = False
+
+# Language in which you want to convert used in GTTS web text to speech.
+language = 'en-us'
 
 # define constants for motors
 HEADNOD = 0
@@ -290,6 +302,9 @@ def _parseSAPIVoice(flag):
 
 # speak depending on synthesizer
 def _speak(text):
+    # Pick up the global variable that defines the language. This is only used in GTTS speech.
+
+    global language
     file = speechAudioFile
     if platform.system() == "Windows":
         if ("sapi" in synthesizer.lower()):
@@ -346,7 +361,7 @@ def _speak(text):
                 speechRate) + ' "' + safetext + '"'
 
         if debug:
-            print("Speech Bash Command")
+            print("Speech Bash Command:")
             print(bashcommand)
 
         # Execute bash command.
@@ -357,14 +372,27 @@ def _speak(text):
 
     if platform.system() == "Linux":
 
-        # Remove any characters that are unsafe for a subprocess call
-        safetext = re.sub(r'[^ .a-zA-Z0-9?\']+', '', text)
-        bashcommand = synthesizer + ' -w picohData/picohspeech.wav ' + voice + ' "' + safetext + '"'
-        # Execute bash command.
-        subprocess.call(bashcommand, shell=True)
+        #if we are using gTTS web speech.
+        if synthesizer.upper() == "GTTS":
+            # Passing the text and language to the engine
+            tts = gTTS(text=text, lang=language, slow=False)
+
+            # Saving the converted audio in a wav file named sample
+            tts.save('picohData/picohspeech.mp3')
+                        # Saving the converted audio in a wav file named sample
+            #tts.save('picohData/picohspeech.mp3')
+            #print("gtts")
+            sound = AudioSegment.from_mp3('picohData/picohspeech.mp3')
+            sound.export('picohData/picohspeech.wav', format="wav")
+        else:
+            # Remove any characters that are unsafe for a subprocess call
+            safetext = re.sub(r'[^ .a-zA-Z0-9?\']+', '', text)
+            bashcommand = synthesizer + ' -w picohData/picohspeech.wav ' + voice + ' "' + safetext + '"'
+            # Execute bash command.
+            subprocess.call(bashcommand, shell=True)
 
         if debug:
-            print("Speech Bash Command")
+            print("Speech Bash Command:")
             print(bashcommand)
 
 
@@ -786,7 +814,7 @@ def _sayLinux(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0)
             while time.time() - startTime < totalTime:
                 continue
 
-    if ("espeak" in synthesizer.lower() or "pico2wave" in synthesizer.lower()):
+    if ("espeak" in synthesizer.lower() or "pico2wave" in synthesizer.lower() or "gtts" in synthesizer.lower()):
 
         if hdmiAudio:
             soundDelay = soundDelay - 1
@@ -1060,8 +1088,8 @@ def _phonememapBottom(val):
 # Legacy function to support Ohbot programs with eyeColour. Passes onto baseColour.
 def eyeColour(r, g, b, swapRandG=False):
     baseColour(r, g, b, swapRandG)
-    
-# Clone of base colour to keep consitency with set eyeShape etc. 
+
+# Clone of base colour to keep consitency with set eyeShape etc.
 def setBaseColour(r, g, b, swapRandG=False):
     baseColour(r, g, b, swapRandG)
 
@@ -1235,11 +1263,11 @@ def setEyeShape(shapeNameRight, shapeNameLeft=''):
     leftHex = ''
 
     for index, shape in enumerate(shapeList):
-        if shape.name.capitalize() == shapeNameRight.capitalize():
+        if shape.name.upper() == shapeNameRight.upper():
             rightHex = shape.hexString
 
     for index, shape in enumerate(shapeList):
-        if shape.name.capitalize() == shapeNameLeft.capitalize():
+        if shape.name.upper() == shapeNameLeft.upper():
             leftHex = shape.hexString
             if shape.autoMirror:
                 autoMirrorVar = True
