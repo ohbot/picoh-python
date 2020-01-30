@@ -9,7 +9,7 @@ if platform.system() == "Windows":
     includes =['pyserial','lxml','playsound','numpy','comtypes']
 
 if platform.system() == "Linux":
-    includes =['pyserial','playsound']
+    includes =['pyserial','playsound','gTTS','pydub']
 
 setup(
     name = 'picoh',
