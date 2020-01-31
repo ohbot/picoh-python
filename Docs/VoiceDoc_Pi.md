@@ -1,9 +1,7 @@
 Picoh supports both online and offline text to speech. 
 
 Offline: <br>
-
 Festival (Default) <br>
-
 espeak <br>
 pico2wave <br>
 
