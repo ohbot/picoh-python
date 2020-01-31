@@ -1,12 +1,30 @@
-Festival is the default speech synthesizer Picoh uses on Raspberry Pi.
+Picoh supports both online and offline text to speech. 
+
+Offline: 
+Festival (Default)
+espeak
+pico2wave
+
+Online:
+gTTS
 
 Additonal voices can be used by installing the ```espeak``` or ```pico2wave``` synthesizers.
+
+Offline:
 
  ```
  sudo apt-get install espeak
  sudo apt-get install libttspico-utils
  ```
 
+Online :
+
+ ```
+ apt-get install libav-tools libavcodec-extra
+ ```
+ (gTTS library is included as part of the picoh pip install)
+ 
+ 
 picoh.setSynthesizer(synth)
 ----------
 
@@ -15,6 +33,7 @@ picoh.setSynthesizer(synth)
 | “festival” | festival speech |
 | “espeak” | espeak speech |
 | “pico2wave” | pico2wave speech |
+| “gTTS” | Google web based text to speech |
 
 
 For Example:
@@ -26,6 +45,12 @@ or
 
 ```python
 picoh.setSynthesizer("pico2wave")
+```
+
+or 
+
+```python
+picoh.setSynthesizer("gTTS")
 ```
 
 picoh.setVoice(voice)
@@ -57,6 +82,22 @@ Examples:<br>
 | ``picoh.setVoice("-vfr+f1 -p99 -s180")`` | French female whisper voice, medium speed and high pitched |
 
 More examples can be found in our [espeakVoices example program](https://github.com/ohbot/picoh-python/raw/master/examples/Pi/espeakVoices.py)  and  [pico2wave example program.](https://github.com/ohbot/picoh-python/raw/master/examples/Pi/pico2waveSpeech.py)
+
+
+# Web Speech
+
+Picoh supports Google Web speech using [gTTS](https://github.com/pndurette/gTTS). This provides a more realistic voice and support for multiple languages on the Raspberry Pi. Please note that using this speech means the text Picoh says is processed online on Google's servers. 
+
+The language can be changed by setting picoh.language to a string containing a [google language code](https://cloud.google.com/speech-to-text/docs/languages).
+
+For example:
+
+```python
+picoh.language = "da-DK"
+picoh.language = "en-GB"
+picoh.language = "en-US"
+etc.
+```
 
 
 **_Press fn + f5 to run your program_**
