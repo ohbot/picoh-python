@@ -22,8 +22,14 @@ Online :
  ```
  apt-get install libav-tools libavcodec-extra
  ```
- (gTTS library is included as part of the picoh pip install)
  
+ gTTS library is included as part of sudo pip3 install picoh.
+ 
+ Ensure you you are running the latest version of the picoh library by running:
+ 
+ ```
+sudo pip3 install picoh --upgrade
+ ```
  
 picoh.setSynthesizer(synth)
 ----------
