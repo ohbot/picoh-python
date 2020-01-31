@@ -20,7 +20,7 @@ Offline:
 Online :
 
  ```
- apt-get install libav-tools libavcodec-extra
+ sudo apt-get install libav-tools libavcodec-extra
  ```
  
  gTTS library is included as part of sudo pip3 install picoh.
