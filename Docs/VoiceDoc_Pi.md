@@ -1,12 +1,14 @@
 Picoh supports both online and offline text to speech. 
 
-Offline: 
-Festival (Default)
-espeak
-pico2wave
+Offline: <br>
 
-Online:
-gTTS
+Festival (Default) <br>
+
+espeak <br>
+pico2wave <br>
+
+Online: <br>
+gTTS <br>
 
 Additonal voices can be used by installing the ```espeak``` or ```pico2wave``` synthesizers.
 
