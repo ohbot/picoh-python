@@ -104,6 +104,3 @@ or
 picoh.language = "en-US"
 ```
 
-
-**_Press fn + f5 to run your program_**
-
