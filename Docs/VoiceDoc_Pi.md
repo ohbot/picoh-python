@@ -94,9 +94,14 @@ For example:
 
 ```python
 picoh.language = "da-DK"
+```
+or
+```python
 picoh.language = "en-GB"
+```
+or
+```python
 picoh.language = "en-US"
-etc.
 ```
 
 
