@@ -29,6 +29,7 @@ if platform.system() == "Windows":
     import winsound
     # For SAPI speech
     from comtypes.client import CreateObject
+    from comtypes.gen import SpeechLib
 if platform.system() == "Darwin":
     from playsound import playsound
 if platform.system() == "Linux":
@@ -36,13 +37,14 @@ if platform.system() == "Linux":
     from gtts import gTTS
     from pydub import AudioSegment
 
+    
 global writing, language, voice, synthesizer, speechRate, connected, shapeList, phraseList, topLipFree, directory
 
 # Global variable to turn on and off printing debug info.
 debug = False
 
-# Language in which you want to convert used in GTTS web text to speech.
-language = 'en-us'
+# Language/Accent for GTTS web text to speech. 
+language = 'en-GB'
 
 # define constants for motors
 HEADNOD = 0
@@ -73,7 +75,7 @@ phraseList = []
 port = ""
 
 # define library version
-version = "1.0"
+version = "1.246"
 
 # flag to stop writing when writing for threading
 writing = False
@@ -85,24 +87,22 @@ connected = False
 topLipFree = False
 
 # global to set the params to speech synthesizer which control the voice
-if platform.system() == "Windows":
-    voice = ""
-if platform.system() == "Darwin":
-    voice = ""
-if platform.system() == "Linux":
-    voice = ""
-
-# global to set the speech speed.
-speechRate = 170
-
 # Global flag to use a synthesizer other than sapi.
 # If it's not sapi then it needs to support -w parameter to write to file e.g. espeak or espeak-NG
 if platform.system() == "Windows":
+    voice = ""
     synthesizer = "sapi"
 if platform.system() == "Darwin":
+    voice = ""
     synthesizer = "say -o "
 if platform.system() == "Linux":
+    voice = ""
     synthesizer = "festival"
+    # un-comment to make google webspeech default
+    # synthesizer = "gTTS" 
+
+# global to set the speech speed.
+speechRate = 170
 
 print("Speech Synthesizer: " + synthesizer)
 
@@ -205,7 +205,7 @@ def _loadMotorDefs():
             rev = False
             motorRev[index] = rev
 
-
+            
 # Read eyeshape file into eyeshape list.
 def _loadEyeShapes():
     global shapeList
@@ -242,7 +242,7 @@ def _loadEyeShapes():
 
             index = index + 1
 
-
+            
 # Read speech database file into phraseList.
 def _loadSpeechDatabase():
     global phraseList
@@ -274,7 +274,7 @@ def _loadSpeechDatabase():
                     newPhrase = Phrase(row[0], row[1], row[2])
                     phraseList.append(newPhrase)
 
-
+                    
 # Function to check if a number is a digit including negative numbers
 def _is_digit(n):
     try:
@@ -299,16 +299,14 @@ def _parseSAPIVoice(flag):
             val = val[:pos]
     return val
 
-
-# speak depending on synthesizer
-def _speak(text):
+# generate speech file depending on platform and sythensizer.
+def _generateSpeechFile(text):
     # Pick up the global variable that defines the language. This is only used in GTTS speech.
-
     global language
     file = speechAudioFile
     if platform.system() == "Windows":
         if ("sapi" in synthesizer.lower()):
-            from comtypes.gen import SpeechLib
+            #from comtypes.gen import SpeechLib
             global sapivoice, sapistream
 
             sapistream.Open(file, SpeechLib.SSFMCreateForWrite)
@@ -379,32 +377,33 @@ def _speak(text):
 
             # Saving the converted audio in a wav file named sample
             tts.save('picohData/picohspeech.mp3')
-                        # Saving the converted audio in a wav file named sample
-            #tts.save('picohData/picohspeech.mp3')
-            #print("gtts")
             sound = AudioSegment.from_mp3('picohData/picohspeech.mp3')
             sound.export('picohData/picohspeech.wav', format="wav")
         else:
             # Remove any characters that are unsafe for a subprocess call
             safetext = re.sub(r'[^ .a-zA-Z0-9?\']+', '', text)
-            bashcommand = synthesizer + ' -w picohData/picohspeech.wav ' + voice + ' "' + safetext + '"'
+                      
+            if synthesizer.upper() == "FESTIVAL":
+                bashcommand = "festival -b '(set! mytext (Utterance Text " + '"' + safetext + '"))' + "' '(utt.synth mytext)' '(utt.save.wave mytext " + '"picohData/picohspeech.wav")' + "' '(utt.save.segs mytext " + '"picohData/phonemes"' + ")'"
+            else:
+                bashcommand = synthesizer + ' -w picohData/picohspeech.wav ' + voice + ' "' + safetext + '"'
+                
             # Execute bash command.
             subprocess.call(bashcommand, shell=True)
 
-        if debug:
-            print("Speech Bash Command:")
-            print(bashcommand)
+            if debug:
+                print("Speech Bash Command:")
+                print(bashcommand)
 
 
 def init(portName):
     # pickup global instances of port, ser and sapi variables
-    global port, ser, sapivoice, sapistream, connected
+    global port, ser, sapivoice, sapistream, connected, directory
 
     _loadEyeShapes()
     _loadMotorDefs()
 
-    dir = os.path.dirname(os.path.abspath(__file__))
-    silenceFile = os.path.join(dir, 'Silence1.wav')
+    silenceFile = os.path.join(directory, 'Silence1.wav')
 
     # get the sapi objects ready on Windows
     if platform.system() == "Windows":
@@ -460,8 +459,9 @@ def init(portName):
     # Create a bash command with the desired text. The command writes two files, a .wav with the speech audio and a
     # .txt file containing the phonemes and the times.
 
-    if synthesizer != "festival":
-        _speak(text)
+    if synthesizer.lower() != "festival":
+        _generateSpeechFile(text)
+        
 
     _loadSpeechDatabase()
 
@@ -480,7 +480,6 @@ if platform.system() == "Linux":
 def getDirectory():
     global directory
     return directory
-
 
 # Function to move Picoh's motors. Arguments | m (motor) → int (0-6) | pos (position) → int (0-10) | spd (speed) →
 # int (0-10) **eg move(4,3,9) or move(0,9,3)**
@@ -512,8 +511,7 @@ def move(m, pos, spd=5, eye=0):
     # Eyeturn
     if (motorType[m] == "Matrix X"):
         pos = (pos - 5) * 0.4 + 5  # Bodge to reduce the scale
-        msg = "FE," + str(eye) + "," + "{:0.0f}".format(pos * 255 / 10) + "," + "{:0.0f}".format(
-            lastfey * 255 / 10) + "\n"
+        msg = "FE," + str(eye) + "," + "{:0.0f}".format(pos * 255 / 10) + "," + "{:0.0f}".format(lastfey * 255 / 10) + "\n"
 
         # print ("fex:" + msg)
         # Write message to serial port
@@ -524,8 +522,7 @@ def move(m, pos, spd=5, eye=0):
     # Eyetilt
     if (motorType[m] == "Matrix Y"):
         pos = (pos - 5) * 0.4 + 5  # Bodge to reduce the scale
-        msg = "FE," + str(eye) + "," + "{:0.0f}".format(lastfex * 255 / 10) + "," + "{:0.0f}".format(
-            pos * 255 / 10) + "\n"
+        msg = "FE," + str(eye) + "," + "{:0.0f}".format(lastfex * 255 / 10) + "," + "{:0.0f}".format(pos * 255 / 10) + "\n"
         # print ("fey:" + msg)
         # Write message to serial port
         _serwrite(msg)
@@ -606,6 +603,12 @@ def _getPos(m, pos):
     return scaledPos + motorMins[m]
 
 
+# Function to set the language used by gTTS web speech synthesizer
+# name - run 'say -v ?' in terminal to find available names.
+def setLanguage(params=language):
+    global language
+    language = params
+
 # Function to set the voice used by the synthesiser
 # name - run 'say -v ?' in terminal to find available names.
 # speed - speech rate in words per min.
@@ -633,137 +636,23 @@ def setSpeechSpeed(params=speechRate):
 def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
     global topLipFree
 
-    if text.isspace() or text == '':
-        return
-
-    # Use the bottom lip to push the top lip above the centre point if it is below
-
     if topLipFree:
         move(BOTTOMLIP, 4)
         wait(0.25)
-
+    
+    if text.isspace() or text == '':
+        return
     text = text.replace("picoh", "peek oh")
     text = text.replace("Picoh", "peek oh")
-
-    if platform.system() == "Linux":
-        _sayLinux(text, untilDone, lipSync, hdmiAudio, soundDelay)
-        return
-
+    
     if hdmiAudio:
         soundDelay = soundDelay - 1
 
     # Create a bash command with the desired text. espeak.exe or another synthesizer must be in the current folder.  the -w parameter forces the speech to a file
-    _speak(text)
-
-    # open the file to calculate visemes. Festival on RPi has this built in but for espeak need to do it manually
-
-    dir = os.path.dirname(os.path.abspath(__file__))
-    file = speechAudioFile
-
-    waveFile = wave.open(file, 'r')
-
-    length = waveFile.getnframes()
-    framerate = waveFile.getframerate()
-    channels = waveFile.getnchannels()
-    bytespersample = waveFile.getsampwidth()
-
-    # How many samples per second for mouth position
-    if platform.system() == "Windows":
-        VISEMESPERSEC = 10
-    if platform.system() == "Darwin":
-        VISEMESPERSEC = 10
-    if platform.system() == "Linux":
-        VISEMESPERSEC = 10
-
-    # How many samples in 1/20th second
-    # print ('framerate:', framerate, ' channels:', channels, ' length:', length, ' bytespersample:', bytespersample)
-
-    chunk = int(waveFile.getframerate() / VISEMESPERSEC)
-    # print ('chunk:', chunk)
-
-    # Empty the lists that contain phoneme data and reset count
-    phonemes = []
-    times = []
-
-    ms = 0
-
-    for i in range(0, length - chunk, chunk):
-        vol = 0
-        buffer = waveFile.readframes(chunk)
-        # frame is 1 sample for mono or 2 for stereo
-        bytesread = chunk * channels * bytespersample
-        # print ('bytesread:', bytesread)
-        index = 0;
-        for sample in range(0, int(bytesread / (channels * bytespersample))):
-            vol += buffer[index]
-            vol += buffer[index + 1] * 256
-            index += bytespersample
-            if channels > 1:
-                vol += buffer[index]
-                vol += buffer[index + 1] * 256
-                index += bytespersample
-
-        # print ('viseme', i, ":", ms, ':', vol)
-        ms += (1000 / VISEMESPERSEC);
-
-        phonemes.append(float(vol))
-        times.append(float(ms) / 1000)
-
-    # Back to the beginning for next use
-    waveFile.rewind()
-
-    # Normalise the volume
-    max = 0
-    for i in range(0, len(phonemes) - 1):
-        if phonemes[i] > max:
-            max = phonemes[i]
-
-    for i in range(0, len(phonemes) - 1):
-        phonemes[i] = phonemes[i] * 10 / max
-        # print ('visnorm', i, ":", times[i], ':', phonemes[i])
-
-    if lipSync:
-        if soundDelay > 0:
-            # Set up a thread for the speech sound synthesis, delay start by soundDelay
-            t = threading.Timer(soundDelay, _saySpeech, args=(hdmiAudio,), kwargs=None)
-            # Set up a thread for the speech movement
-            t2 = threading.Thread(target=_moveSpeech, args=(phonemes, times))
-        else:
-            # Set up a thread for the speech sound synthesis
-            t = threading.Thread(target=_saySpeech, args=(hdmiAudio,))
-            # Set up a thread for the speech movement, delay start by - soundDelay
-            t2 = threading.Timer(-soundDelay, _moveSpeech, args=(phonemes, times), kwargs=None)
-        t2.start()
-    else:
-        # Set up a thread for the speech sound synthesis
-        t = threading.Thread(target=_saySpeech, args=(hdmiAudio,))
-    t.start()
-
-    # if untilDone, keep running until speech has finished
-    if untilDone:
-        totalTime = times[len(times) - 1]
-        startTime = time.time()
-        while time.time() - startTime < totalTime:
-            continue
-
-
-def _sayLinux(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
-    if "festival" in synthesizer.lower():
-
-        if hdmiAudio:
-            soundDelay = soundDelay - 1
-
-        safetext = re.sub(r'[^ .a-zA-Z0-9?\']+', '', text)
-
-        # Create a bash command with the desired text. The command writes two files, a .wav with the speech audio and a .txt file containing the phonemes and the times.
-
-        bashcommand = "festival -b '(set! mytext (Utterance Text " + '"' + safetext + '"))' + "' '(utt.synth mytext)' '(utt.save.wave mytext " + '"picohData/picohspeech.wav")' + "' '(utt.save.segs mytext " + '"picohData/phonemes"' + ")'"
-
-        # Execute bash command.
-        subprocess.call(bashcommand, shell=True)
-        if debug:
-            print (bashcommand)
-
+    _generateSpeechFile(text)
+    
+    if synthesizer.upper() == "FESTIVAL":
+        
         # Open the text file containing the phonemes
 
         f = open("picohData/phonemes", 'r')
@@ -790,40 +679,11 @@ def _sayLinux(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0)
                 phonemes.append(vals[2])
                 times.append(float(vals[0]))
 
-        if lipSync:
-            if soundDelay > 0:
-                # Set up a thread for the speech sound synthesis, delay start by soundDelay
-                t = threading.Timer(soundDelay, _saySpeech, args=(hdmiAudio,), kwargs=None)
-                # Set up a thread for the speech movement
-                t2 = threading.Thread(target=_moveSpeechFest, args=(phonemes, times))
-            else:
-                # Set up a thread for the speech sound synthesis
-                t = threading.Thread(target=_saySpeech, args=(hdmiAudio,))
-                # Set up a thread for the speech movement, delay start by - soundDelay
-                t2 = threading.Timer(-soundDelay, _moveSpeechFest, args=(phonemes, times), kwargs=None)
-            t2.start()
-        else:
-            # Set up a thread for the speech sound synthesis
-            t = threading.Thread(target=_saySpeech, args=(hdmiAudio,))
-        t.start()
-
-        # if untilDone, keep running until speech has finished
-        if untilDone:
-            totalTime = times[len(times) - 1]
-            startTime = time.time()
-            while time.time() - startTime < totalTime:
-                continue
-
-    if ("espeak" in synthesizer.lower() or "pico2wave" in synthesizer.lower() or "gtts" in synthesizer.lower()):
-
-        if hdmiAudio:
-            soundDelay = soundDelay - 1
-
-        # Create a bash command with the desired text. espeak.exe or another synthesizer must be in the current folder.  the -w parameter forces the speech to a file
-        _speak(text)
-
+    else:
+        
         # open the file to calculate visemes. Festival on RPi has this built in but for espeak need to do it manually
-        waveFile = wave.open("picohData/picohspeech.wav", 'r')
+
+        waveFile = wave.open(speechAudioFile, 'r')
 
         length = waveFile.getnframes()
         framerate = waveFile.getframerate()
@@ -831,7 +691,12 @@ def _sayLinux(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0)
         bytespersample = waveFile.getsampwidth()
 
         # How many samples per second for mouth position
-        VISEMESPERSEC = 20
+        if platform.system() == "Windows":
+            VISEMESPERSEC = 10
+        if platform.system() == "Darwin":
+            VISEMESPERSEC = 10
+        if platform.system() == "Linux":
+            VISEMESPERSEC = 10
 
         # How many samples in 1/20th second
         # print ('framerate:', framerate, ' channels:', channels, ' length:', length, ' bytespersample:', bytespersample)
@@ -873,52 +738,42 @@ def _sayLinux(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0)
         # Normalise the volume
         max = 0
         for i in range(0, len(phonemes) - 1):
-            if (phonemes[i] > max):
+            if phonemes[i] > max:
                 max = phonemes[i]
 
         for i in range(0, len(phonemes) - 1):
             phonemes[i] = phonemes[i] * 10 / max
             # print ('visnorm', i, ":", times[i], ':', phonemes[i])
-
-        if lipSync:
-            if soundDelay > 0:
-                # Set up a thread for the speech sound synthesis, delay start by soundDelay
-                t = threading.Timer(soundDelay, _saySpeech, args=(hdmiAudio,), kwargs=None)
-                # Set up a thread for the speech movement
-                t2 = threading.Thread(target=_moveSpeech, args=(phonemes, times))
-            else:
-                # Set up a thread for the speech sound synthesis
-                t = threading.Thread(target=_saySpeech, args=(hdmiAudio,))
-                # Set up a thread for the speech movement, delay start by - soundDelay
-                t2 = threading.Timer(-soundDelay, _moveSpeech, args=(phonemes, times), kwargs=None)
-            t2.start()
+    
+    # Use the bottom lip to push the top lip above the centre point if it is below
+       
+    if lipSync:
+        if soundDelay > 0:
+            # Set up a thread for the speech sound synthesis, delay start by soundDelay
+            t = threading.Timer(soundDelay, _playSpeech, args=(hdmiAudio,), kwargs=None)
+            # Set up a thread for the speech movement
+            t2 = threading.Thread(target=_moveSpeech, args=(phonemes, times))
         else:
             # Set up a thread for the speech sound synthesis
-            t = threading.Thread(target=_saySpeech, args=(hdmiAudio,))
-        t.start()
-
-        # if untilDone, keep running until speech has finished
-        if untilDone:
-            totalTime = times[len(times) - 1]
-            startTime = time.time()
-            while time.time() - startTime < totalTime:
-                continue
-
-
-# Function to limit values so they are between 0 - 10
-def _limit(val):
-    if val > 10:
-        return 10
-    elif val < 0:
-        return 0
+            t = threading.Thread(target=_playSpeech, args=(hdmiAudio,))
+            # Set up a thread for the speech movement, delay start by - soundDelay
+            t2 = threading.Timer(-soundDelay, _moveSpeech, args=(phonemes, times), kwargs=None)
+        t2.start()
     else:
-        return val
+        # Set up a thread for the speech sound synthesis
+        t = threading.Thread(target=_playSpeech, args=(hdmiAudio,))
+    t.start()
 
-
+    # if untilDone, keep running until speech has finished
+    if untilDone:
+        totalTime = times[len(times) - 1]
+        startTime = time.time()
+        while time.time() - startTime < totalTime:
+            continue
+                
 # Function to play back the speech wav file, if hmdi audio is being used play silence before speech sound
-def _saySpeech(addSilence):
+def _playSpeech(addSilence):
     dir = os.path.dirname(os.path.abspath(__file__))
-    # speechFile = os.path.join(dir, 'picohspeech.wav')
     silenceFile = os.path.join(dir, 'Silence1.wav')
 
     speechFile = speechAudioFile
@@ -951,34 +806,27 @@ def _moveSpeech(phonemes, times):
         timeNow = time.time() - startTime
         for x in range(0, len(times)):
             if timeNow > times[x] and x > currentX:
-                posTop = _phonememapTop(phonemes[x])
-                posBottom = _phonememapBottom(phonemes[x])
+                if synthesizer.upper() == "FESTIVAL":
+                    posTop = _phonememapTopFest(phonemes[x])
+                    posBottom = _phonememapBottomFest(phonemes[x])
+                else:
+                    posTop = _phonememapTop(phonemes[x])
+                    posBottom = _phonememapBottom(phonemes[x])
                 # move(TOPLIP, posTop, 10)
                 move(BOTTOMLIP, posBottom, 10)
                 currentX = x
     # move(TOPLIP, 5)
     move(BOTTOMLIP, 5)
+    
 
-
-def _moveSpeechFest(phonemes, times):
-    startTime = time.time()
-    timeNow = 0
-    totalTime = times[len(times) - 1]
-    currentX = -1
-    while timeNow < totalTime:
-        timeNow = time.time() - startTime
-        for x in range(0, len(times)):
-            if timeNow > times[x] and x > currentX:
-                posTop = _phonememapTopFest(phonemes[x])
-                posBottom = _phonememapBottomFest(phonemes[x])
-                posBottom = 5 + (posBottom * 3 / 10)
-                # move(TOPLIP,posTop,10)
-
-                move(BOTTOMLIP, posBottom, 10)
-                currentX = x
-    # move(TOPLIP,5)
-    move(BOTTOMLIP, 5)
-
+# Function to limit values so they are between 0 - 10    
+def _limit(val):
+    if val > 10:
+        return 10
+    elif val < 0:
+        return 0
+    else:
+        return val
 
 # Function mapping phonemes to top lip positions. Argument | val → phoneme | returns a position as int
 def _phonememapTopFest(val):
@@ -1142,6 +990,8 @@ def reset():
     setEyeShape("Eyeball", "Eyeball")
     for x in range(0, len(restPos) - 1):
         move(x, restPos[x])
+        wait(0.1)
+    close()
 
 
 # Return the sensor value between 0-10 for a given sensor number. Values stored in sensors[] array.
@@ -1221,8 +1071,8 @@ def _EyeShapeBytes(definitionR, definition, setNo, autoMirror):
             strRet += _reverseBits(definition[offset: offset + 2])
 
         strRet += _reverseBits(definitionR[offset: offset + 2])
-
-    # print ("eyeshape set:" + str(set) + ": " + strRet)
+    if debug:
+        print ("eyeshape set:" + str(set) + ": " + strRet)
 
     return strRet
 
@@ -1319,14 +1169,12 @@ def playSound(name="", untilDone=True):
     if untilDone:
         soundThread.join()
 
-
 def _playSoundThread(name=""):
     if not name:
         return
 
     name = name + ".wav"
-    dir = soundFolder
-    soundFile = os.path.join(dir, name)
+    soundFile = os.path.join(soundFolder, name)
 
     # play the sound on Windows
     if platform.system() == "Windows":
