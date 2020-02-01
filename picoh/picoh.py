@@ -68,7 +68,7 @@ phraseList = []
 port = ""
 
 # define library version
-version = "1.246"
+version = "1.248"
 
 # flag to stop writing when writing for threading
 writing = False
@@ -809,12 +809,13 @@ def _moveSpeech(phonemes, times):
         for x in range(0, len(times)):
             if timeNow > times[x] and x > currentX:
                 if synthesizer.upper() == "FESTIVAL":
-                    posTop = _phonememapTopFest(phonemes[x])
+                    #posTop = _phonememapTopFest(phonemes[x])
                     posBottom = _phonememapBottomFest(phonemes[x])
                 else:
                     posTop = _phonememapTop(phonemes[x])
                     posBottom = _phonememapBottom(phonemes[x])
                 # move(TOPLIP, posTop, 10)
+                posBottom = (((posBottom-5)/5)*3)+5
                 move(BOTTOMLIP, posBottom, 10)
                 currentX = x
     # move(TOPLIP, 5)
