@@ -17,13 +17,6 @@ import random
 import re
 import csv
 
-try:
-    # Display logo on Pi-Top[4]
-    from ptoled import PTOLEDDisplay
-    oled_screen = PTOLEDDisplay()
-    oled_screen.draw_image_file("Screen/gif.gif")
-except:
-    pass
 # Import the correct sound library depending on platform.
 if platform.system() == "Windows":
     import winsound
@@ -118,6 +111,15 @@ except FileExistsError:
 
 # Variable to hold the location of the picoh library folder.
 directory = os.path.dirname(os.path.abspath(__file__))
+
+try:
+    # Display logo on Pi-Top[4]
+    from ptoled import PTOLEDDisplay
+    oled_screen = PTOLEDDisplay()
+    logoImagePath = os.path.join(directory, 'Images/logoPT.gif')
+    oled_screen.draw_image_file(logoImagePath)
+except:
+    pass
 
 if debug:
     print("Picoh Library Directory " + directory)
