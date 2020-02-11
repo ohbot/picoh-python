@@ -35,7 +35,7 @@ Type the folloing:
 ``pip install picoh``
 
 To upgrade to the latest version of the library run the following in the console:
-```pip3 install picoh --upgrade```
+```pip install picoh --upgrade```
 
 Installing more voices (optional)
 --------
