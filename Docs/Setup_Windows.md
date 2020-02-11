@@ -12,9 +12,11 @@ More information about Picoh can be found on [ohbot.co.uk.](http://www.ohbot.co.
 Setup
 --------
 
-Install the latest version of Python from [here.](https://www.python.org/downloads/)
+Download a Python installer from [here.] (https://www.python.org/downloads/release/python-364/) On Windows the Picoh library currently only works with Python versions up to 3.6.
 
-Tick the option to Add Python 3.7 to PATH then click on Install Now. 
+We chose version 3.6 Windows x86-64 executable installer.
+
+Tick the option to Add Python to PATH then click on Install Now. 
 
 <br>
 
