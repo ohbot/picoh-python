@@ -29,15 +29,28 @@ if platform.system() == "Linux":
     from playsound import playsound
     from gtts import gTTS
     from pydub import AudioSegment
+  
+# Variables to hold name of settings
 
-    
-global writing, language, voice, synthesizer, speechRate, connected, shapeList, phraseList, topLipFree, directory
+speechDatabaseFile = ''
+defaultEyeShape = ''
+eyeShapeFile = ''
+speechAudioFile = 'picohData/picohspeech.wav'
+picohMotorDefFile = 'picohData/MotorDefinitonsPicoh.omd'
+soundFolder = 'picohData/Sounds'
+synthesizer = ''
+voice = ''
+language = 'en-GB' # Language/Accent for GTTS web text to speech.
+settingsFile = 'picohData/PicohSettings.xml' # String to hold location of settings file
+
+# Variable to hold the location of the picoh library folder.
+directory = os.path.dirname(os.path.abspath(__file__))
+
+# name of directory that holds eye shape, motor definition and speech db files.
+dirName = 'picohData'
 
 # Global variable to turn on and off printing debug info.
 debug = False
-
-# Language/Accent for GTTS web text to speech. 
-language = 'en-GB'
 
 # define constants for motors
 HEADNOD = 0
@@ -68,7 +81,7 @@ phraseList = []
 port = ""
 
 # define library version
-version = "1.248"
+version = "1.249"
 
 # flag to stop writing when writing for threading
 writing = False
@@ -79,18 +92,92 @@ connected = False
 # flag to track if top lip is below centre.
 topLipFree = False
 
+# If the picohData folder does not exist, create it.
+try:
+    # Create target Directory
+    os.mkdir(dirName)
+except FileExistsError:
+    pass
+
+# Copy settings file
+if not path.exists('picohData/PicohSettings.xml'):
+    shutil.copyfile(os.path.join(directory, "PicohSettings.xml"), settingsFile)
+    if debug:
+        print("Copied Picoh Settings from :" + directory + " to picohData/")
+
+# Load settings from XML file.
+def _loadSettings():
+    global eyeShapeFile,defaultEyeShape,synthesizer,voice,speechDatabaseFile,eyeShapeFile,picohMotorDefFile
+    
+    tree = etree.parse(settingsFile)
+
+    
+    root = tree.getroot()
+
+    for element in tree.iter():
+
+        name = element.get("Name")
+        val = element.get("Value")
+
+        if name == "DefaultEyeShape":
+            defaultEyeShape = val
+            
+        if name == "DefaultSpeechSynth":
+            synthesizer = val
+
+        if name == "DefaultVoice":
+            voice = val
+
+        if name == "DefaultLang":
+            language = val
+
+        if name == "SpeechDBFile":
+            speechDatabaseFile = val
+
+        if name == "EyeShapeList":
+            eyeShapeFile = val
+
+        if name == "MotorDefFile":
+            picohMotorDefFile = val
+
+_loadSettings()
+
+# Copy over files
+if not path.exists(speechDatabaseFile):
+    shutil.copyfile(os.path.join(directory, 'PicohSpeech.csv'),speechDatabaseFile)
+    if debug:
+        print("Copied PicohSpeech.csv from :" + directory + " to picohData/")
+
+if not path.exists(eyeShapeFile):
+    shutil.copyfile(os.path.join(directory, 'ohbot.obe'), eyeShapeFile)
+    if debug:
+        print("Copied ohbot.obe from :" + directory + " to picohData/")
+
+if not path.exists(picohMotorDefFile):
+    shutil.copyfile(os.path.join(directory, 'MotorDefinitionsPicoh.omd'), picohMotorDefFile)
+    if debug:
+        print("Copied MotorDefinitionsPicoh.omd from :" + directory + " to picohData/")
+
+if not path.exists(soundFolder):
+
+    shutil.copytree(os.path.join(directory, 'Sounds'),soundFolder)
+
+    if debug:
+        print("Copied Sounds from :" + directory + " to PicohData/")
+
 # global to set the params to speech synthesizer which control the voice
 # Global flag to use a synthesizer other than sapi.
 # If it's not sapi then it needs to support -w parameter to write to file e.g. espeak or espeak-NG
+
 if platform.system() == "Windows":
-    voice = ""
-    synthesizer = "sapi"
+    if synthesizer == "":
+        synthesizer = "sapi"
 if platform.system() == "Darwin":
-    voice = ""
-    synthesizer = "say -o "
+    if synthesizer == "":
+        synthesizer = "say -o "
 if platform.system() == "Linux":
-    voice = ""
-    synthesizer = "festival"
+    if synthesizer == "":
+        synthesizer = "festival"
     # un-comment to make google webspeech default
     # synthesizer = "gTTS" 
 
@@ -99,18 +186,6 @@ speechRate = 170
 
 print("Speech Synthesizer: " + synthesizer)
 
-# name of directory that holds eye shape, motor definition and speech db files.
-dirName = 'picohData'
-
-# If the picohData folder does not exist, create it.
-try:
-    # Create target Directory
-    os.mkdir(dirName)
-except FileExistsError:
-    pass
-
-# Variable to hold the location of the picoh library folder.
-directory = os.path.dirname(os.path.abspath(__file__))
 
 try:
     # Display logo on Pi-Top[4]
@@ -124,35 +199,6 @@ except:
 if debug:
     print("Picoh Library Directory " + directory)
 
-if not path.exists('picohData/PicohSpeech.csv'):
-    shutil.copyfile(os.path.join(directory, 'PicohSpeech.csv'), 'picohData/PicohSpeech.csv')
-    if debug:
-        print("Copied PicohSpeech.csv from :" + directory + " to picohData/")
-
-if not path.exists('picohData/ohbot.obe'):
-    shutil.copyfile(os.path.join(directory, 'ohbot.obe'), 'picohData/ohbot.obe')
-    if debug:
-        print("Copied ohbot.obe from :" + directory + " to picohData/")
-
-if not path.exists('picohData/MotorDefinitionsPicoh.omd'):
-    shutil.copyfile(os.path.join(directory, 'MotorDefinitionsPicoh.omd'), 'picohData/MotorDefinitionsPicoh.omd')
-    if debug:
-        print("Copied MotorDefinitionsPicoh.omd from :" + directory + " to picohData/")
-
-if not path.exists('picohData/Sounds'):
-
-    shutil.copytree(os.path.join(directory, 'Sounds'), 'picohData/Sounds')
-
-    if debug:
-        print("Copied Sounds from :" + directory + " to PicohData/")
-
-# Variables to hold name of speech database and eyeshape files.
-
-speechDatabaseFile = 'picohData/PicohSpeech.csv'
-eyeShapeFile = 'picohData/ohbot.obe'
-speechAudioFile = 'picohData/picohspeech.wav'
-picohMotorDefFile = 'picohData/MotorDefinitionsPicoh.omd'
-soundFolder = 'picohData/Sounds'
 
 # Cache of pupil positions
 global lastfex, lastfey
@@ -180,10 +226,10 @@ class Phrase(object):
         self.set = set
         self.variable = variable
         self.text = text
-
+            
 # Used during calibration.
 def _revertMotorDefsFile():
-    shutil.copyfile(os.path.join(directory, 'MotorDefinitionsPicoh.omd'), 'picohData/MotorDefinitionsPicoh.omd')
+    shutil.copyfile(os.path.join(directory, 'MotorDefinitionsPicoh.omd'), os.path.join('picohData',picohMotorDefFile))
     _loadMotorDefs()
 
 # Read motor definitions file.
@@ -214,11 +260,7 @@ def _loadEyeShapes():
 
     # Clear the shapeList
     shapeList = []
-
-    file = eyeShapeFile
-
-    tree = etree.parse(file)
-
+    tree = etree.parse(eyeShapeFile)
     index = 0
 
     for element in tree.iter():
@@ -477,7 +519,6 @@ if platform.system() == "Darwin":
     init("usbmodem")
 if platform.system() == "Linux":
     init("Arduino")
-
 
 def getDirectory():
     global directory
@@ -975,27 +1016,24 @@ def baseColour(r, g, b, swapRandG=False):
     _serwrite(msg1)
     _serwrite(msg2)
 
-
+# Wait for a number of seconds. 
 def wait(seconds):
     time.sleep(float(seconds))
     return
 
-
+# Detach each of Picoh's motors.
 def close():
     for x in range(0, len(motorMins) - 1):
         detach(x)
 
     # Reset Picoh back to start position
-
-
 def reset():
     baseColour(0, 0, 0)
-    setEyeShape("Eyeball", "Eyeball")
-    for x in range(0, len(restPos) - 1):
+    setEyeShape(defaultEyeShape, defaultEyeShape)
+    for x in range(len(restPos) - 1,-1,-1):
         move(x, restPos[x])
         wait(0.1)
     close()
-
 
 # Return the sensor value between 0-10 for a given sensor number. Values stored in sensors[] array.
 def readSensor(index):
