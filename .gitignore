@@ -7,8 +7,9 @@ tools/.idea/tools.iml
 tools/.idea/misc.xml
 tools/.idea/vcs.xml
 *.gz
-*.xml
 *.iml
+*.xml
+!picoh/PicohSettings.xml
 test/picohData/MotorDefinitionsPicoh.omd
 test/picohData/ohbot.obe
 test/picohData/PicohSpeech.csv

@@ -186,7 +186,6 @@ speechRate = 170
 
 print("Speech Synthesizer: " + synthesizer)
 
-
 try:
     # Display logo on Pi-Top[4]
     from ptoled import PTOLEDDisplay
@@ -285,8 +284,7 @@ def _loadEyeShapes():
                 shapeList[index].autoMirror = False
 
             index = index + 1
-
-            
+       
 # Read speech database file into phraseList.
 def _loadSpeechDatabase():
     global phraseList
@@ -439,7 +437,6 @@ def _generateSpeechFile(text):
                 print("Speech Bash Command:")
                 print(bashcommand)
 
-
 def init(portName):
     # pickup global instances of port, ser and sapi variables
     global port, ser, sapivoice, sapistream, connected, directory
@@ -506,7 +503,6 @@ def init(portName):
     if synthesizer.lower() != "festival":
         _generateSpeechFile(text)
         
-
     _loadSpeechDatabase()
 
     return True
@@ -721,7 +717,6 @@ def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
             if vals:
                 phonemes.append(vals[2])
                 times.append(float(vals[0]))
-
     else:
         
         # open the file to calculate visemes. Festival on RPi has this built in but for espeak need to do it manually
@@ -965,17 +960,14 @@ def _phonememapBottomFest(val):
         'v': 5
     }.get(val, 5)
 
-
 # Function mapping phonemes to top lip positions.
 def _phonememapTop(val):
     return 5 + (_limit(val) / 2)
-
 
 # Function mapping phonemes to top lip positions.
 # Bottom lip never goes over 9
 def _phonememapBottom(val):
     return 5 + (_limit(val) * 3 / 10)
-
 
 # Legacy function to support Ohbot programs with eyeColour. Passes onto baseColour.
 def eyeColour(r, g, b, swapRandG=False):
@@ -1069,7 +1061,6 @@ def setEyeBrightness(val):
 
     _serwrite("FI," + msg + "\n")
 
-
 # set the eye shape according to the passed in eyeshapedefinition
 # eysshape definition is 6 sets of 9 hex pairs which set the bits of half of the screen
 # the other half of the screen is a mirror copy
@@ -1096,7 +1087,6 @@ def _setEyes(leftDefinition, rightDefinition="", autoMirror=True):
     # Pupil is held in set 6 and has been implemented in the Arduino driver as FB 8
     _serwrite("FB,8," + _EyeShapeBytes(definition, rightDefinition, 5, autoMirror) + "\n")
 
-
 # function for getting a string that defines the 16 x 9 matrix for a particular 8 x 9 eyeshapedefinition
 # setNo is 0 for the normal eyeshape, 1 to 4 for blink shapes or 5 for the pupil
 def _EyeShapeBytes(definitionR, definition, setNo, autoMirror):
@@ -1116,7 +1106,6 @@ def _EyeShapeBytes(definitionR, definition, setNo, autoMirror):
         print ("eyeshape set:" + str(set) + ": " + strRet)
 
     return strRet
-
 
 # reverse the bits of a two byte hex number
 def _reverseBits(str):
@@ -1143,7 +1132,6 @@ def _reverseBits(str):
 
     # https://stackoverflow.com/questions/2269827/how-to-convert-an-int-to-a-hex-string
     return "%0.2X" % r
-
 
 def setEyeShape(shapeNameRight, shapeNameLeft=''):
     global shapeList
@@ -1193,7 +1181,6 @@ def getPhrase(set='None', variable='None'):
         return possiblePhrases[0]
     else:
         return possiblePhrases[random.randint(0, length - 1)]
-
 
 # Function to play sounds located in the picohData/Sounds/ folder.
 def playSound(name="", untilDone=True):
