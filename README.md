@@ -289,7 +289,7 @@ picoh.say(picoh.getPhrase())
 picoh.baseColour(r, g, b)
 ----------
 
-Set the colour of Picoh’s eyes. 
+Set the colour of Picoh’s base. 
 
 | Name| Range| Description  | Default |
 | ---      |------|-------------| ------- |

@@ -1,4 +1,4 @@
-from picohLocal import picoh
+from picoh import picoh
 import random
 
 picoh.reset()
