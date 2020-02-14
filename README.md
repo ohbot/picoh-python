@@ -36,7 +36,7 @@ The data files include:
 If you delete a file in picohData (or the whole folder) the default files will be copied back over from the picoh library folder.  
 
 
-You can share the picohData between multiple programs by saving them in the same folder. 
+You can share the picohData folder between multiple programs by saving them in the same folder. 
 
 For example:
 ```
