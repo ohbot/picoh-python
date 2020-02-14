@@ -6,7 +6,7 @@ import os.path
 import numpy as np
 from lxml import etree
 import os
-from picohLocal import picoh
+from picoh import picoh
 from copy import deepcopy
 import platform
 import threading
