@@ -39,9 +39,9 @@ For Example:
 ```python
 
 picoh.setVoice("Oliver")
-picoh.speechSpeed(90)
+picoh.setSpeechSpeed(90)
 picoh.say("Hello this is Oliver Slow")
-picoh.speechSpeed(400)
+picoh.setSpeechSpeed(400)
 picoh.say("Hello this is Oliver Fast")
 ```
 
