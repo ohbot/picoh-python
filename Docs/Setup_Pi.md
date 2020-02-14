@@ -47,7 +47,7 @@ Picoh is tested with Python 3 running on a Raspberry Pi 3 Model B.
 To upgrade to the latest version of the library run the following in the console:
 ```sudo pip3 install picoh --upgrade```
 
-|Picoh library files (these will be installed with the `sudo pip3 install picoh` command above):
+Picoh library files (these will be installed with the `sudo pip3 install picoh` command above):
 
 | File    | Use         |
 | ---------- |------------|
