@@ -22,23 +22,23 @@ def xy(event):
     picoh.move(picoh.HEADNOD,ym)
     picoh.move(picoh.EYETURN,xm)
     picoh.move(picoh.EYETILT,ym)
-    picoh.baseColour(10-ym,ym,xm)
+    picoh.setBaseColour(10-ym,ym,xm)
 
 # Function for when the 'a' key is pressed
 def aKey(event):
     picoh.say("Hello I am Picoh",untilDone = False)
-    picoh.baseColour(3,3,10)
+    picoh.setBaseColour(3,3,10)
 
 # Function for when the 'b' key is pressed
 def bKey(event):
     picoh.playSound('spring',untilDone = False)
     picoh.say("What's going on ?",untilDone = False)
-    picoh.baseColour(10,3,3)
+    picoh.setBaseColour(10,3,3)
 
 # Function for when the 'c' key is pressed
 def cKey(event):
     picoh.say("Hello humans",untilDone = False)
-    picoh.baseColour(3,10,3)
+    picoh.setBaseColour(3,10,3)
 
 # Function called when window is closed. 
 def on_closing():

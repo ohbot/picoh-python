@@ -23,9 +23,9 @@ def blinkLids():
 
 # start up sequence resets to mid position, sets the eyes to blue then goes to sleep
 picoh.reset()
-picoh.baseColour(0, 0, 10)
+picoh.setBaseColour(0, 0, 10)
 sleep(1.0)
-picoh.baseColour(0, 0, 0)
+picoh.setBaseColour(0, 0, 0)
 picoh.move(picoh.HEADNOD, 0)
 picoh.move(picoh.LIDBLINK, 0)
 sleep(2.0)
@@ -66,7 +66,7 @@ while (True):
             say = say + " and " + m + " minutes"
 
         # set the eyes to pink, open eyes, lift head
-        picoh.baseColour(10, 2, 2)
+        picoh.setBaseColour(10, 2, 2)
         picoh.move(picoh.LIDBLINK, 10)
         picoh.move(picoh.HEADNOD, 5)
 
@@ -102,7 +102,7 @@ while (True):
         # wait a second for the thread to stop
         sleep(1)
         picoh.move(picoh.LIDBLINK, 0)
-        picoh.baseColour(0, 0, 0)
+        picoh.setBaseColour(0, 0, 0)
         sleep(1)
         picoh.move(picoh.HEADNOD, 0)
         sleep(1)

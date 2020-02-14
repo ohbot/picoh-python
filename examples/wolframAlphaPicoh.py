@@ -36,7 +36,7 @@ def handleInput():
 
         text = input("Question:\n")
         picoh.say(text)
-        picoh.baseColour(10,5,0)
+        picoh.setBaseColour(10,5,0)
 
         # Stop the random movement. 
         moving = False
@@ -61,13 +61,13 @@ def handleInput():
             picoh.say(ans)
             
             # set base to green. 
-            picoh.baseColour(0,10,0)
+            picoh.setBaseColour(0,10,0)
             
         # If no answer can be found then say answer not available and set base to red. 
         except:
             print('Answer not available')
             picoh.say("Answer not available")
-            picoh.baseColour(10,0,0)
+            picoh.setBaseColour(10,0,0)
                 
         picoh.move(picoh.HEADTURN,5)
 
@@ -82,7 +82,7 @@ def handleInputWiki():
         
         # Say the word they have typed.
         picoh.say(text)
-        picoh.baseColour(10,5,0)
+        picoh.setBaseColour(10,5,0)
 
         # Stop the random movement
         moving = False
@@ -102,13 +102,13 @@ def handleInputWiki():
             moving = True
             res = wikipedia.summary(text,sentences=1)
             picoh.say(res)
-            picoh.baseColour(0,10,0)
+            picoh.setBaseColour(0,10,0)
 
         except:
             # If no answer can be found then say answer not available and set base to red. 
             print('Answer not available')
             picoh.say("Answer not available")
-            picoh.baseColour(10,0,0)
+            picoh.setBaseColour(10,0,0)
             picoh.move(picoh.HEADTURN,5)
         
 def blinkLids():
