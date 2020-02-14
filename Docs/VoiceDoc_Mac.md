@@ -27,7 +27,7 @@ A full list of voices can also be displayed by entering the following command in
 
 ```say -v ?```
 
-picoh.speechSpeed(params)
+picoh.setSpeechSpeed(params)
 ------
 
 Use picoh.speechSpeed() to set speech rate in words per minute:
