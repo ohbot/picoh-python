@@ -286,7 +286,7 @@ picoh.say(picoh.getPhrase())
 ```
 
 
-picoh.baseColour(r, g, b)
+picoh.setBaseColour(r, g, b)
 ----------
 
 Set the colour of Picoh’s base. 
