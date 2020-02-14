@@ -31,7 +31,7 @@ Additonal voices can be used by installing ```espeak``` and ```pico2wave```
  
 | Library    | Use         | Terminal command to install  |Link |
 | ---------- |-------------| -----------------------------|-----|
-| picoh   | Interface with Picoh          | ```sudo pip3 install picoh``` |[picoh](https://github.com/picoh/picoh-python/) |
+| picoh   | Interface with Picoh          | ```sudo pip3 install picoh``` |[picoh](https://github.com/ohbot/picoh-python/) |
 | festival    | Generate text to speech  | ```sudo apt-get install festival```  |- |
 | espeak (optional)    | Generate text to speech  | ```sudo apt-get install espeak```  |[espeak](http://espeak.sourceforge.net/) |
 | pico2wave (optional)    | Generate text to speech  | ```sudo apt-get install libttspico-utils```  |-|
@@ -47,7 +47,7 @@ Picoh is tested with Python 3 running on a Raspberry Pi 3 Model B.
 To upgrade to the latest version of the library run the following in the console:
 ```sudo pip3 install picoh --upgrade```
 
-|Picoh library files (these will be installed with the `sudo pip3 install picoh` command above):
+Picoh library files (these will be installed with the `sudo pip3 install picoh` command above):
 
 | File    | Use         |
 | ---------- |------------|

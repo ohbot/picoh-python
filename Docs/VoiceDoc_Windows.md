@@ -1,3 +1,5 @@
+# Ohbot text to speech on Windows
+
 picoh.setSynthesizer(synth)
 ----------
 

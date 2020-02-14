@@ -1,6 +1,6 @@
 # Picoh for Python
 
-<a href=".images/PicohLogoPixels.png" target="_blank"><img src=".images/PicohLogoPixels.png" border="0" width = "30%"/></a>
+<a href=".images/PicohLogoPixels2.png" target="_blank"><img src=".images/PicohLogoPixels2.png" border="0" width = "30%"/></a>
 
 Choose your platform and click the links to get started!
 
@@ -20,7 +20,7 @@ picohData Folder
 The first time you run a Picoh program a new folder called picohData is created in your working directory. This folder is used to store various files that you can read from within your Picoh programs, these include a SpeechDatabase file, a Motor Definitions file and an EyeShapes file. 
 
 
-There are a various tools you can use to help edit these data files. When using a tool please download it and save it in the same folder as the your Picoh program file, this will ensure it is reading and writing to the correct folder. 
+We have written a few tools you can use to help edit these data files. When using a tool please download it and save it in the same folder as the your Picoh program file, this will ensure it is reading and writing to the correct folder. 
 
 
 The data files include: 
@@ -36,7 +36,7 @@ The data files include:
 If you delete a file in picohData (or the whole folder) the default files will be copied back over from the picoh library folder.  
 
 
-You can share the picohData between multiple programs by saving them in the same folder. 
+You can share the picohData folder between multiple programs by saving them in the same folder. 
 
 For example:
 ```
@@ -286,10 +286,10 @@ picoh.say(picoh.getPhrase())
 ```
 
 
-picoh.baseColour(r, g, b)
+picoh.setBaseColour(r, g, b)
 ----------
 
-Set the colour of Picoh’s eyes. 
+Set the colour of Picoh’s base. 
 
 | Name| Range| Description  | Default |
 | ---      |------|-------------| ------- |
@@ -300,7 +300,7 @@ Set the colour of Picoh’s eyes.
 
 For Example:
 ```python
-picoh.baseColour(2,3,8)
+picoh.setBaseColour(2,3,8)
 ```
 
 ---

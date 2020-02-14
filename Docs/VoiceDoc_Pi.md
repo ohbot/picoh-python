@@ -1,3 +1,5 @@
+# Ohbot text to speech on a Pi
+
 Picoh supports both online and offline text to speech. 
 
 Offline: <br>
@@ -94,19 +96,19 @@ More examples can be found in our [espeakVoices example program](https://github.
 
 Picoh supports Google Web speech using [gTTS](https://github.com/pndurette/gTTS). This provides a more realistic voice and support for multiple languages on the Raspberry Pi. Please note that using this speech means the text Picoh says is processed online on Google's servers. 
 
-The language can be changed by setting picoh.language to a string containing a [google language code](https://cloud.google.com/speech-to-text/docs/languages).
+The language can be changed by calling picoh.setLanguage() passing a string containing a [google language code](https://cloud.google.com/speech-to-text/docs/languages).
 
 For example:
 
 ```python
-picoh.language = "da-DK"
+picoh.setLanguage("da-DK")
 ```
 or
 ```python
-picoh.language = "en-GB"
+picoh.setLanguage("en-GB")
 ```
 or
 ```python
-picoh.language = "en-US"
+picoh.setLanguage("en-US")
 ```
 

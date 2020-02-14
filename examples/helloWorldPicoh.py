@@ -20,12 +20,12 @@ picoh.move(picoh.HEADTURN,7)
 picoh.move(picoh.EYETURN,7)
 
 # Set the base to red:3/10 green: 4/10 and blue 2/10. 
-picoh.baseColour(3,4,2)
+picoh.setBaseColour(3,4,2)
 
 picoh.wait(1)
 
 # Change the base to orange
-picoh.baseColour(10,3,0)
+picoh.setBaseColour(10,3,0)
 
 # Set the eyeshape to SunGlasses
 picoh.setEyeShape("SunGlasses")

@@ -28,15 +28,15 @@ picoh.playSound('ohbot',untilDone = False)
 
 picoh.setEyeShape('Glasses')
 for x in range(0,40):
-    picoh.baseColour(random.randrange(0,10),random.randrange(0,10),random.randrange(0,10))
+    picoh.setBaseColour(random.randrange(0,10),random.randrange(0,10),random.randrange(0,10))
     picoh.wait(0.05)
     
-picoh.baseColour(0,0,0)
+picoh.setBaseColour(0,0,0)
 picoh.wait(0.5)
 
 picoh.setEyeShape('Angry')
 picoh.playSound('smash',untilDone = False)
-picoh.baseColour(10,0,0)
+picoh.setBaseColour(10,0,0)
 
 for x in range(0,14):
     picoh.move(picoh.EYETILT,3)
@@ -53,7 +53,7 @@ for x in range(0,14):
     picoh.wait(x/100)
     picoh.move(picoh.EYETURN,7)
     picoh.wait(x/100)
-    picoh.baseColour(x,10-x,0)
+    picoh.setBaseColour(x,10-x,0)
 
 picoh.move(picoh.EYETURN,5)
 
@@ -66,16 +66,16 @@ lengthOfBeat = 0.565
 for x in range(0,8):
 
     picoh.move(picoh.HEADNOD,6)
-    picoh.baseColour(x,10-x,0)
+    picoh.setBaseColour(x,10-x,0)
 
     picoh.wait(lengthOfBeat/2)
     
     picoh.move(picoh.HEADTURN,7)
     picoh.move(picoh.HEADNOD,4)
-    picoh.baseColour(0,x,10-x)
+    picoh.setBaseColour(0,x,10-x)
 
     picoh.wait(lengthOfBeat/2)
-    picoh.baseColour(10-x,x,0)
+    picoh.setBaseColour(10-x,x,0)
 
     picoh.move(picoh.HEADNOD,6)
 
@@ -83,7 +83,7 @@ for x in range(0,8):
 
     picoh.move(picoh.HEADTURN,3)
     picoh.move(picoh.HEADNOD,4)
-    picoh.baseColour(0,10-x,x)
+    picoh.setBaseColour(0,10-x,x)
 
     picoh.wait(lengthOfBeat/2)
     

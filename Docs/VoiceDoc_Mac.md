@@ -1,3 +1,5 @@
+# Ohbot text to speech on a Mac
+
 picoh.setSynthesizer(synth)
 ----------
 
@@ -27,7 +29,7 @@ A full list of voices can also be displayed by entering the following command in
 
 ```say -v ?```
 
-picoh.speechSpeed(params)
+picoh.setSpeechSpeed(params)
 ------
 
 Use picoh.speechSpeed() to set speech rate in words per minute:
@@ -39,9 +41,9 @@ For Example:
 ```python
 
 picoh.setVoice("Oliver")
-picoh.speechSpeed(90)
+picoh.setSpeechSpeed(90)
 picoh.say("Hello this is Oliver Slow")
-picoh.speechSpeed(400)
+picoh.setSpeechSpeed(400)
 picoh.say("Hello this is Oliver Fast")
 ```
 

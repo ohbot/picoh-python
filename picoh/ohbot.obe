@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <EyeShapeSet xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <EyeShapeList>
     <EyeShape>
@@ -6,7 +5,7 @@
       <FileName>Ohbot.obe</FileName>
       <PupilRangeX>5</PupilRangeX>
       <PupilRangeY>5</PupilRangeY>
-      <Matrix />
+      <Matrix/>
       <Hex>2070F8FCFE7C3800000070F8FCFE3C000000000078FCFC38000000000000F8FC0000000000000000F800000000000010381000000000</Hex>
       <AutoMirror>true</AutoMirror>
     </EyeShape>
@@ -15,7 +14,7 @@
       <FileName>Ohbot.obe</FileName>
       <PupilRangeX>6</PupilRangeX>
       <PupilRangeY>7</PupilRangeY>
-      <Matrix />
+      <Matrix/>
       <Hex>00001F1F1F1F1F00000000000004000000000000000E0A0E00000000001F1115111F00000000000E0A0E000000000000000C0C000000</Hex>
       <AutoMirror>false</AutoMirror>
     </EyeShape>
@@ -24,7 +23,7 @@
       <FileName>Ohbot.obe</FileName>
       <PupilRangeX>6</PupilRangeX>
       <PupilRangeY>7</PupilRangeY>
-      <Matrix />
+      <Matrix/>
       <Hex>007C7C7C7C7C7C0000000000202000000000000038282838000000007C445454447C0000000038282838000000000000003030000000</Hex>
       <AutoMirror>true</AutoMirror>
     </EyeShape>
@@ -33,7 +32,7 @@
       <FileName>Ohbot.obe</FileName>
       <PupilRangeX>5</PupilRangeX>
       <PupilRangeY>5</PupilRangeY>
-      <Matrix />
+      <Matrix/>
       <Hex>003C7EFEFEFC002000003C7EFEFE7C800020387CFEFEFE7C388800387CFEFEFE7C380088003C7EFEFEFC082800000010381000000000</Hex>
       <AutoMirror>true</AutoMirror>
     </EyeShape>
@@ -42,7 +41,7 @@
       <FileName>Ohbot.obe</FileName>
       <PupilRangeX>5</PupilRangeX>
       <PupilRangeY>5</PupilRangeY>
-      <Matrix />
+      <Matrix/>
       <Hex>387CFEFEFE7C380000007CFEFEFE7C00000000007CFE7C00000000000000FE7C00000000000000827C00000000000010381000000000</Hex>
       <AutoMirror>true</AutoMirror>
     </EyeShape>
@@ -51,7 +50,7 @@
       <FileName>Ohbot.obe</FileName>
       <PupilRangeX>6</PupilRangeX>
       <PupilRangeY>5</PupilRangeY>
-      <Matrix />
+      <Matrix/>
       <Hex>FEFFFEFEFE00000000FEFFFEFEFE00000000FEFFFEFEFE00000000FEFFFEFEFE00000000FEFFFEFEFE00000000001038100000000000</Hex>
       <AutoMirror>true</AutoMirror>
     </EyeShape>
@@ -60,7 +59,7 @@
       <FileName>Ohbot.obe</FileName>
       <PupilRangeX>5</PupilRangeX>
       <PupilRangeY>6</PupilRangeY>
-      <Matrix />
+      <Matrix/>
       <Hex>6CFEFEFE7C38100000007CFEFE7C3810000000007CFE7C38100000000000FE7C38000000000000007C00000000000010381000000000</Hex>
       <AutoMirror>true</AutoMirror>
     </EyeShape>
@@ -69,7 +68,7 @@
       <FileName>Ohbot.obe</FileName>
       <PupilRangeX>5</PupilRangeX>
       <PupilRangeY>5</PupilRangeY>
-      <Matrix />
+      <Matrix/>
       <Hex>387CFEFEFE7C380000007CFEFEFE7C00000000007CFE7C00000000000000FE7C00000000000000827C000000000010387C3810000000</Hex>
       <AutoMirror>true</AutoMirror>
     </EyeShape>
@@ -78,7 +77,7 @@
       <FileName>Ohbot.obe</FileName>
       <PupilRangeX>5</PupilRangeX>
       <PupilRangeY>5</PupilRangeY>
-      <Matrix />
+      <Matrix/>
       <Hex>081C3E7EFE7C380000001C3E7EFE7C00000000003C7E7E3C0000000000003E7E00000000000000003E00000000000010381000000000</Hex>
       <AutoMirror>true</AutoMirror>
     </EyeShape>
@@ -87,7 +86,7 @@
       <FileName>Ohbot.obe</FileName>
       <PupilRangeX>5</PupilRangeX>
       <PupilRangeY>5</PupilRangeY>
-      <Matrix />
+      <Matrix/>
       <Hex>00387C7C7C3800000000107C7C7C100000000000387C3800000000000000380000000000000000000000000000000000100000000000</Hex>
       <AutoMirror>true</AutoMirror>
     </EyeShape>
@@ -96,7 +95,7 @@
       <FileName>Ohbot.obe</FileName>
       <PupilRangeX>5</PupilRangeX>
       <PupilRangeY>5</PupilRangeY>
-      <Matrix />
+      <Matrix/>
       <Hex>7CFEFEFEFEFE7C0000007CFEFEFE7C00000000007CFE7C00000000000000FE7C00000000000000827C00000000000010381000000000</Hex>
       <AutoMirror>true</AutoMirror>
     </EyeShape>
@@ -105,7 +104,7 @@
       <FileName>Custom.obe</FileName>
       <PupilRangeX>0</PupilRangeX>
       <PupilRangeY>0</PupilRangeY>
-      <Matrix />
+      <Matrix/>
       <Hex>FE838282FE00000000FEC78282FE00000000FEFF8282FE00000000FEFFC682FE00000000FEFFFE82FE00000000000000000000000000</Hex>
       <AutoMirror>true</AutoMirror>
     </EyeShape>
@@ -114,11 +113,20 @@
       <FileName>Ohbot.obe</FileName>
       <PupilRangeX>6</PupilRangeX>
       <PupilRangeY>6</PupilRangeY>
-      <Matrix />
+      <Matrix/>
       <Hex>1C3E7EFEFEFE7C0000003C7EFEFE7C00000000007CFE7C0000000000007EFC00000000000000827C000000000000183C3C3C18000000</Hex>
       <AutoMirror>true</AutoMirror>
     </EyeShape>
-  </EyeShapeList>
+  <EyeShape>
+      <Name>Full</Name>
+      <FileName>Ohbot.obe</FileName>
+      <PupilRangeX>5</PupilRangeX>
+      <PupilRangeY>5</PupilRangeY>
+      <Matrix/>
+      <Hex>ffffffffffffffffffffffffffffffff0000ffffffff0000000000ffff00000000000000000000000000000000000000000000000000</Hex>
+      <AutoMirror>true</AutoMirror>
+    </EyeShape>
+    </EyeShapeList>
   <Version>1</Version>
-  <FilePathName />
+  <FilePathName/>
 </EyeShapeSet>
