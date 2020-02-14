@@ -33,7 +33,7 @@ Type the folloing:
 ``pip install picoh``
 
 To upgrade to the latest version of the library run the following in the console:
-```pip3 install picoh --upgrade```
+```pip install picoh --upgrade```
 
 Installing more voices (optional)
 --------
@@ -77,7 +77,7 @@ The ``pip install picoh`` command will install the following libraries:
 | serial    | Communicate with serial port| ```pip install pyserial```  |[pyserial](https://github.com/pyserial/pyserial/) |
 | lxml    | Import settings file          | ```pip install lxml```  |[lxml](https://github.com/lxml/lxml) |
 | comtypes    | Required for serial communication      | ```pip install comtypes```  | [comtypes](https://github.com/enthought/comtypes) |
-| pyobjc    | Python Objective C library       | ```pip3 install objc```  |[pyobjc](https://pypi.org/project/pyobjc/) |
+| pyobjc    | Python Objective C library       | ```pip install objc```  |[pyobjc](https://pypi.org/project/pyobjc/) |
 
 
 To upgrade to the latest version of the library run the following in the console:
