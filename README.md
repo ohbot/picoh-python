@@ -300,7 +300,7 @@ Set the colour of Picoh’s base.
 
 For Example:
 ```python
-picoh.baseColour(2,3,8)
+picoh.setBaseColour(2,3,8)
 ```
 
 ---
