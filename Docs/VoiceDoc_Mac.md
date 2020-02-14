@@ -1,3 +1,5 @@
+# Ohbot text to speech on a Mac
+
 picoh.setSynthesizer(synth)
 ----------
 
