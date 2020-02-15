@@ -2,12 +2,13 @@
 setup.cfg
 setup.py
 picoh/MotorDefinitionsPicoh.omd
+picoh/PicohSettings.xml
 picoh/PicohSpeech.csv
 picoh/Silence1.wav
 picoh/__init__.py
 picoh/ohbot.obe
 picoh/picoh.py
-picoh/picohdefinitions.omd
+picoh/Images/calibrate400.gif
 picoh/Images/logoPT.gif
 picoh/Images/movedown.gif
 picoh/Images/moveright.gif
