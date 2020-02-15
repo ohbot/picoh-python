@@ -21,7 +21,7 @@ setup(
     author = 'ohbot',
     author_email = 'info@ohbot.co.uk',
     url = 'https://github.com/ohbot/picoh',
-    download_url = 'https://github.com/ohbot/picoh-python/archive/1.249.1.tar.gz',
+    download_url = 'https://github.com/ohbot/picoh-python/archive/1.25.tar.gz',
     keywords = ['ohbot', 'robot','picoh'],
     classifiers = [],
     install_requires= includes,
