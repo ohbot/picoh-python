@@ -1635,7 +1635,7 @@ class Calibrate(Tk.Frame):
             selection = "Value = " + str(self.var.get())
             self.label.config(
                 text="Slowly move the slider to the right, stop when the bottom lip pops the top lip into a smile.")
-
+            frames = famesTwo
             self.button.config(text="Set Smile Point")
 
             self.ResetRangeToRawCentre()
@@ -1678,19 +1678,13 @@ class Calibrate(Tk.Frame):
         self.graphic.configure(image=frame)
 
         ind += 1
-
         if ind == len(frames):
             ind = 0
 
         if ind == 0:
             root.after(2000,self.update, ind)
         else:
-            root.after(200,self.update, ind)
-
-
-
-
-
+            root.after(20,self.update, ind)
 
     def __init__(self,parent,frameIn):
 
@@ -1919,7 +1913,10 @@ if __name__ == "__main__":
     picohImage = Tk.PhotoImage(file=imageFile)
 
     imageFile = os.path.join(directory, 'Images/calibrate400.gif')
-    frames = [Tk.PhotoImage(file=imageFile,format = 'gif -index %i' %(i)) for i in range(5)]
+    frames = [Tk.PhotoImage(file=imageFile,format = 'gif -index %i' %(i)) for i in range(52)]
+
+    imageFile = os.path.join(directory, 'Images/calibrate2400.gif')
+    framesTwo = [Tk.PhotoImage(file=imageFile,format = 'gif -index %i' %(i)) for i in range(53)]
 
     if platform.system() == "Darwin":
         xDim = 120
