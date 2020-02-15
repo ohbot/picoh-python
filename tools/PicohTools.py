@@ -1612,6 +1612,7 @@ class Calibrate(Tk.Frame):
 
 
     def sel(self):
+        global frameUsed
 
         if self.stage == 2:
             picoh.reset()
@@ -1628,14 +1629,12 @@ class Calibrate(Tk.Frame):
         if self.stage == 1:
             self.ResetRangeToRawMin()
             self.label.config(text="All done!")
-            self.stage = 2
-            self.button.config(text="Close")
+            self.started = False
 
         if self.stage == 0:
             selection = "Value = " + str(self.var.get())
             self.label.config(
                 text="Slowly move the slider to the right, stop when the bottom lip pops the top lip into a smile.")
-            frames = famesTwo
             self.button.config(text="Set Smile Point")
 
             self.ResetRangeToRawCentre()
@@ -1673,12 +1672,19 @@ class Calibrate(Tk.Frame):
 
     def update(self,ind):
 
-
-        frame = frames[ind]
-        self.graphic.configure(image=frame)
-
+        if self.stage == 0:
+            frame = frames[ind]
+            self.graphic.configure(image=frame)
+        if self.stage == 1:
+            frame = framesTwo[ind]
+            self.graphic.configure(image=frame)
+            
         ind += 1
-        if ind == len(frames):
+        
+        if ind == len(frames) and self.stage == 0:
+            ind = 0
+
+        if ind == len(framesTwo) and self.stage == 1:
             ind = 0
 
         if ind == 0:
