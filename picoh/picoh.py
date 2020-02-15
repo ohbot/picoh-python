@@ -662,12 +662,15 @@ def setSynthesizer(params=synthesizer):
     global synthesizer
     synthesizer = params
 
-
 # Set the speed of the speech in words per min.
+def speechSpeed(params=speechRate):
+    global speechRate
+    speechRate = params
+    
+# Set the speed of the speech in words per min mirrors speechSpeed for consistency.
 def setSpeechSpeed(params=speechRate):
     global speechRate
     speechRate = params
-
 
 # Function to make Picoh Speak. Arguments | text String "Hello World" **eg say("Hello my name is Picoh")
 # untilDone - wait in function until speech is complete, lipSync - move lips in time with speech, hdmiAudio - adds a delay to give hdmi channel time to activate.
