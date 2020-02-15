@@ -1617,15 +1617,7 @@ class Calibrate(Tk.Frame):
         if self.stage == 2:
             picoh.reset()
             return
-            #root.destroy()
 
-           # c
-
-            #picoh.wait(1)
-
-           # picoh.close()
-
-            #sys.exit()
         if self.stage == 1:
             self.ResetRangeToRawMin()
             self.label.config(text="All done!")
