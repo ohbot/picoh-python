@@ -1702,7 +1702,7 @@ class Calibrate(Tk.Frame):
 
         self.graphic.config(width=10000)
 
-        frame = frames[0]
+        frame = frames[len(frames)-1]
         self.graphic.configure(image=frame)
 
 
