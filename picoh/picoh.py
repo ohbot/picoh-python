@@ -656,7 +656,6 @@ def setVoice(params=voice):
     global voice
     voice = params
 
-
 # Function to set a different speech synthesizer - defaults to sapi
 def setSynthesizer(params=synthesizer):
     global synthesizer
