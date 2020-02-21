@@ -17,11 +17,16 @@ import random
 import re
 import csv
 
+sapivoice = ""
+sapistream = ""
+
 # Import the correct sound library depending on platform.
 if platform.system() == "Windows":
     import winsound
     # For SAPI speech
     from comtypes.client import CreateObject
+    sapivoice = CreateObject("SAPI.SpVoice")
+    sapistream = CreateObject("SAPI.SpFileStream")
     from comtypes.gen import SpeechLib
 if platform.system() == "Darwin":
     from playsound import playsound
@@ -81,7 +86,7 @@ phraseList = []
 port = ""
 
 # define library version
-version = "1.253"
+version = "1.254"
 
 # flag to stop writing when writing for threading
 writing = False
@@ -448,8 +453,6 @@ def init(portName):
 
     # get the sapi objects ready on Windows
     if platform.system() == "Windows":
-        sapivoice = CreateObject("SAPI.SpVoice")
-        sapistream = CreateObject("SAPI.SpFileStream")
         winsound.PlaySound(silenceFile, winsound.SND_FILENAME)
 
     # get the audio system warmed up on Mac
