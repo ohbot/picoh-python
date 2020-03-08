@@ -31,8 +31,8 @@ def aKey(event):
 
 # Function for when the 'b' key is pressed
 def bKey(event):
-    picoh.playSound('spring',untilDone = False)
-    picoh.say("What's going on ?",untilDone = False)
+    picoh.playSound('spring',untilDone = True)
+    picoh.say("What is going on ?",untilDone = False)
     picoh.setBaseColour(10,3,3)
 
 # Function for when the 'c' key is pressed

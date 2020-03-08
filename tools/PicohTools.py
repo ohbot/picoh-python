@@ -1612,30 +1612,21 @@ class Calibrate(Tk.Frame):
 
 
     def sel(self):
+        global frameUsed
 
         if self.stage == 2:
             picoh.reset()
             return
-            #root.destroy()
 
-           # c
-
-            #picoh.wait(1)
-
-           # picoh.close()
-
-            #sys.exit()
         if self.stage == 1:
             self.ResetRangeToRawMin()
             self.label.config(text="All done!")
-            self.stage = 2
-            self.button.config(text="Close")
+            self.started = False
 
         if self.stage == 0:
             selection = "Value = " + str(self.var.get())
             self.label.config(
                 text="Slowly move the slider to the right, stop when the bottom lip pops the top lip into a smile.")
-
             self.button.config(text="Set Smile Point")
 
             self.ResetRangeToRawCentre()
@@ -1673,24 +1664,25 @@ class Calibrate(Tk.Frame):
 
     def update(self,ind):
 
-
-        frame = frames[ind]
-        self.graphic.configure(image=frame)
-
+        if self.stage == 0:
+            frame = frames[ind]
+            self.graphic.configure(image=frame)
+        if self.stage == 1:
+            frame = framesTwo[ind]
+            self.graphic.configure(image=frame)
+            
         ind += 1
+        
+        if ind == len(frames) and self.stage == 0:
+            ind = 0
 
-        if ind == len(frames):
+        if ind == len(framesTwo) and self.stage == 1:
             ind = 0
 
         if ind == 0:
             root.after(2000,self.update, ind)
         else:
-            root.after(200,self.update, ind)
-
-
-
-
-
+            root.after(20,self.update, ind)
 
     def __init__(self,parent,frameIn):
 
@@ -1702,7 +1694,7 @@ class Calibrate(Tk.Frame):
 
         self.graphic.config(width=10000)
 
-        frame = frames[0]
+        frame = frames[len(frames)-1]
         self.graphic.configure(image=frame)
 
 
@@ -1919,7 +1911,10 @@ if __name__ == "__main__":
     picohImage = Tk.PhotoImage(file=imageFile)
 
     imageFile = os.path.join(directory, 'Images/calibrate400.gif')
-    frames = [Tk.PhotoImage(file=imageFile,format = 'gif -index %i' %(i)) for i in range(5)]
+    frames = [Tk.PhotoImage(file=imageFile,format = 'gif -index %i' %(i)) for i in range(52)]
+
+    imageFile = os.path.join(directory, 'Images/calibrate2400.gif')
+    framesTwo = [Tk.PhotoImage(file=imageFile,format = 'gif -index %i' %(i)) for i in range(53)]
 
     if platform.system() == "Darwin":
         xDim = 120

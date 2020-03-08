@@ -12,15 +12,15 @@ picoh.wait(2)
 
 picoh.setVoice("Karen")
 
-picoh.speechSpeed(150)
+picoh.setSpeechSpeed(150)
 
 picoh.move(picoh.HEADTURN,random.randint(3,6))
 
 picoh.say("hello i am Karen")
 
-picoh.setVoice(name = "Alex")
+picoh.setVoice("Alex")
 
-picoh.speechSpeed(90)
+picoh.setSpeechSpeed(90)
 
 picoh.move(picoh.HEADTURN,random.randint(2,6))
 
@@ -30,17 +30,17 @@ picoh.setVoice("Oliver")
 
 picoh.move(picoh.HEADTURN,random.randint(1,6))
 
-picoh.speechSpeed(200)
+picoh.setSpeechSpeed(200)
 
 picoh.say("hello i am Oliver fast")
 
 picoh.setVoice("Kate")
 
-picoh.speechSpeed(90)
+picoh.setSpeechSpeed(90)
 
 picoh.say("Hey I am Kate slow")
 
-picoh.speechSpeed(500)
+picoh.setSpeechSpeed(500)
 
 picoh.say("Hey I am Kate fast")
 
