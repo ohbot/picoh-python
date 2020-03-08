@@ -233,7 +233,7 @@ class Phrase(object):
             
 # Used during calibration.
 def _revertMotorDefsFile():
-    shutil.copyfile(os.path.join(directory, 'MotorDefinitionsPicoh.omd'), os.path.join('picohData',picohMotorDefFile))
+    shutil.copyfile(os.path.join(directory, 'MotorDefinitionsPicoh.omd'), picohMotorDefFile)
     _loadMotorDefs()
 
 # Read motor definitions file.

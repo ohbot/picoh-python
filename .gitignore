@@ -16,3 +16,5 @@ test/picohData/PicohSpeech.csv
 test/test.py
 test/picohData/picohspeech.wav
 *.icloud
+picoh/__pycache__/__init__.cpython-36.pyc
+picoh/__pycache__/picoh.cpython-36.pyc
