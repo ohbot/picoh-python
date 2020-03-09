@@ -25,9 +25,7 @@ if platform.system() == "Windows":
     import winsound
     # For SAPI speech
     from comtypes.client import CreateObject
-    sapivoice = CreateObject("SAPI.SpVoice")
-    sapistream = CreateObject("SAPI.SpFileStream")
-    from comtypes.gen import SpeechLib
+
 if platform.system() == "Darwin":
     from playsound import playsound
 if platform.system() == "Linux":
@@ -353,7 +351,7 @@ def _generateSpeechFile(text):
     file = speechAudioFile
     if platform.system() == "Windows":
         if ("sapi" in synthesizer.lower()):
-            #from comtypes.gen import SpeechLib
+            from comtypes.gen import SpeechLib
             global sapivoice, sapistream
 
             sapistream.Open(file, SpeechLib.SSFMCreateForWrite)
@@ -453,6 +451,8 @@ def init(portName):
 
     # get the sapi objects ready on Windows
     if platform.system() == "Windows":
+        sapivoice = CreateObject("SAPI.SpVoice")
+        sapistream = CreateObject("SAPI.SpFileStream") 
         winsound.PlaySound(silenceFile, winsound.SND_FILENAME)
 
     # get the audio system warmed up on Mac
