@@ -346,39 +346,43 @@ def _parseSAPIVoice(flag):
 
 # generate speech file depending on platform and sythensizer.
 def _generateSpeechFile(text):
-    # Pick up the global variable that defines the language. This is only used in GTTS speech.
+    # Pick up the global variable that defines the language. This is only used in GTTS speech.
     global language
     file = speechAudioFile
     if platform.system() == "Windows":
         if ("sapi" in synthesizer.lower()):
             from comtypes.gen import SpeechLib
             global sapivoice, sapistream
+            #sapivoice = CreateObject("SAPI.SpVoice")
+            #sapistream = CreateObject("SAPI.SpFileStream")
+            try:
+                sapistream.Open(file, SpeechLib.SSFMCreateForWrite)
+                sapivoice.AudioOutputStream = sapistream
 
-            sapistream.Open(file, SpeechLib.SSFMCreateForWrite)
-            sapivoice.AudioOutputStream = sapistream
+                # set any parameters
+                sa = _parseSAPIVoice("a");
+                if _is_digit(sa):
+                    sapivoice.Volume = int(sa)
+                else:
+                    sapivoice.Volume = 100
+                sr = _parseSAPIVoice("r")
+                if _is_digit(sr):
+                    sapivoice.Rate = int(sr)
+                else:
+                    sapivoice.Rate = 0
+                sv = _parseSAPIVoice("v");
+                # Default voice is always first in the list
+                if (sv == ''):
+                    sapivoice.voice = sapivoice.GetVoices()[0]
+                else:
+                    for v in sapivoice.GetVoices():
+                        if (sv.lower() in v.GetDescription().lower()):
+                            sapivoice.voice = v
 
-            # set any parameters
-            sa = _parseSAPIVoice("a");
-            if _is_digit(sa):
-                sapivoice.Volume = int(sa)
-            else:
-                sapivoice.Volume = 100
-            sr = _parseSAPIVoice("r")
-            if _is_digit(sr):
-                sapivoice.Rate = int(sr)
-            else:
-                sapivoice.Rate = 0
-            sv = _parseSAPIVoice("v");
-            # Default voice is always first in the list
-            if (sv == ''):
-                sapivoice.voice = sapivoice.GetVoices()[0]
-            else:
-                for v in sapivoice.GetVoices():
-                    if (sv.lower() in v.GetDescription().lower()):
-                        sapivoice.voice = v
-
-            sapivoice.Speak(text)
-            sapistream.Close()
+                sapivoice.Speak(text)
+                sapistream.Close()
+            except:
+                print("Speech being generated too quickly")
         else:
             # Remove any characters that are unsafe for a subprocess call
             safetext = re.sub(r'[^ .a-zA-Z0-9?\']+', '', text)
