@@ -84,7 +84,7 @@ phraseList = []
 port = ""
 
 # define library version
-version = "1.256"
+version = "1.257"
 
 # flag to stop writing when writing for threading
 writing = False
@@ -739,7 +739,7 @@ def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
 
         # How many samples per second for mouth position
         if platform.system() == "Windows":
-            VISEMESPERSEC = 10
+            VISEMESPERSEC = 20
         if platform.system() == "Darwin":
             VISEMESPERSEC = 10
         if platform.system() == "Linux":
@@ -857,10 +857,9 @@ def _moveSpeech(phonemes, times):
                     #posTop = _phonememapTopFest(phonemes[x])
                     posBottom = _phonememapBottomFest(phonemes[x])
                 else:
-                    posTop = _phonememapTop(phonemes[x])
+                    #posTop = _phonememapTop(phonemes[x])
                     posBottom = _phonememapBottom(phonemes[x])
                 # move(TOPLIP, posTop, 10)
-                posBottom = (((posBottom-5)/5)*3)+5
                 move(BOTTOMLIP, posBottom, 10)
                 currentX = x
     # move(TOPLIP, 5)
