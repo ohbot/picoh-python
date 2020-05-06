@@ -517,7 +517,7 @@ def init(portName):
 # initialise with any port that has USB Serial Device in the name
 
 if platform.system() == "Windows":
-    init("USB Serial Device")
+    init("Arduino")
 if platform.system() == "Darwin":
     init("usbmodem")
 if platform.system() == "Linux":
