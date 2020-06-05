@@ -9,7 +9,6 @@ import os
 import os.path
 from os import path
 import shutil
-import sys
 import wave
 import subprocess
 from lxml import etree
@@ -17,8 +16,17 @@ import random
 import re
 import csv
 
+try:
+    from azure.cognitiveservices.speech import AudioDataStream, SpeechConfig, SpeechSynthesizer, SpeechSynthesisOutputFormat
+    from azure.cognitiveservices.speech.audio import AudioOutputConfig
+except:
+    pass
+
 sapivoice = ""
 sapistream = ""
+speech_config = "" 
+audio_config = ""
+azureSynthesizer = ""
 
 # Import the correct sound library depending on platform.
 if platform.system() == "Windows":
@@ -32,11 +40,12 @@ if platform.system() == "Linux":
     from playsound import playsound
     from gtts import gTTS
     from pydub import AudioSegment
-  
 # Variables to hold name of settings
 
 speechDatabaseFile = ''
 defaultEyeShape = ''
+eyeShapeLeft = ''
+eyeShapeRight = ''
 eyeShapeFile = ''
 speechAudioFile = 'picohData/picohspeech.wav'
 picohMotorDefFile = 'picohData/MotorDefinitonsPicoh.omd'
@@ -45,6 +54,7 @@ synthesizer = ''
 voice = ''
 language = 'en-GB' # Language/Accent for GTTS web text to speech.
 settingsFile = 'picohData/PicohSettings.xml' # String to hold location of settings file
+
 
 # Variable to hold the location of the picoh library folder.
 directory = os.path.dirname(os.path.abspath(__file__))
@@ -71,6 +81,8 @@ sensors = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 motorPos = [11, 11, 11, 11, 11, 11, 11, 11]
 motorMins = [0, 0, 0, 0, 0, 0, 0, 0]
 motorMaxs = [0, 0, 0, 0, 0, 0, 0, 0]
+motorSpeeds = [0, 0, 0, 0, 0, 0, 0, 0]
+motorAccels = [0, 0, 0, 0, 0, 0, 0, 0]
 motorRev = [False, False, False, False, False, False, False, False]
 restPos = [0, 0, 0, 0, 0, 0, 0, 0]
 isAttached = [False, False, False, False, False, False, False, False]
@@ -84,7 +96,7 @@ phraseList = []
 port = ""
 
 # define library version
-version = "1.257"
+version = "1.259"
 
 # flag to stop writing when writing for threading
 writing = False
@@ -110,7 +122,7 @@ if not path.exists('picohData/PicohSettings.xml'):
 
 # Load settings from XML file.
 def _loadSettings():
-    global eyeShapeFile,defaultEyeShape,synthesizer,voice,speechDatabaseFile,eyeShapeFile,picohMotorDefFile
+    global eyeShapeFile,defaultEyeShape,synthesizer,voice,speechDatabaseFile,eyeShapeFile,picohMotorDefFile,eyeShapeLeft,eyeShapeRight
     
     tree = etree.parse(settingsFile)
 
@@ -124,6 +136,8 @@ def _loadSettings():
 
         if name == "DefaultEyeShape":
             defaultEyeShape = val
+            eyeShapeLeft = val
+            eyeShapeRight = val
             
         if name == "DefaultSpeechSynth":
             synthesizer = val
@@ -203,9 +217,20 @@ if debug:
 
 
 # Cache of pupil positions
-global lastfex, lastfey
-lastfex = 5
-lastfey = 5
+
+lastfexl = 5
+lastfexr = 5
+lastfeyl = 5
+lastfeyr = 5
+
+blinkl = 10
+blinkr = 10
+
+bottomLipPos = 5
+
+baseR = 0
+baseG = 0
+baseB = 0
 
 ser = None
 
@@ -247,6 +272,8 @@ def _loadMotorDefs():
         motorPos[index] = int(child.get("RestPosition"))
         restPos[index] = int(child.get("RestPosition"))
         motorType[index] = child.get("MotorType")
+        motorSpeeds[index] = child.get("Speed")
+        motorAccels[index] = child.get("Acceleration")
 
         if child.get("Reverse") == "True":
             rev = True
@@ -349,6 +376,12 @@ def _generateSpeechFile(text):
     # Pick up the global variable that defines the language. This is only used in GTTS speech.
     global language
     file = speechAudioFile
+
+    if synthesizer.lower() == 'azure':
+        azureSynthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
+        azureSynthesizer.speak_text_async(text)
+        return
+
     if platform.system() == "Windows":
         if ("sapi" in synthesizer.lower()):
             from comtypes.gen import SpeechLib
@@ -455,8 +488,10 @@ def init(portName):
 
     # get the sapi objects ready on Windows
     if platform.system() == "Windows":
+
         sapivoice = CreateObject("SAPI.SpVoice")
         sapistream = CreateObject("SAPI.SpFileStream") 
+
         winsound.PlaySound(silenceFile, winsound.SND_FILENAME)
 
     # get the audio system warmed up on Mac
@@ -530,7 +565,7 @@ def getDirectory():
 # Function to move Picoh's motors. Arguments | m (motor) → int (0-6) | pos (position) → int (0-10) | spd (speed) →
 # int (0-10) **eg move(4,3,9) or move(0,9,3)**
 def move(m, pos, spd=5, eye=0):
-    global lastfex, lastfey, topLipFree
+    global lastfexl, lastfeyl,lastfexr, lastfeyr, topLipFree
 
     # Limit values to keep then within range
     pos = _limit(pos)
@@ -557,22 +592,53 @@ def move(m, pos, spd=5, eye=0):
     # Eyeturn
     if (motorType[m] == "Matrix X"):
         pos = (pos - 5) * 0.4 + 5  # Bodge to reduce the scale
-        msg = "FE," + str(eye) + "," + "{:0.0f}".format(pos * 255 / 10) + "," + "{:0.0f}".format(lastfey * 255 / 10) + "\n"
+   
+        if eye == 1 or eye == 0:
+            msg = "FE,2," + "{:0.0f}".format(pos * 255 / 10) + "," + "{:0.0f}".format(lastfeyl * 255 / 10) + "\n"
+            # Write message to serial port
+            _serwrite(msg)
+            lastfexl = pos
 
-        # print ("fex:" + msg)
-        # Write message to serial port
-        _serwrite(msg)
-        lastfex = pos
+        if eye == 2 or eye == 0:
+            msg = "FE,1," + "{:0.0f}".format(pos * 255 / 10) + "," + "{:0.0f}".format(lastfeyr * 255 / 10) + "\n"
+            # Write message to serial port
+            _serwrite(msg)
+            lastfexr = pos
+
+        if eye == 0:
+            msg = "FE,0," + "{:0.0f}".format(pos * 255 / 10) + "," + "{:0.0f}".format(lastfeyl * 255 / 10) + "\n"
+            # Write message to serial port
+            _serwrite(msg)
+            lastfexl = pos
+            lastfexr = pos
+
+        motorPos[m] = pos  
         return
 
     # Eyetilt
     if (motorType[m] == "Matrix Y"):
         pos = (pos - 5) * 0.4 + 5  # Bodge to reduce the scale
-        msg = "FE," + str(eye) + "," + "{:0.0f}".format(lastfex * 255 / 10) + "," + "{:0.0f}".format(pos * 255 / 10) + "\n"
-        # print ("fey:" + msg)
-        # Write message to serial port
-        _serwrite(msg)
-        lastfey = pos
+
+        if eye == 1:
+            msg = "FE,2," + "{:0.0f}".format(lastfexl * 255 / 10) + "," + "{:0.0f}".format(pos * 255 / 10) + "\n"
+            # Write message to serial port
+            _serwrite(msg)
+            lastfeyl = pos
+
+        if eye == 2:
+            msg = "FE,1," + "{:0.0f}".format(lastfexr * 255 / 10) + "," + "{:0.0f}".format(pos * 255 / 10) + "\n"
+            # Write message to serial port
+            _serwrite(msg)
+            lastfeyr = pos
+
+        if  eye == 0:
+            msg = "FE,0," + "{:0.0f}".format(lastfexl * 255 / 10) + "," + "{:0.0f}".format(pos * 255 / 10) + "\n"
+            # Write message to serial port
+            _serwrite(msg)
+            lastfeyl = pos
+            lastfeyr = pos
+
+        motorPos[m] = pos
         return
 
     # Blink
@@ -581,6 +647,14 @@ def move(m, pos, spd=5, eye=0):
         # print ("fl:" + msg)
         # Write message to serial port
         _serwrite(msg)
+
+        if eye == 0:
+            blinkl = pos
+            blinkr = pos
+        if eye == 1:
+            blinkl = pos
+        if eye == 2:
+            blinkr = pos
         return
 
     # Attach motor
@@ -659,15 +733,28 @@ def setLanguage(params=language):
 # name - run 'say -v ?' in terminal to find available names.
 # speed - speech rate in words per min.
 # This override will stay in use until it's next called
-def setVoice(params=voice):
-    global voice
+def setVoice(params=voice,language = "en-GB"):
+    global voice, speech_config, audio_config,azureSynthesizer
     voice = params
 
-# Function to set a different speech synthesizer - defaults to sapi
-def setSynthesizer(params=synthesizer):
-    global synthesizer
-    synthesizer = params
+    if synthesizer.lower() == 'azure':
+       speech_config.speech_synthesis_language = language   
+       voice = "Microsoft Server Speech Text to Speech Voice ("+language+", "+voice+")"
+       speech_config.speech_synthesis_voice_name = voice
+       azureSynthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
 
+# Function to set a different speech synthesizer - defaults to sapi
+def setSynthesizer(params=synthesizer,ID = "",region ='westeurope'):
+    global synthesizer, speech_config, audio_config,azureSynthesizer, voice
+    synthesizer = params
+    voice = ""
+    if params.lower() == 'azure':
+
+        speech_config = SpeechConfig(subscription=ID, region=region)
+        audio_config = AudioOutputConfig(filename=speechAudioFile)
+        azureSynthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
+        setVoice("LibbyNeural","en-GB")
+    
 # Set the speed of the speech in words per min.
 def speechSpeed(params=speechRate):
     global speechRate
@@ -799,16 +886,18 @@ def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
             # Set up a thread for the speech sound synthesis, delay start by soundDelay
             t = threading.Timer(soundDelay, _playSpeech, args=(hdmiAudio,), kwargs=None)
             # Set up a thread for the speech movement
-            t2 = threading.Thread(target=_moveSpeech, args=(phonemes, times))
+            t2 = threading.Thread(target=_moveSpeech, args=(phonemes, times,True))
         else:
             # Set up a thread for the speech sound synthesis
             t = threading.Thread(target=_playSpeech, args=(hdmiAudio,))
             # Set up a thread for the speech movement, delay start by - soundDelay
-            t2 = threading.Timer(-soundDelay, _moveSpeech, args=(phonemes, times), kwargs=None)
+            t2 = threading.Timer(-soundDelay, _moveSpeech, args=(phonemes, times,True), kwargs=None)
         t2.start()
     else:
         # Set up a thread for the speech sound synthesis
         t = threading.Thread(target=_playSpeech, args=(hdmiAudio,))
+        t2 = threading.Timer(-soundDelay, _moveSpeech, args=(phonemes, times,False), kwargs=None)
+        t2.start()
     t.start()
 
     # if untilDone, keep running until speech has finished
@@ -844,7 +933,8 @@ def _playSpeech(addSilence):
 
 
 # Function to move Picoh's lips in time with speech. Arguments | phonemes → list of phonemes[] | waits → list of waits[]
-def _moveSpeech(phonemes, times):
+def _moveSpeech(phonemes, times,autoSync = True):
+    global bottomLipPos
     startTime = time.time()
     timeNow = 0
     totalTime = times[len(times) - 1]
@@ -860,11 +950,17 @@ def _moveSpeech(phonemes, times):
                     #posTop = _phonememapTop(phonemes[x])
                     posBottom = _phonememapBottom(phonemes[x])
                 # move(TOPLIP, posTop, 10)
-                move(BOTTOMLIP, posBottom, 10)
+
+                #posBottom = (((posBottom-5)/5)*3)+5
+                if autoSync:
+                    move(BOTTOMLIP, posBottom, 10)
+                bottomLipPos = posBottom
+
                 currentX = x
     # move(TOPLIP, 5)
-    move(BOTTOMLIP, 5)
-    
+    if autoSync:
+        move(BOTTOMLIP, 5)
+    bottomLipPos = posBottom
 
 # Function to limit values so they are between 0 - 10    
 def _limit(val):
@@ -992,10 +1088,14 @@ def setBaseColor(r, g, b, swapRandG=False):
 # Function to set the color of the LEDs in Picoh's base. Arguments | r (red) → int (0-10) | g (green) → int (0-10) | b (blue) → int (0-10)
 # swapRandG is used to swap the red and green values as this is required for some LEDs
 def baseColour(r, g, b, swapRandG=False):
+    global baseR,baseB,baseG
     # Limit the values to keep them within range.
     r = _limit(r)
     g = _limit(g)
     b = _limit(b)
+    baseR = r
+    baseG = g
+    baseB = b
 
     # Scale the values so they are between 0 - 255.
     r = int((255 / 10) * r)
@@ -1142,20 +1242,22 @@ def _reverseBits(str):
     return "%0.2X" % r
 
 def setEyeShape(shapeNameRight, shapeNameLeft=''):
-    global shapeList
+    global shapeList,eyeShapeLeft,eyeShapeRight
+
+    leftHex =''
 
     if shapeNameLeft == '':
         shapeNameLeft = shapeNameRight
-
-    leftHex = ''
-
+    
     for index, shape in enumerate(shapeList):
         if shape.name.upper() == shapeNameRight.upper():
             rightHex = shape.hexString
+            eyeShapeRight = shape.name
 
     for index, shape in enumerate(shapeList):
         if shape.name.upper() == shapeNameLeft.upper():
             leftHex = shape.hexString
+            eyeShapeLeft = shape.name
             if shape.autoMirror:
                 autoMirrorVar = True
             else:
@@ -1169,8 +1271,11 @@ def setEyeShape(shapeNameRight, shapeNameLeft=''):
     if connected:
         _setEyes(rightHex, leftHex, autoMirrorVar)
         wait(0.05)
-        move(EYETILT, motorPos[EYETILT])
-        move(EYETURN, motorPos[EYETURN])
+        move(EYETILT, lastfeyl,1)
+        move(EYETILT, lastfeyr,2)
+
+        move(EYETURN, lastfexl,1)
+        move(EYETURN, lastfexr,2)
 
 
 def getPhrase(set='None', variable='None'):
