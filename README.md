@@ -1,6 +1,6 @@
 # Picoh for Python
 
-<a href=".images/PicohLogoPixels2.png" target="_blank"><img src=".images/PicohLogoPixels2.png" border="0" width = "30%"/></a>
+<a href="https://github.com/ohbot/picoh-python/raw/master/.images/PicohLogoPixels2.png" target="_blank"><img src="https://github.com/ohbot/picoh-python/raw/master/.images/PicohLogoPixels2.png" border="0" width = "80%"/></a>
 
 Choose your platform and click the links to get started!
 
@@ -220,7 +220,7 @@ picoh.setEyeShape("Large","Heart")
 
 Default options for eye shapes: 
 
-"Angry", "BoxLeft", "BoxRight", "Crying", "Eyeball", "Glasses", "Heart", "Large", "Sad", "SmallBall", "Square", "SunGlasses", "VerySad"
+"Angry", "BoxLeft", "BoxRight", "Crying", "Eyeball", "Full", "Glasses", "Heart", "Large", "Sad", "SmallBall", "Square", "SunGlasses", "VerySad"
 
 
 picoh.setEyeBrightness(val)

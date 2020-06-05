@@ -88,7 +88,7 @@ phraseList = []
 port = ""
 
 # define library version
-version = "1.255"
+version = "1.257"
 
 # flag to stop writing when writing for threading
 writing = False
@@ -248,7 +248,7 @@ class Phrase(object):
             
 # Used during calibration.
 def _revertMotorDefsFile():
-    shutil.copyfile(os.path.join(directory, 'MotorDefinitionsPicoh.omd'), os.path.join('picohData',picohMotorDefFile))
+    shutil.copyfile(os.path.join(directory, 'MotorDefinitionsPicoh.omd'), picohMotorDefFile)
     _loadMotorDefs()
 
 # Read motor definitions file.
@@ -365,7 +365,7 @@ def _parseSAPIVoice(flag):
 
 # generate speech file depending on platform and sythensizer.
 def _generateSpeechFile(text):
-    # Pick up the global variable that defines the language. This is only used in GTTS speech.
+    # Pick up the global variable that defines the language. This is only used in GTTS speech.
     global language
     file = speechAudioFile
     if platform.system() == "Windows":
@@ -476,7 +476,8 @@ def init(portName):
     if platform.system() == "Windows":
 
         sapivoice = CreateObject("SAPI.SpVoice")
-        sapistream = CreateObject("SAPI.SpFileStream")
+        sapistream = CreateObject("SAPI.SpFileStream") 
+
         winsound.PlaySound(silenceFile, winsound.SND_FILENAME)
 
     # get the audio system warmed up on Mac
@@ -537,7 +538,7 @@ def init(portName):
 # initialise with any port that has USB Serial Device in the name
 
 if platform.system() == "Windows":
-    init("USB Serial Device")
+    init("Arduino")
 if platform.system() == "Darwin":
     init("usbmodem")
 if platform.system() == "Linux":
@@ -798,7 +799,7 @@ def say(text, untilDone=True, lipSync=True, hdmiAudio=False, soundDelay=0):
 
         # How many samples per second for mouth position
         if platform.system() == "Windows":
-            VISEMESPERSEC = 10
+            VISEMESPERSEC = 20
         if platform.system() == "Darwin":
             VISEMESPERSEC = 10
         if platform.system() == "Linux":
@@ -919,13 +920,15 @@ def _moveSpeech(phonemes, times,autoSync = True):
                     #posTop = _phonememapTopFest(phonemes[x])
                     posBottom = _phonememapBottomFest(phonemes[x])
                 else:
-                    posTop = _phonememapTop(phonemes[x])
+                    #posTop = _phonememapTop(phonemes[x])
                     posBottom = _phonememapBottom(phonemes[x])
                 # move(TOPLIP, posTop, 10)
+
                 posBottom = (((posBottom-5)/5)*3)+5
                 if autoSync:
                     move(BOTTOMLIP, posBottom, 10)
                 bottomLipPos = posBottom
+
                 currentX = x
     # move(TOPLIP, 5)
     if autoSync:

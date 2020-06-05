@@ -180,7 +180,7 @@ t4 = threading.Thread(target=randomTurn, args=())
 if wiki:
     t5 = threading.Thread(target=handleInputWiki, args=())
 else:
-    t2 = threading.Thread(target=handleInput, args=())
+    t5 = threading.Thread(target=handleInput, args=())
 
 # Set moving and blinking global variables to True. 
 moving = True

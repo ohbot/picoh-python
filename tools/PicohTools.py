@@ -1616,12 +1616,17 @@ class Calibrate(Tk.Frame):
 
         if self.stage == 2:
             picoh.reset()
+            self.stage=-1
+            self.sel()
             return
 
         if self.stage == 1:
             self.ResetRangeToRawMin()
             self.label.config(text="All done!")
             self.started = False
+            picoh.reset()
+            self.button.config(text="Restart")
+            self.stage = 2
 
         if self.stage == 0:
             selection = "Value = " + str(self.var.get())
