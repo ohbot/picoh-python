@@ -16,8 +16,17 @@ import random
 import re
 import csv
 
+try:
+    from azure.cognitiveservices.speech import AudioDataStream, SpeechConfig, SpeechSynthesizer, SpeechSynthesisOutputFormat
+    from azure.cognitiveservices.speech.audio import AudioOutputConfig
+except:
+    pass
+
 sapivoice = ""
 sapistream = ""
+speech_config = "" 
+audio_config = ""
+azureSynthesizer = ""
 
 # Import the correct sound library depending on platform.
 if platform.system() == "Windows":
@@ -31,7 +40,6 @@ if platform.system() == "Linux":
     from playsound import playsound
     from gtts import gTTS
     from pydub import AudioSegment
-  
 # Variables to hold name of settings
 
 speechDatabaseFile = ''
@@ -88,7 +96,7 @@ phraseList = []
 port = ""
 
 # define library version
-version = "1.257"
+version = "1.259"
 
 # flag to stop writing when writing for threading
 writing = False
@@ -368,6 +376,12 @@ def _generateSpeechFile(text):
     # Pick up the global variable that defines the language. This is only used in GTTS speech.
     global language
     file = speechAudioFile
+
+    if synthesizer.lower() == 'azure':
+        azureSynthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
+        azureSynthesizer.speak_text_async(text)
+        return
+
     if platform.system() == "Windows":
         if ("sapi" in synthesizer.lower()):
             from comtypes.gen import SpeechLib
@@ -719,15 +733,28 @@ def setLanguage(params=language):
 # name - run 'say -v ?' in terminal to find available names.
 # speed - speech rate in words per min.
 # This override will stay in use until it's next called
-def setVoice(params=voice):
-    global voice
+def setVoice(params=voice,language = "en-GB"):
+    global voice, speech_config, audio_config,azureSynthesizer
     voice = params
 
-# Function to set a different speech synthesizer - defaults to sapi
-def setSynthesizer(params=synthesizer):
-    global synthesizer
-    synthesizer = params
+    if synthesizer.lower() == 'azure':
+       speech_config.speech_synthesis_language = language   
+       voice = "Microsoft Server Speech Text to Speech Voice ("+language+", "+voice+")"
+       speech_config.speech_synthesis_voice_name = voice
+       azureSynthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
 
+# Function to set a different speech synthesizer - defaults to sapi
+def setSynthesizer(params=synthesizer,ID = "",region ='westeurope'):
+    global synthesizer, speech_config, audio_config,azureSynthesizer, voice
+    synthesizer = params
+    voice = ""
+    if params.lower() == 'azure':
+
+        speech_config = SpeechConfig(subscription=ID, region=region)
+        audio_config = AudioOutputConfig(filename=speechAudioFile)
+        azureSynthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
+        setVoice("LibbyNeural","en-GB")
+    
 # Set the speed of the speech in words per min.
 def speechSpeed(params=speechRate):
     global speechRate
@@ -924,7 +951,7 @@ def _moveSpeech(phonemes, times,autoSync = True):
                     posBottom = _phonememapBottom(phonemes[x])
                 # move(TOPLIP, posTop, 10)
 
-                posBottom = (((posBottom-5)/5)*3)+5
+                #posBottom = (((posBottom-5)/5)*3)+5
                 if autoSync:
                     move(BOTTOMLIP, posBottom, 10)
                 bottomLipPos = posBottom
