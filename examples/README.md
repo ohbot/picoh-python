@@ -39,9 +39,7 @@ This program makes Picoh wake up every quarter of an hour and say the time. It a
 
  [facetrack.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/facetrack.py)
 -
-This program requires CV2 which is a python Computer Vision library. You will also need a [trained classifier XML file (haarcascade_frontalface_default.xml)](https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_default.xml) available from the [OpenCV Github Page.](https://github.com/opencv/opencv). For more details on detecting faces check out [this tutorial.](https://towardsdatascience.com/face-detection-in-2-minutes-using-opencv-python-90f89d7c0f81)
-
-https://towardsdatascience.com/face-detection-in-2-minutes-using-opencv-python-90f89d7c0f81
+This program requires CV2 which is a python Computer Vision library. You will also need a [trained classifier XML file (haarcascade_frontalface_default.xml)](https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_default.xml) available from the [OpenCV Github Page.](https://github.com/opencv/opencv) For more details on detecting faces check out [this tutorial.](https://towardsdatascience.com/face-detection-in-2-minutes-using-opencv-python-90f89d7c0f81)
 
  [wolframAlphaPicoh](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/wolframAlphaPicoh.py)
 -
