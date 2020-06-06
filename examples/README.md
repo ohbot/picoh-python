@@ -41,6 +41,16 @@ This program makes Picoh wake up every quarter of an hour and say the time. It a
 -
 This program requires CV2 which is a python Computer Vision library. You will also need a [trained classifier XML file (haarcascade_frontalface_default.xml)](https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_default.xml) available from the [OpenCV Github Page.](https://github.com/opencv/opencv) For more details on detecting faces check out [this tutorial.](https://towardsdatascience.com/face-detection-in-2-minutes-using-opencv-python-90f89d7c0f81)
 
+Requires:
+
+Mac and Pi:
+
+```sudo pip3 install opencv-python```  
+
+Windows:
+
+```pip install opencv-python```  
+
  [wolframAlphaPicoh](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/wolframAlphaPicoh.py)
 -
 This program uses the wolfram alpha and wikipedia web services to get definitions of words users type in. It builds upon the movements from the threadingExample. 
