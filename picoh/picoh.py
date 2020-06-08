@@ -15,18 +15,13 @@ from lxml import etree
 import random
 import re
 import csv
+import requests
 
-try:
-    from azure.cognitiveservices.speech import AudioDataStream, SpeechConfig, SpeechSynthesizer, SpeechSynthesisOutputFormat
-    from azure.cognitiveservices.speech.audio import AudioOutputConfig
-except:
-    pass
+AccessUri = "https://westeurope.api.cognitive.microsoft.com/sts/v1.0/issueToken"
+SynthesizeUri = "https://westeurope.tts.speech.microsoft.com/cognitiveservices/v1"
 
 sapivoice = ""
 sapistream = ""
-speech_config = "" 
-audio_config = ""
-azureSynthesizer = ""
 
 # Import the correct sound library depending on platform.
 if platform.system() == "Windows":
@@ -54,7 +49,8 @@ synthesizer = ''
 voice = ''
 language = 'en-GB' # Language/Accent for GTTS web text to speech.
 settingsFile = 'picohData/PicohSettings.xml' # String to hold location of settings file
-
+speechGender = "Female"
+cogServicesID = ''
 
 # Variable to hold the location of the picoh library folder.
 directory = os.path.dirname(os.path.abspath(__file__))
@@ -371,6 +367,7 @@ def _parseSAPIVoice(flag):
             val = val[:pos]
     return val
 
+
 # generate speech file depending on platform and sythensizer.
 def _generateSpeechFile(text):
     # Pick up the global variable that defines the language. This is only used in GTTS speech.
@@ -378,8 +375,8 @@ def _generateSpeechFile(text):
     file = speechAudioFile
 
     if synthesizer.lower() == 'azure':
-        azureSynthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
-        azureSynthesizer.speak_text_async(text)
+
+        _generateSpeechFromAzure(text)
         return
 
     if platform.system() == "Windows":
@@ -476,6 +473,50 @@ def _generateSpeechFile(text):
             if debug:
                 print("Speech Bash Command:")
                 print(bashcommand)
+
+def _generateSpeechFromAzure(words):
+    headers = {'Ocp-Apim-Subscription-Key': cogServicesID}
+    try:
+        r = requests.post(AccessUri, data='', headers=headers)
+    except Exception as e:
+        print("While trying to access cognitive speech: Internet connection failed")
+        print(e)
+        return
+        
+    if r.status_code != 200:
+        print("Authentication Failed with code:" +r.status_code)
+        return
+    
+    token = r.content.decode("utf-8")
+    postStringData = GenerateSsml(words, language, speechGender, voice)
+
+    # use riff-16khz-16bit-mono-pcm in output format to get playable file with header. raw-16khz-16bit-mono-pcm is used to get file without header (useful in a stream etc)
+
+    headers = {"Content-Type": "application/ssml+xml",
+               "X-Microsoft-OutputFormat": "riff-16khz-16bit-mono-pcm",
+               "Authorization": "Bearer " + token
+               }         
+    
+    r = requests.post(SynthesizeUri, data=postStringData, headers=headers)
+    if r.status_code != 200:
+        print("Synthesis Failed with code:" +r.status_code)
+        return
+
+    with open(speechAudioFile, mode='wb') as f:
+        f.write(r.content)
+
+def GenerateSsml(textToSpeak, locale, gender, voiceName):
+
+    #// Using XDocument from the example formats it wrongly.  Maybe because of " instead of '
+    
+    ssmlDoc = "<speak version='1.0' xml:lang='" + locale + "'>";
+
+    ssmlDoc += "<voice xml:lang='" + locale + "' xml:gender='" + gender + "' name='" + locale + "-" + voiceName + "'>";
+    ssmlDoc += textToSpeak;
+    ssmlDoc += "</voice>";
+    ssmlDoc += "</speak>";
+
+    return ssmlDoc
 
 def init(portName):
     # pickup global instances of port, ser and sapi variables
@@ -733,27 +774,21 @@ def setLanguage(params=language):
 # name - run 'say -v ?' in terminal to find available names.
 # speed - speech rate in words per min.
 # This override will stay in use until it's next called
-def setVoice(params=voice,language = "en-GB"):
-    global voice, speech_config, audio_config,azureSynthesizer
+def setVoice(params=voice,language = "en-GB", gender = 'Female'):
+    global voice, speech_config, audio_config,azureSynthesizer, speechGender
     voice = params
-
-    if synthesizer.lower() == 'azure':
-       speech_config.speech_synthesis_language = language   
-       voice = "Microsoft Server Speech Text to Speech Voice ("+language+", "+voice+")"
-       speech_config.speech_synthesis_voice_name = voice
-       azureSynthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
+    speechGender = gender
+    setLanguage(language)
+    
 
 # Function to set a different speech synthesizer - defaults to sapi
 def setSynthesizer(params=synthesizer,ID = "",region ='westeurope'):
-    global synthesizer, speech_config, audio_config,azureSynthesizer, voice
+    global synthesizer, speech_config, audio_config,azureSynthesizer, voice, cogServicesID
     synthesizer = params
     voice = ""
+    cogServicesID = ID
     if params.lower() == 'azure':
-
-        speech_config = SpeechConfig(subscription=ID, region=region)
-        audio_config = AudioOutputConfig(filename=speechAudioFile)
-        azureSynthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
-        setVoice("LibbyNeural","en-GB")
+        setVoice("LibbyNeural")
     
 # Set the speed of the speech in words per min.
 def speechSpeed(params=speechRate):
