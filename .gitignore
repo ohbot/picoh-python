@@ -22,3 +22,4 @@ picoh/__pycache__/picoh.cpython-36.pyc
 .vs/slnx.sqlite
 .vs/ProjectSettings.json
 .vs/picoh-python/v16/.suo
+*.pyc
