@@ -3,13 +3,13 @@ from distutils.core import setup
 import platform
 
 if platform.system() == "Darwin":
-    includes =['pyserial','lxml','playsound','pyobjc','numpy','comtypes']
+    includes =['pyserial','lxml','playsound','pyobjc','numpy','comtypes','requests']
 
 if platform.system() == "Windows":
-    includes =['pyserial','lxml','playsound','numpy','comtypes']
+    includes =['pyserial','lxml','playsound','numpy','comtypes','requests']
 
 if platform.system() == "Linux":
-    includes =['pyserial','playsound','gTTS','pydub']
+    includes =['pyserial','playsound','gTTS','pydub','requests']
 
 setup(
     name = 'picoh',
