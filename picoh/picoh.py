@@ -499,7 +499,8 @@ def _generateSpeechFromAzure(words):
     
     r = requests.post(SynthesizeUri, data=postStringData, headers=headers)
     if r.status_code != 200:
-        print("Synthesis Failed with code:" +r.status_code)
+        print("Synthesis Failed with code:")
+        print(r.status_code)
         return
 
     with open(speechAudioFile, mode='wb') as f:
