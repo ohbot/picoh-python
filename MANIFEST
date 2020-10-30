@@ -8,10 +8,7 @@ picoh/Silence1.wav
 picoh/__init__.py
 picoh/ohbot.obe
 picoh/picoh.py
-<<<<<<< HEAD
-=======
 picoh/Images/calibrate2400.gif
->>>>>>> master
 picoh/Images/calibrate400.gif
 picoh/Images/logoPT.gif
 picoh/Images/movedown.gif

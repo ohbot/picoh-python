@@ -92,7 +92,7 @@ phraseList = []
 port = ""
 
 # define library version
-version = "1.263"
+version = "1.264"
 
 # flag to stop writing when writing for threading
 writing = False
@@ -484,7 +484,8 @@ def _generateSpeechFromAzure(words):
         return
         
     if r.status_code != 200:
-        print("Authentication Failed with code:" +r.status_code)
+        print("Authentication Failed with code:")
+        print(r.status_code)
         return
     
     token = r.content.decode("utf-8")
