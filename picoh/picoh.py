@@ -1153,6 +1153,33 @@ def baseColour(r, g, b, swapRandG=False):
     _serwrite(msg1)
     _serwrite(msg2)
 
+def setLEDByName(name):
+    if (name == "off"):
+        return baseColour(0,0,0)       
+    if (name == "red"):
+        return baseColour(10,0,0)        
+    if (name == "green"):
+        return baseColour(0,10,0)       
+    if (name == "blue"):
+        return baseColour(0,0,10)      
+    if (name == "yellow"):
+        return baseColour(10,10,0)       
+    if (name == "orange"):
+        return baseColour(10,6.47,0)        
+    if (name == "purple"):
+        return baseColour(5,0,5)       
+    if (name == "white"):
+        return baseColour(10,10,10)
+
+def setLEDRGB(col,val):
+    if(col == "red"):
+        baseColour(val,baseG,baseB)     
+    if(col == "green"):
+        baseColour(baseR,val,baseB)
+    if(col == "blue"):
+        baseColour(baseR,baseG,val)
+
+   
 # Wait for a number of seconds. 
 def wait(seconds):
     time.sleep(float(seconds))
@@ -1365,3 +1392,6 @@ def _playSoundThread(name=""):
     # play the sound on Linux
     if platform.system() == "Linux":
         os.system('aplay ' + soundFile)
+
+def SetSoundLevel(val):
+    return
