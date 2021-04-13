@@ -277,8 +277,7 @@ def _loadMotorDefs():
         else:
             rev = False
             motorRev[index] = rev
-
-            
+           
 # Read eyeshape file into eyeshape list.
 def _loadEyeShapes():
     global shapeList
@@ -520,7 +519,30 @@ def GenerateSsml(textToSpeak, locale, gender, voiceName):
 
     return ssmlDoc
 
-def init(portName):
+def checkPort(p):
+    try:
+        ser = serial.Serial(p[0], 19200)
+
+        ser.timeout = None
+        ser.write_timeout = None
+        ser.flushInput()
+
+        msg = "v" + "\n"
+        ser.write(msg.encode('latin-1'))
+
+        line = ser.readline()
+        ser.close()
+
+        subString = "v2".encode('latin-1')
+
+        if line.find(subString) != -1:
+            return True
+        else:
+            return False
+    except:
+        return False
+
+def init(portName = None):
     # pickup global instances of port, ser and sapi variables
     global port, ser, sapivoice, sapistream, connected, directory
 
@@ -547,35 +569,39 @@ def init(portName):
 
     # Search for the Picoh serial port
     ports = list(serial.tools.list_ports.comports())
-    for p in ports:
+    
 
-        # If port has Picoh connected save the location
-        if portName in p[1]:
-            port = p[0]
-            print("Picoh found on port:" + port)
-            connected = True
-        elif portName in p[0]:
-            port = p[0]
-            print("Picoh found on port:" + port)
-            connected = True
-
-    # If not found then try the first port
-    if port == "":
+    if portName == None:
         for p in ports:
-            port = p[0]
-            print("Picoh not found")
+            if(checkPort(p)):
+                port = p[0]
+                print("Picoh found on port:" + port)
+                connected = True
+                break
+            else:
+                print("Checked " + p[0] + " Picoh not connected")
+    else:
+ 
+        if checkPort(portName):
+            connected = True
+            print("Picoh found on port:" + port)
+            port = portName
+        else:
             connected = False
-            break
+            print("Checked " + portName + " Picoh not connected")
 
     if port == "":
-        print("Picoh port " + portName + " not found")
+        print("Picoh not found")
         return False
 
     # Open the serial port
     if connected:
-        ser = serial.Serial(port, 19200)
-        ser.timeout = None
-        ser.write_timeout = None
+        try:
+            ser = serial.Serial(port, 19200)
+            ser.timeout = None
+            ser.write_timeout = None
+        except:
+            print("Could not connect to" + port)
 
     # Set read timeout and write timeouts to blocking
 
@@ -595,11 +621,12 @@ def init(portName):
 # initialise with any port that has USB Serial Device in the name
 
 if platform.system() == "Windows":
-    init("Arduino")
+    init()
 if platform.system() == "Darwin":
-    init("usbmodem")
+    init()
 if platform.system() == "Linux":
-    init("Arduino")
+    init()
+
 
 def getDirectory():
     global directory
@@ -718,8 +745,7 @@ def move(m, pos, spd=5, eye=0):
     # Update motor positions list
     motorPos[m] = pos
 
-
-# Function to write to serial port
+  # Function to write to serial port
 def _serwrite(s):
     global connected, writing
 
@@ -737,8 +763,7 @@ def _serwrite(s):
         ser.write(s.encode('latin-1'))
         writing = False
 
-    # Function to attach Picoh's motors. Argument | m (motor) int (0-6)
-
+# Function to attach Picoh's motors. Argument | m (motor) int (0-6)
 
 def attach(m):
     if isAttached[m] == False:
