@@ -92,7 +92,7 @@ phraseList = []
 port = ""
 
 # define library version
-version = "1.268"
+version = "1.269"
 
 # flag to stop writing when writing for threading
 writing = False
@@ -523,8 +523,8 @@ def checkPort(p):
     try:
         ser = serial.Serial(p[0], 19200)
 
-        ser.timeout = 0.3
-        ser.write_timeout = None
+        ser.timeout = 0.2
+        ser.write_timeout = 0.2
         ser.flushInput()
 
         msg = "v" + "\n"
@@ -573,13 +573,15 @@ def init(portName = None):
 
     if portName == None:
         for p in ports:
-            if(checkPort(p)):
-                port = p[0]
-                print("Picoh found on port:" + port)
-                connected = True
-                break
-            else:
-                print("Checked " + p[0] + " Picoh not connected")
+            if (not platform.system() == "Darwin") or "usb" in p[0]:
+                if(checkPort(p)):
+                    port = p[0]
+                    print("Picoh found on port:" + port)
+                    connected = True
+                    break
+                else:
+                    print("Checked " + p[0] + " Picoh not connected")
+                
     else:
  
         if checkPort(portName):
