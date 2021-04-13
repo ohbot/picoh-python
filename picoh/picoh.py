@@ -523,8 +523,8 @@ def checkPort(p):
     try:
         ser = serial.Serial(p[0], 19200)
 
-        ser.timeout = None
-        ser.write_timeout = None
+        ser.timeout = 0.1
+        ser.write_timeout = 0.1
         ser.flushInput()
 
         msg = "v" + "\n"
