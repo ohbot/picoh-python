@@ -92,7 +92,7 @@ phraseList = []
 port = ""
 
 # define library version
-version = "1.269"
+version = "1.270"
 
 # flag to stop writing when writing for threading
 writing = False
@@ -523,8 +523,8 @@ def checkPort(p):
     try:
         ser = serial.Serial(p[0], 19200)
 
-        ser.timeout = 0.2
-        ser.write_timeout = 0.2
+        ser.timeout = 0.5
+        ser.write_timeout = 0.5
         ser.flushInput()
 
         msg = "v" + "\n"
