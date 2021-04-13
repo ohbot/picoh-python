@@ -92,7 +92,7 @@ phraseList = []
 port = ""
 
 # define library version
-version = "1.266"
+version = "1.267"
 
 # flag to stop writing when writing for threading
 writing = False
