@@ -23,6 +23,7 @@ SynthesizeUri = "https://westeurope.tts.speech.microsoft.com/cognitiveservices/v
 sapivoice = ""
 sapistream = ""
 
+ServerAddress = ""
 # Import the correct sound library depending on platform.
 if platform.system() == "Windows":
     import winsound
@@ -92,7 +93,6 @@ phraseList = []
 port = ""
 
 # define library version
-version = "1.275"
 
 # flag to stop writing when writing for threading
 writing = False
@@ -634,6 +634,32 @@ def getDirectory():
     global directory
     return directory
 
+def _getMotorName(m):
+    if m == 0:
+        return "HeadNod"     
+    if m == 1:
+        return "HeadTurn"     
+    if m == 2:
+        return "EyeTurn"     
+    if m == 3:
+        return "LidBlink"     
+    if m == 4:
+        return "TopLip"     
+    if m == 5:
+        return "BottomLip"     
+    if m == 6:
+        return "EyeTilt" 
+
+def _moveSim(m,pos):
+    if ServerAddress == "":
+        return
+    motorName = _getMotorName(m)
+    dictToSend = {'Motor':motorName,'Position':pos,'msgType':'motor'}
+    try:
+        res = requests.post(ServerAddress+"/command", json=dictToSend,timeout=0.1)
+    except requests.exceptions.Timeout:
+        pass
+
 # Function to move Picoh's motors. Arguments | m (motor) → int (0-6) | pos (position) → int (0-10) | spd (speed) →
 # int (0-10) **eg move(4,3,9) or move(0,9,3)**
 def move(m, pos, spd=5, eye=0):
@@ -684,7 +710,8 @@ def move(m, pos, spd=5, eye=0):
             lastfexl = pos
             lastfexr = pos
 
-        motorPos[m] = pos  
+        motorPos[m] = pos
+        _moveSim(m,pos)
         return
 
     # Eyetilt
@@ -711,6 +738,7 @@ def move(m, pos, spd=5, eye=0):
             lastfeyr = pos
 
         motorPos[m] = pos
+        _moveSim(m,pos)
         return
 
     # Blink
@@ -727,6 +755,7 @@ def move(m, pos, spd=5, eye=0):
             blinkl = pos
         if eye == 2:
             blinkr = pos
+        _moveSim(m,pos)
         return
 
     # Attach motor
@@ -740,7 +769,9 @@ def move(m, pos, spd=5, eye=0):
 
     # Construct message from values
     msg = "m0" + str(m) + "," + str(absPos) + "," + str(spd) + "\n"
-
+    
+    _moveSim(m,pos)
+    
     # Write message to serial port
     _serwrite(msg)
 
@@ -750,7 +781,8 @@ def move(m, pos, spd=5, eye=0):
   # Function to write to serial port
 def _serwrite(s):
     global connected, writing
-
+    if not connected:
+        return
     if debug:
         print("Serial command sent to Picoh:")
         print(s)
@@ -1161,6 +1193,13 @@ def baseColour(r, g, b, swapRandG=False):
     baseG = g
     baseB = b
 
+    dictToSend = {'R':baseR,'G':baseG,'B':baseB,'msgType':'colour'}
+    
+    if ServerAddress != "":
+        try:
+            res = requests.post(ServerAddress+"/command", json=dictToSend,timeout=0.1)
+        except requests.exceptions.Timeout:
+            pass
     # Scale the values so they are between 0 - 255.
     r = int((255 / 10) * r)
 
@@ -1181,6 +1220,14 @@ def baseColour(r, g, b, swapRandG=False):
     _serwrite(msg2)
 
 def setLEDByName(name):
+
+    dictToSend = {'Name':name,'msgType':'colourName'}
+
+    if ServerAddress != "":
+        try:
+            res = requests.post(ServerAddress+"/command", json=dictToSend,timeout=0.1)
+        except requests.exceptions.Timeout:
+            pass
     if (name == "off"):
         return baseColour(0,0,0)       
     if (name == "red"):
@@ -1340,6 +1387,13 @@ def setEyeShape(shapeNameRight, shapeNameLeft=''):
     if shapeNameLeft == '':
         shapeNameLeft = shapeNameRight
     
+    dictToSend = {'Motor':'eyeShape','rightEye':shapeNameRight,'leftEye':shapeNameLeft,'msgType':'eyshape'}
+    if ServerAddress != "":
+
+        try:
+            res = requests.post(ServerAddress+"/command", json=dictToSend,timeout=0.1)
+        except requests.exceptions.Timeout:
+            pass
     for index, shape in enumerate(shapeList):
         if shape.name.upper() == shapeNameRight.upper():
             rightHex = shape.hexString
