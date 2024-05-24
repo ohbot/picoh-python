@@ -71,6 +71,7 @@ with pyaudio.PyAudio() as p:
         print("Stopped monitoring")
 
     # Close the stream and clean up
+    picoh.close()
     stream.stop_stream()
     stream.close()
     p.terminate()
