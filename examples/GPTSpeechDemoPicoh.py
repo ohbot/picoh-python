@@ -150,8 +150,7 @@ def LetterOf(s, n):
 # GPT
 def GPT3(model, prompt):
     if (OPENAI_API_KEY == ""):
-        print ("OpenAI key is undefined")
-        return ""
+        return "OpenAI key is undefined"
     
     openai.api_key = OPENAI_API_KEY
 
