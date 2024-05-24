@@ -23,3 +23,5 @@ picoh/__pycache__/picoh.cpython-36.pyc
 .vs/ProjectSettings.json
 .vs/picoh-python/v16/.suo
 *.pyc
+picoh.egg-info/*
+Build/*
