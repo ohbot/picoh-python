@@ -13,6 +13,14 @@ Run an example
 
 2) Open and run in IDLE or whatever Python editor/launcher you prefer. 
 
+[GPTSpeechDemo.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/GPTSpeechDemo.py)
+-
+A program with random headturn and headnod movements, eyelid blink and lip synch. When the space key is pressed a subject is requested and GPT is used to generate a Haiku about this subject. 
+
+[MoveLipsToAudio.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/MoveLipsToAudio.py)
+-
+A simple program that makes Picoh's lips move in time to audio input so that Picoh can lip-synch with a podcast etc.
+
 [helloWorldPicoh.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/helloWorldPicoh.py)
 -
 A simple program that makes Picoh move and speak. 
@@ -37,8 +45,13 @@ Control Picoh's motor positions using the mouse and trigger actions using the a,
 -
 This program makes Picoh wake up every quarter of an hour and say the time. It also uses a second thread to blink Picoh's eyes. 
 
+ [AzureSpeech.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/AzureSpeech.py)
+-
+A simple example of using Azure Speech to give a broader range of spoken voices and languages. An Azure speech key is required to use this.  
+
  [facetrack.py](https://raw.githubusercontent.com/ohbot/picoh-python/master/examples/facetrack.py)
 -
+This program uses a face detection library to move Picoh's head and eyes to track a face.  A camera is required. 
 This program requires CV2 which is a python Computer Vision library. You will also need a [trained classifier XML file (haarcascade_frontalface_default.xml)](https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_default.xml) available from the [OpenCV Github Page.](https://github.com/opencv/opencv) For more details on detecting faces check out [this tutorial.](https://towardsdatascience.com/face-detection-in-2-minutes-using-opencv-python-90f89d7c0f81)
 
 Requires:
