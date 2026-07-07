@@ -1,4 +1,4 @@
-# Ohbot text to speech on a Pi
+# Picoh text to speech on a Pi
 
 Picoh supports both online and offline text to speech. 
 
@@ -9,6 +9,11 @@ pico2wave <br>
 
 Online: <br>
 gTTS <br>
+Azure <br>
+
+You can set up a free Azure account here:
+
+<a href="https://azure.microsoft.com/en-gb/free/" target="_blank"></a>
 
 Additonal voices can be used by installing the ```espeak``` or ```pico2wave``` synthesizers.
 
@@ -33,7 +38,7 @@ Online :
 sudo pip3 install picoh --upgrade
  ```
  
-picoh.setSynthesizer(synth)
+picoh.setSynthesizer(synth,ID = "",region ='westeurope')
 ----------
 
 | synth | Full Name |
@@ -42,6 +47,7 @@ picoh.setSynthesizer(synth)
 | “espeak” | espeak speech |
 | “pico2wave” | pico2wave speech |
 | “gTTS” | Google web based text to speech |
+| “Azure” | Microsoft web based text to speech |
 
 
 For Example:
@@ -61,7 +67,16 @@ or
 picoh.setSynthesizer("gTTS")
 ```
 
-picoh.setVoice(voice)
+or 
+
+```python
+picoh.setSynthesizer("Azure", "<key>", "<region>")
+where <key> and <region> come from your Azure acccount
+```
+
+picoh.setVoice(voice,language = "en-GB", gender = 'Female')
+language is only supported by Azure voices and gTTS voices
+gender is only supported by Azure voices and is overridden by the voice
 ------
 
 Use picoh.setVoice() to set the voice synthesizer:
@@ -89,14 +104,14 @@ Examples:<br>
 | ``picoh.setVoice("-vzh+m2 -s26")`` | Chinese male voice, Fast |
 | ``picoh.setVoice("-vfr+f1 -p99 -s180")`` | French female whisper voice, medium speed and high pitched |
 
-More examples can be found in our [espeakVoices example program](https://github.com/ohbot/picoh-python/raw/master/examples/Pi/espeakVoices.py)  and  [pico2wave example program.](https://github.com/ohbot/picoh-python/raw/master/examples/Pi/pico2waveSpeech.py)
+More examples can be found in our [espeakVoices example program](https://github.com/ohbot/picoh-python/blob/master/examples/Pi/espeakVoices.py)  and  [pico2wave example program.](https://github.com/ohbot/picoh-python/blob/master/examples/Pi/pico2waveSpeech.py)
 
 
 # Web Speech
 
 Picoh supports Google Web speech using [gTTS](https://github.com/pndurette/gTTS). This provides a more realistic voice and support for multiple languages on the Raspberry Pi. Please note that using this speech means the text Picoh says is processed online on Google's servers. 
 
-The language can be changed by calling picoh.setLanguage() passing a string containing a [google language code](https://cloud.google.com/speech-to-text/docs/languages).
+The language can be changed by calling picoh.setLanguage and passing a string containing a [google language code](https://cloud.google.com/speech-to-text/docs/languages).
 
 For example:
 

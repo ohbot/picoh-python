@@ -374,6 +374,73 @@ def _parseSAPIVoice(flag):
             val = val[:pos]
     return val
 
+async def _onecore_to_wav_async(text, file, sv="", rate=0, pitch=0, volume=100):
+    from winrt.windows.media.speechsynthesis import SpeechSynthesizer
+    from winrt.windows.storage.streams import DataReader
+
+    synth = SpeechSynthesizer()
+
+    # Voice
+    voices = list(SpeechSynthesizer.all_voices)
+    # for v in voices:
+        # print ("Voice: " + v.display_name   + " Language: " + v.language);
+
+    if sv == "":
+        synth.voice = voices[0]
+    else:
+        for v in voices:
+            if sv.lower() in v.display_name.lower():
+                synth.voice = v
+                break
+
+    options = synth.options
+
+    # Map the SAPI4 rates and pitches for consistency
+    # Rate: -10 to +10 -> 0.5-6.0
+    if rate >= 0:
+        options.speaking_rate = 1.0 + rate * 0.5      # 0 -> 1.0, +10 -> 6.0
+    else:
+        options.speaking_rate = 1.0 + rate * 0.05     # -10 -> 0.5
+    options.speaking_rate = max(0.5, min(6.0, 1.0 + rate * 0.25))   # 1.0 = normal
+    
+    options.audio_volume = volume / 100.0     # 0.0 - 1.0
+
+    options.audio_pitch = 1.0 + (pitch / 10.0)
+    options.audio_pitch = max(0.0, min(2.0, options.audio_pitch))
+
+    # Note: OneCore does not support synth.Volume / synth.Rate directly
+    # in the same way SAPI.SpVoice does.
+
+    stream = await synth.synthesize_text_to_stream_async(text)
+
+    reader = DataReader(stream.get_input_stream_at(0))
+    await reader.load_async(stream.size)
+
+    data = bytearray(stream.size)
+    reader.read_bytes(data)
+
+    with open(file, "wb") as f:
+        f.write(data)
+
+    reader.close()
+    stream.close()
+
+
+def _onecore_to_wav(text, file):
+    import asyncio
+
+    sv = _parseSAPIVoice("v")
+
+    sa = _parseSAPIVoice("a")
+    volume = int(sa) if _is_digit(sa) else 100
+
+    sr = _parseSAPIVoice("r")
+    rate = int(sr) if _is_digit(sr) else 0
+
+    pi = _parseSAPIVoice("p")
+    pitch = int(pi) if _is_digit(pi) else 0
+
+    asyncio.run(_onecore_to_wav_async(text, file, sv, rate, pitch, volume))
 
 # generate speech file depending on platform and synthesizer.
 def _generateSpeechFile(text):
@@ -387,7 +454,12 @@ def _generateSpeechFile(text):
         return
 
     if platform.system() == "Windows":
-        if ("sapi" in synthesizer.lower()):
+        if ("sapi5" in synthesizer.lower()):
+            try:
+                _onecore_to_wav(text, file)
+            except:
+                print("Speech being generated too quickly")
+        elif ("sapi" in synthesizer.lower()):
             from comtypes.gen import SpeechLib
             global sapivoice, sapistream
             #sapivoice = CreateObject("SAPI.SpVoice")

@@ -1,12 +1,22 @@
-# Ohbot text to speech on a Mac
+# Picoh text to speech on a Mac
 
-picoh.setSynthesizer(synth)
+
+picoh.setSynthesizer(synth,ID = "",region ='westeurope')
 ----------
 
-Allows override of default OSX say command. 
+Allows override of default OSX synthesizer. 
 
+If you have an Azure account you can use:
 
-picoh.setVoice(voice)
+use picoh.setSynthesizer("Azure", "<key>", "<region>") 
+where <key> and <region> come from your Azure acccount
+
+You can set up a free Azure account here:
+
+<a href="https://azure.microsoft.com/en-gb/free/" target="_blank"></a>
+
+picoh.setVoice(voice,language = "en-GB", gender = 'Female')
+language and gender are only supported by Azure voices.  Gender is overridden by the selected voice
 ------
 
 Use picoh.setVoice() to set the voice:
@@ -18,6 +28,8 @@ picoh.setVoice("Oliver")
 picoh.say("Hello this is Oliver")
 picoh.setVoice("Kate")
 picoh.say("Hello this is Kate")
+picoh.setVoice("ClaraNeural","en-CA")
+picoh.say("This is Clara speaking with a canadian voice")
 ```
 Available voices can be found in System Preferences -> Accessibility -> Speech in the System Voice Menu. Click customize to view voices in other languages. 
 
@@ -29,10 +41,15 @@ A full list of voices can also be displayed by entering the following command in
 
 ```say -v ?```
 
+For Azure speech you can get a list of voices here:
+
+<a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support#text-to-speech" target="_blank"></a>
+
+
 picoh.setSpeechSpeed(params)
 ------
 
-Use picoh.speechSpeed() to set speech rate in words per minute:
+Use picoh.setSpeechSpeed() to set speech rate in words per minute:
 
 Range: (int) 90+
 
