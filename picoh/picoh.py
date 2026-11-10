@@ -622,10 +622,33 @@ def checkPort(p):
     except:
         return False
 
+_motorIdleLock = threading.RLock()
+_motorLastMove = [None] * len(motorPos)
+_motorIdleThread = None
+
+
+# This thread runs in the background and monitors the last time each motor was moved. 
+# If a motor has not been moved for 5 seconds, it is detached to save power and motor wear.
+def _monitorIdleMotors():
+    while True:
+        time.sleep(0.1)
+        with _motorIdleLock:
+            now = time.monotonic()
+            for motor, lastMove in enumerate(_motorLastMove):
+                if lastMove is not None and now - lastMove >= 5:
+                    if isAttached[motor]:
+                        detach(motor)
+                    _motorLastMove[motor] = None
+
 def init(portName = None):
     # pickup global instances of port, ser and sapi variables
-    global port, ser, sapivoice, sapistream, connected, directory
+    global port, ser, sapivoice, sapistream, connected, directory, _motorIdleThread
 
+    with _motorIdleLock:
+        if _motorIdleThread is None or not _motorIdleThread.is_alive():
+            _motorIdleThread = threading.Thread(target=_monitorIdleMotors, daemon=True)
+            _motorIdleThread.start()
+    
     _loadEyeShapes()
     _loadMotorDefs()
 
@@ -717,6 +740,11 @@ def getDirectory():
 # Function to move Picoh's motors. Arguments | m (motor) → int (0-6) | pos (position) → int (0-10) | spd (speed) →
 # int (0-10) **eg move(4,3,9) or move(0,9,3)**
 def move(m, pos, spd=5, eye=0):
+    with _motorIdleLock:
+        _motorLastMove[m] = time.monotonic()
+        _move(m, pos, spd, eye)
+
+def _move(m, pos, spd=5, eye=0):
     global lastfexl, lastfeyl,lastfexr, lastfeyr, topLipFree
 
     # Limit values to keep then within range
